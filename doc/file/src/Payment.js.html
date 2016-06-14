@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/Payment.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <a data-ice="repoURL" href="https://github.com/thegroundwork/groundwork.js.git" class="repo-url-github">Repository</a>
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Auth.js~Auth.html">Auth</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Dictionary.js~Dictionary.html">Dictionary</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Donation.js~Donation.html">Donation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Event.js~Event.html">Event</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/EventCategory.js~EventCategory.html">EventCategory</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/EventInvitation.js~EventInvitation.html">EventInvitation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/EventMessage.js~EventMessage.html">EventMessage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/EventTicket.js~EventTicket.html">EventTicket</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Groundwork.js~Groundwork.html">Groundwork</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Http.js~Http.html">Http</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Payment.js~Payment.html">Payment</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Profile.js~Profile.html">Profile</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Quickcard.js~Quickcard.html">Quickcard</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/SchemaUtils.js~SchemaUtils.html">SchemaUtils</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Subscription.js~Subscription.html">Subscription</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Supporter.js~Supporter.html">Supporter</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-deprecate">deprecate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-epoch">epoch</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-has">has</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isApiVersion">isApiVersion</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-isEmpty">isEmpty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-max">max</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mixin">mixin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-normalizeUrl">normalizeUrl</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-only">only</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-urlJoin">urlJoin</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validEmail">validEmail</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ENDPOINT_CATEGORY">ENDPOINT_CATEGORY</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ENDPOINT_EVENT">ENDPOINT_EVENT</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ENDPOINT_HOST_UNSUBSCRIBE">ENDPOINT_HOST_UNSUBSCRIBE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ENDPOINT_INVITATION">ENDPOINT_INVITATION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ENDPOINT_MESSAGE">ENDPOINT_MESSAGE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-ENDPOINT_TICKET">ENDPOINT_TICKET</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-NAMESPACE">NAMESPACE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-API_URL">API_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-API_VERSION">API_VERSION</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AUTH_ACCESS_TOKEN">AUTH_ACCESS_TOKEN</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AUTH_GWID">AUTH_GWID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-AUTH_TOKEN_TYPE">AUTH_TOKEN_TYPE</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-CONFIG_AUTH">CONFIG_AUTH</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-DEFAULT_API_URL">DEFAULT_API_URL</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-FACEBOOK_APP_ID">FACEBOOK_APP_ID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-OAUTH_CLIENT_ID">OAUTH_CLIENT_ID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-RE_API_VERSION">RE_API_VERSION</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Payment.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import CreditCard from &apos;credit-card&apos;;
+import currencyFormatter from &apos;currency-formatter&apos;;
+import numeral from &apos;numeral&apos;;
+
+import Http from &apos;./Http&apos;;
+import Dictionary from &apos;./Dictionary&apos;;
+import SchemaUtils from &apos;./SchemaUtils&apos;;
+import { isEmpty, has, urlJoin } from &apos;./utils&apos;;
+import * as constants from &apos;./constants&apos;;
+
+import cloneDeep from &apos;lodash-es/cloneDeep&apos;;
+import forEach from &apos;lodash-es/forEach&apos;;
+import merge from &apos;lodash-es/merge&apos;;
+
+/** @type {String} - API endpoint for resource */
+const NAMESPACE = &apos;payments&apos;;
+
+/** @type {Object} - used to map validation errors to fields */
+const CC_MAP = Object.freeze({
+  validCardNumber: &apos;ccNum&apos;,
+  validExpiryMonth: &apos;ccExpMonth&apos;,
+  validExpiryYear: &apos;ccExpYear&apos;,
+  validCvv: &apos;ccCvc&apos;,
+  isExpired: &apos;expiration&apos;
+});
+
+export default class Payment {
+  /**
+   * @param {Dictionary} [config] - configuration dictionary
+   * @param {Http} http
+   */
+  constructor(config, http) {
+    /** @type {Dictionary} */
+    this.config = (config &amp;&amp; config instanceof Dictionary) ?
+      config : new Dictionary();
+
+    // Resource must have an Http instance
+    if (!http || http instanceof Http === false) {
+      throw new Error(&apos;Payment requires Http&apos;);
+    }
+
+    /** @type {Http} */
+    this.http = http;
+
+    /** @type {String} */
+    this.namespace = NAMESPACE;
+
+    /** @type {SchemaUtils} */
+    this.schemaUtils = SchemaUtils;
+  }
+
+  /**
+   * If a specific function argument is missing then send back a tuple with a
+   * rejected Promise containing an error message.
+   *
+   * @param {*} arg - value to check
+   * @param {String} name - name of argument being checked
+   * @return {Array}
+   */
+  validateArg(arg, name = &apos;&apos;) {
+    let out = [true];
+
+    if (arg === null || arg === undefined || arg === false) {
+      const response = this.http.generateErrorResponse({
+        valid: false,
+        fields: [name],
+        msg: [`Missing Argument: ${name}`]
+      });
+      out = [false, Promise.reject(response)];
+    }
+
+    return out;
+  }
+
+  /**
+   * Return a validation object with Booleans for each item of the card
+   *
+   * @param {Object} [payment] - payment object
+   * @return {Object}
+   */
+  validateCreditCard(payment = {}) {
+    const { ccNum, ccExpMonth, ccExpYear, ccCvc } = payment;
+    const card = {
+      cardType: CreditCard.determineCardType(ccNum),
+      number: ccNum,
+      expiryMonth: String(ccExpMonth),
+      expiryYear: String(ccExpYear),
+      cvv: String(ccCvc)
+    };
+    return CreditCard.validate(card);
+  }
+
+  /**
+   * If no ID is present, then send back a tuple with a rejected Promise with an
+   * error message
+   *
+   * @param {String} id
+   * @return {Array}
+   */
+  validateId(id = &apos;&apos;) {
+    let out = [true];
+
+    if (id.length === 0) {
+      const response = this.http.generateErrorResponse({
+        valid: false,
+        fields: [&apos;id&apos;],
+        msg: [&apos;Missing ID&apos;]
+      });
+      out = [false, Promise.reject(response)];
+    }
+    return out;
+  }
+
+  /**
+   * If code is not a valid country code for currencies then return an updated
+   * errors object we can give back to the user
+   *
+   * @param {String} code
+   * @param {Object} errors
+   * @return {Object}
+   */
+  validateCurrencyCode(code, errors) {
+    const errs = cloneDeep(errors);
+    const upCode = String(code).toUpperCase();
+    const codeCheck = currencyFormatter.findCurrency(upCode);
+
+    if (!codeCheck || codeCheck.code !== upCode) {
+      errs.msg.push(&apos;currency is not a valid ISO-4217 country code&apos;);
+      errs.fields.push(&apos;currency&apos;);
+    }
+
+    return errs;
+  }
+
+  /**
+   * If no interval is present, or its not set to &apos;weekly&apos; or &apos;monthly&apos;
+   * then send back a tuple with a rejected Promise with an error message
+   *
+   * @param {String} interval
+   * @return {Array}
+   */
+  validateInterval(interval) {
+    let out = [true];
+
+    // Slightly complex check is complex
+    const test = (t) =&gt; {
+      if (!t) { return false; }
+      if (t === &apos;weekly&apos; || t === &apos;monthly&apos;) { return false; }
+      return true;
+    };
+
+    if (test(interval)) {
+      const response = this.http.generateErrorResponse({
+        valid: false,
+        fields: [&apos;interval&apos;],
+        msg: [&apos;Interval must be weekly or monthly&apos;]
+      });
+      out = [false, Promise.reject(response)];
+    }
+    return out;
+  }
+
+  /**
+   * Validate the payment against the schema. If it fails then return a tuple
+   * with a rejected Promise containing an error message
+   *
+   * @param {Object} payment
+   * @param {Object} schema
+   * @return {Array}
+   */
+  validateSchema(payment, schema) {
+    let out = [true];
+
+    const valid = this.schemaUtils.validateSchema(this.attachIdentity(payment),
+                                                schema);
+    if (valid.length &gt; 0) {
+      const ret = this.http.generateErrorObject();
+      valid.forEach((err) =&gt; {
+        ret.msg.push(err.message);
+        ret.fields.push(this.schemaUtils.extractFieldByError(err));
+      });
+      out = [false, Promise.reject(this.http.generateErrorResponse(ret))];
+    }
+    return out;
+  }
+
+  /**
+   * Generate a standardized validation message for payment object. The
+   * payment object should already have its types coerced before being
+   * passed into this function.
+   *
+   * @param {Object} payment
+   * @param {Object} [schema]
+   * @return {Object}
+   */
+  validatePayment(payment, schema) {
+    let ret = this.http.generateErrorObject();
+    const _schema = schema || this.schema;
+    const validSchema = this.schemaUtils.validateSchema(payment, _schema);
+
+    // Bail out on empty form
+    if (!payment || isEmpty(payment)) {
+      ret.msg = [&apos;Required fields missing&apos;];
+      ret.fields = this.schema.required;
+      return ret;
+    }
+
+    // Loop through schema errors and build up
+    if (validSchema.length &gt; 0) {
+      validSchema.forEach((err) =&gt; {
+        ret.msg.push(err.message);
+        ret.fields.push(this.schemaUtils.extractFieldByError(err));
+      });
+    }
+
+    // Check the CC
+    ret = this.validateCCPayment(payment, ret);
+
+    // Check currency code if it exists
+    if (has(payment, &apos;currency&apos;)) {
+      ret = this.validateCurrencyCode(payment.currency, ret);
+    }
+
+    if (ret.fields.length === 0) {
+      ret.valid = true;
+    }
+    return ret;
+  }
+
+  /**
+   * Build up validation errors related to Credit Cards
+   *
+   * @access private
+   * @param {Object} payment
+   * @param {Object} errors - http error object
+   * @return {Object}
+   */
+  validateCCPayment(payment, errors) {
+    const ret = cloneDeep(errors);
+    const validCard = this.validateCreditCard(payment);
+    delete validCard.customValidation; // Un-used
+
+    forEach(validCard, (val, key) =&gt; {
+      if (!val &amp;&amp; key !== &apos;isExpired&apos;) {
+        const field = CC_MAP[key];
+        ret.msg.push(`${ field } is invalid`);
+        ret.fields.push(field);
+      }
+    });
+
+    if (validCard.isExpired) {
+      ret.msg.push(&apos;Credit card expired&apos;);
+      ret.fields.push(CC_MAP.isExpired);
+    }
+
+    return ret;
+  }
+
+  /**
+   * Remove all currency symbols and punctuation from amount (except for
+   * decimal)
+   *
+   * @example
+   * removeCurrencyFormatting(&apos;$1,123.33&apos;); // =&gt; &apos;1123.33&apos;
+   *
+   * @param {String} [amount] - currency amount
+   * @return {String}
+   */
+  removeCurrencyFormatting(amount = &apos;&apos;) {
+    let _amount = amount;
+    if (typeof _amount !== &apos;string&apos;) {
+      _amount = String(_amount);
+    }
+    return numeral(_amount).format(&apos;0.00&apos;);
+  }
+
+  /**
+   * Remove any currency formatting and return as an Integer. This is
+   * specifically for dealing with non-divisible currencies such as Yen
+   * which cannot be divided into &apos;cents&apos;. Also, this will round up
+   * (see example)
+   *
+   * @example
+   * toIndivisible(&apos;-&#xA5;12,300&apos;) // =&gt; 12300
+   * toIndivisible(&apos;-&#xA5;12,300.55&apos;) // =&gt; 12301
+   *
+   * @param {String} [amount]
+   * @return {Number}
+   */
+  toIndivisible(amount = &apos;&apos;) {
+    return Math.abs(Number(this.removeCurrencyFormatting(amount)).toFixed(0));
+  }
+
+  /**
+   * Convert a currency amount into a &apos;cents&apos; value
+   *
+   * !! Note: expects amount to be an amount divisible by 100, such as dollars
+   * or euros. If using a non-divisible amount such as Yen then do not use
+   * this function and use toIndivisible
+   *
+   * @example
+   * toCents(&apos;$12.04&apos;) // =&gt; 1204
+   * toCents(1000) // =&gt; 100000
+   *
+   * @param {String} amount - string representation of value
+   * @return {Number}
+   */
+  toCents(amount = &apos;&apos;) {
+    const amt = this.removeCurrencyFormatting(amount);
+    const abs = Math.abs(Number(amt).toFixed(2));
+    return (abs &lt;= 0) ? Number(String(abs).replace(/\D/g, &apos;&apos;)) : abs * 100;
+  }
+
+  /**
+   * Format the amount from API in cents  based on the ISO-4217 country
+   * code provided
+   *
+   * @param {Number} [cents] - amount from API in cents
+   * @param {String} code
+   * @return {String}
+   */
+  formatCurrency(cents = 0, code) {
+    const { decimalDigits } = currencyFormatter.findCurrency(code);
+    const amount = Number(cents) / Math.pow(10, decimalDigits);
+    return currencyFormatter.format(amount, { code });
+  }
+
+  /**
+   * If a GWID is present then attach to the request. This is immutable,
+   * a new object is returned (we don&apos;t mutate the original payment)
+   *
+   * @param {Object} [payment]
+   * @return {Object}
+   */
+  attachIdentity(payment = {}) {
+    const fields = {};
+    const auth = this.config.get(constants.CONFIG_AUTH);
+    if (has(auth, &apos;gwid&apos;)) {
+      fields.gwid = auth.gwid;
+    }
+    return merge({}, payment, fields);
+  }
+
+  /**
+   * Interface to Http::get
+   *
+   * @access private
+   * @param {String} url
+   * @param {Object} params
+   * @return {Promise}
+   */
+  fetchCollection(url = &apos;&apos;, params = {}) {
+    return this.http.get(url, { params });
+  }
+
+  /**
+   * GET the health status of the Donations service. Passing in features: true
+   * will get the status of the service AND its available features
+   *
+   * @param {Object} opts
+   * @param {Boolean} [opts.features] - get features status
+   * @return {Proimise}
+   */
+  health(opts = {}) {
+    const { features } = opts;
+    const urlBase = urlJoin(this.namespace, &apos;health&apos;);
+    const url = (features) ? urlJoin(urlBase, &apos;features&apos;) : urlBase;
+    return this.http.get(url);
+  }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.5)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

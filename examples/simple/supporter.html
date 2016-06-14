@@ -1,0 +1,235 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Simple Supporter (Signup)</title>
+    <link rel="stylesheet" href="//storage.googleapis.com/code.getmdl.io/1.0.4/material.indigo-pink.min.css">
+    <link rel="stylesheet" src="//cdn.thegroundwork.com/lattice/2.0.1/lattice.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/styles/zenburn.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.8.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-color--blue-grey-50">
+
+      <div class="mdl-layout__header">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">
+            Simple Supporter Example
+          </span>
+          <!-- Add spacer, to align navigation to the right in desktop -->
+          <div class="mdl-layout-spacer"></div>
+        </div>
+      </div>
+
+      <div class="mdl-layout__content">
+        <div class="mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col"></div>
+          <div class="mdl-cell mdl-cell--8-col">
+
+            <div style="width: 100%; height: 20px"></div>
+
+            <!-- Form -->
+            <div class="mdl-card gwl-card mdl-shadow--2dp" style="width: 100%">
+              <div class="mdl-card__title gwl-card__title gwl-card__title--inverse mdl-color--indigo-400">
+                <h2 class="mdl-card__title-text" style="color: #fff">Signup</h2>
+              </div>
+              <div class="mdl-card__supporting-text">
+                <form action="#">
+                  <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: block; padding-right: 16px;">
+                    <label class="gwl-form-field__label mdl-textfield__label" for="apiKey">Enter your API key</label>
+                    <input class="gwl-form-field__input mdl-textfield__input" name="apiKey" id="apikey-text-field" type="text">
+                  </div>
+                  <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right: 16px;">
+                    <label class="gwl-form-field__label mdl-textfield__label" for="givenName">
+                      First name
+                    </label>
+                    <input class="gwl-form-field__input mdl-textfield__input" name="givenName" id="username-text-field" type="text">
+                    <span class="gwl-form-field__error mdl-typography--body-1"></span>
+                  </div>
+                  <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right: 16px;">
+                    <label class="gwl-form-field__label mdl-textfield__label" for="familyName">
+                      Last name
+                    </label>
+                    <input class="gwl-form-field__input mdl-textfield__input" name="familyName" id="username-text-field" type="text">
+                    <span class="gwl-form-field__error mdl-typography--body-1"></span>
+                  </div>
+                  <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                    <label class="gwl-form-field__label mdl-textfield__label" for="email">
+                      Email
+                    </label>
+                    <input class="gwl-form-field__input mdl-textfield__input" name="email" id="email-field" type="email">
+                    <span class="gwl-form-field__error mdl-typography--body-1"></span>
+                  </div>
+                  <input type="hidden" name="source" value="supporterFormA">
+                </form>
+              </div>
+              <div class="mdl-card__supporting-text" id="message-text" style="display: none;">
+              </div>
+              <div class="mdl-card__actions">
+                <!-- Colored raised button -->
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="form-button">
+                  Click here to sign up!
+                </a>
+              </div>
+            </div>
+
+            <div style="width: 100%; height: 40px"></div>
+
+            <!-- Code -->
+            <div class="mdl-card gwl-card mdl-shadow--2dp" style="width: 100%">
+              <div class="mdl-card__title gwl-card__title">
+                <h2 class="mdl-card__title-text">Code</h2>
+              </div>
+              <div class="mdl-card__supporting-text" style="width: auto;">
+                <p>
+                  This simple jQuery powered form makes a single call to the API using <strong>groundwork.js</strong> to
+                  create a new Supporter record. The client always returns a Promise for consistent success / failure handling.
+                </p>
+
+                <pre>                  <code class="javascript" style="font-size: 1.1em">
+$(function() {
+  // Create and configure an instance of Groundwork
+  var gw = new Groundwork({
+    apiKey: '...'
+  });
+
+  /* ... */
+
+  // Form submission
+  function submitForm(form) {
+    // Must have an email and source!
+    if (form.email &amp;&amp; form.source) {
+
+      displayMessage('-- Saving information --');
+
+      // Sent the form data to the API, this will return a Promise
+      // you can handle
+      gw.supporters.create(form)
+        .then(handleSuccess)
+        .catch(handleError);
+
+    } else {
+      displayMessage('Please enter an email!');
+    }
+  }
+
+  /* ... */
+});
+                  </code>
+                </pre>
+              </div>
+              <div class="mdl-card__actions">
+                <!-- Colored raised button -->
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="view-source">
+                  View source
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--2-col"></div>
+        </div>
+      </div>
+    </div>
+    <script src="//storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
+    <link href="//fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script id="gwjs" src="//cdn.thegroundwork.com/groundworkjs/1.1.1/groundwork.min.js"></script>
+    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script>
+     $(function() {
+       // Create and configure an instance of Groundwork
+       var gw = new Groundwork();
+
+       // Sandbox in your console
+       console.info('groundwork.js is available in your console as gw');
+       window.gw = gw;
+
+       // Setup DOM elements
+       var $form = $('form');
+       var $button = $('#form-button');
+       var $message = $('#message-text');
+
+       // Promise handlers
+       function handleSuccess(response) {
+         if (response.status === 201) {
+           var d = response.data;
+           if (d.familyName || d.givenName) {
+             displayMessage('Thanks for signing up, ' + d.givenName +
+                            ' ' + d.familyName);
+           } else {
+             displayMessage('Thanks for signing up!')
+           }
+         }
+       }
+
+       function handleError(error) {
+         var msg = 'Login failed:';
+         if (error.status && error.statusText) {
+           msg = msg + ' ' + error.status + ' ' + error.statusText;
+           displayMessage(msg);
+         } else {
+           msg = msg + ' You have died of dysentery.';
+           displayMessage(msg);
+         }
+       }
+
+       // Message display
+       function displayMessage(msg) {
+         $message.html(msg).show();
+       }
+
+       // Form submission
+       function submitForm(form) {
+         if (!form.apiKey) {
+           return displayMessage('Please enter an API key');
+         } else {
+           gw.apiKey = form.apiKey;
+           delete form.apiKey;
+         }
+
+         // Must have an email and source!
+         if (form.email && form.source) {
+           // Sent the form data to the API, this will return a Promise
+           // you can handle
+           displayMessage('-- Saving information --');
+           gw.supporters.create(form)
+             .then(handleSuccess)
+             .catch(handleError);
+         } else {
+           displayMessage('Please enter an email!');
+         }
+       }
+
+       // Convert array of objects into an Object of key/val
+       function makeObject(arr) {
+         if (arr) {
+           return arr.reduce(function(prev, next) {
+             if (String(next.value).length > 0) {
+               prev[next.name] = next.value;
+             }
+             return prev;
+           }, {});
+         } else {
+           return {};
+         }
+       }
+
+       // Setup listeners
+       $button.on('click', function(event) {
+         event.preventDefault();
+         submitForm(makeObject($form.serializeArray()));
+       });
+
+       $('#view-source').on('click', function(event) {
+         event.preventDefault();
+         window.location="view-source:" + window.location.href;
+       });
+     });
+    </script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+</body></html>
