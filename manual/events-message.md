@@ -46,20 +46,24 @@ perPage               |          | Integer indicating how many results should be
   },
   "results": [
     {
+      "createdUtc": "2015-06-20T16:11:44Z",
       "email": "",
       "eventId": "c84c8a10-fc0d-4bbc-beb5-86d921974998",
       "gwid": "ba5defe9-4a38-4782-abf6-70e81823a53f",
       "id": "82f29c96-bd9d-4e03-9c7d-e58c6e8bc50f",
+      "initiativeId": "my_organization.my_initiative",
       "message": "I'm excited to see you at my event!",
       "subject": "Can't wait to see you!",
       "template": "my_template",
       "title": "1 More Day!"
     },
     {
+      "createdUtc": "2015-06-20T16:11:44Z",
       "email": "example@example.com",
       "eventId": "c84c8a10-fc0d-4bbc-beb5-86d921974998",
       "gwid": "",
       "id": "b7269c74-773e-4070-a179-038158dd83ec",
+      "initiativeId": "my_organization.my_initiative",
       "message": "I'm excited to see you at my event!",
       "subject": "Can't wait to see you!",
       "template": "my_template",
@@ -118,20 +122,24 @@ title                   |          | String title that will be included in the e
 ```json
 [
   {
+    "createdUtc": "2015-06-20T16:11:44Z",
     "email": "",
     "eventId": "c84c8a10-fc0d-4bbc-beb5-86d921974998",
     "gwid": "ba5defe9-4a38-4782-abf6-70e81823a53f",
     "id": "82f29c96-bd9d-4e03-9c7d-e58c6e8bc50f",
+    "initiativeId": "my_organization.my_initiative",
     "message": "I'm excited to see you at my event!",
     "subject": "Can't wait to see you!",
     "template": "my_template",
     "title": "1 More Day!"
   },
   {
+    "createdUtc": "2015-06-20T16:11:44Z",
     "email": "example@example.com",
     "eventId": "c84c8a10-fc0d-4bbc-beb5-86d921974998",
     "gwid": "",
     "id": "b7269c74-773e-4070-a179-038158dd83ec",
+    "initiativeId": "my_organization.my_initiative",
     "message": "I'm excited to see you at my event!",
     "subject": "Can't wait to see you!",
     "template": "my_template",
@@ -186,10 +194,12 @@ gw.events.fetchMessage(<event id>, <message id>)
 
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "email": "",
   "eventId": "c84c8a10-fc0d-4bbc-beb5-86d921974998",
   "gwid": "ba5defe9-4a38-4782-abf6-70e81823a53f",
   "id": "82f29c96-bd9d-4e03-9c7d-e58c6e8bc50f",
+  "initiativeId": "my_organization.my_initiative",
   "message": "I'm excited to see you at my event!",
   "subject": "Can't wait to see you!",
   "template": "my_template",

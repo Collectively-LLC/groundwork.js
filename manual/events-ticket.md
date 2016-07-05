@@ -49,20 +49,40 @@ purchaserGwid         |          | GWID String of the user who purchased the tic
   "results": [
     {
       "attendeeGwid": "752bfe79-fc8b-48e9-8f7f-67cdd1c7a67c",
+      "attendeeProfile": {
+        "email": "johndoe@thegroundwork.com",
+        "familyName": "Doe",
+        "givenName": "Jane"
+      },
       "categoryId": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+      "createdUtc": "2015-06-20T16:11:44Z",
       "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
       "id": "84e1e2c4-8ac9-4f38-9bd8-b1abfb8dc3d4",
+      "initiativeId": "my_organization.my_initiative",
       "invitationId": "",
       "purchaserGwid": "752bfe79-fc8b-48e9-8f7f-67cdd1c7a67c",
+      "purchaserProfile": {
+        "email": "matt@thegroundwork.com",
+        "familyName": "Hodges",
+        "givenName": "Matt"
+      },
       "redeemedUtc": "2016-08-22T12:00:00Z"
     },
     {
       "attendeeGwid": "",
+      "attendeeProfile": null,
       "categoryId": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+      "createdUtc": "2015-06-20T16:11:44Z",
       "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
       "id": "36a91d28-dfaf-42c3-91ea-89806254ae35",
+      "initiativeId": "my_organization.my_initiative",
       "invitationId": "",
       "purchaserGwid": "f3fed15c-7007-4f39-82d8-930db0c3c0ea",
+      "purchaserProfile": {
+        "email": "johndoe@thegroundwork.com",
+        "familyName": "Doe",
+        "givenName": "John"
+      },
       "redeemedUtc": ""
     }
   ]
@@ -123,13 +143,26 @@ redeemedUtc             |          | UTC ISO-8601 formatted String of the dateti
 ```json
 {
   "attendeeGwid": "9465a252-3319-4471-a908-8e1333692bff",
+  "attendeeProfile": {
+    "email": "janedoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "Jane"
+  },
   "categoryId": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "createdUtc": "2015-06-20T16:11:44Z",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "36a91d28-dfaf-42c3-91ea-89806254ae35",
+  "initiativeId": "my_organization.my_initiative",
   "invitationId": "dd380647-4630-4146-a5c9-7b533dbedf5e",
   "purchaserGwid": "f3fed15c-7007-4f39-82d8-930db0c3c0ea",
+  "purchaserProfile": {
+    "email": "johndoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "John"
+  },
   "redeemedUtc": ""
 }
+
 ```
 
 
@@ -183,11 +216,23 @@ gw.events.fetchTicket(<event id>, <category id>, <ticket id>)
 ```json
 {
   "attendeeGwid": "9465a252-3319-4471-a908-8e1333692bff",
+  "attendeeProfile": {
+    "email": "janedoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "Jane"
+  },
   "categoryId": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "createdUtc": "2015-06-20T16:11:44Z",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "36a91d28-dfaf-42c3-91ea-89806254ae35",
+  "initiativeId": "my_organization.my_initiative",
   "invitationId": "",
   "purchaserGwid": "f3fed15c-7007-4f39-82d8-930db0c3c0ea",
+  "purchaserProfile": {
+    "email": "johndoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "John"
+  },
   "redeemedUtc": ""
 }
 ```
@@ -235,10 +280,23 @@ redeemedUtc             |          | UTC ISO-8601 formatted String of the dateti
 ```json
 {
   "attendeeGwid": "9465a252-3319-4471-a908-8e1333692bff",
+  "attendeeProfile": {
+    "email": "janedoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "Jane"
+  },
   "categoryId": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "createdUtc": "2015-06-20T16:11:44Z",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "36a91d28-dfaf-42c3-91ea-89806254ae35",
+  "initiativeId": "my_organization.my_initiative",
+  "invitationId": "",
   "purchaserGwid": "f3fed15c-7007-4f39-82d8-930db0c3c0ea",
+  "purchaserProfile": {
+    "email": "johndoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "John"
+  },
   "redeemedUtc": "2016-08-22T12:00:00Z"
 }
 ```
@@ -286,10 +344,23 @@ redeemedUtc             |          | UTC ISO-8601 formatted String of the dateti
 ```json
 {
   "attendeeGwid": "9465a252-3319-4471-a908-8e1333692bff",
+  "attendeeProfile": {
+    "email": "janedoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "Jane"
+  },
   "categoryId": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "createdUtc": "2015-06-20T16:11:44Z",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "36a91d28-dfaf-42c3-91ea-89806254ae35",
+  "initiativeId": "my_organization.my_initiative",
+  "invitationId": "",
   "purchaserGwid": "f3fed15c-7007-4f39-82d8-930db0c3c0ea",
+  "purchaserProfile": {
+    "email": "johndoe@thegroundwork.com",
+    "familyName": "Doe",
+    "givenName": "John"
+  },
   "redeemedUtc": "2016-08-22T13:00:00Z"
 }
 ```

@@ -93,9 +93,11 @@ startsAfter   |          | string        | Return Events after this time. Format
       "addressLongitude": -84.512228,
       "addressPostalCode": "45202",
       "addressStateOrProvince": "Ohio",
+      "createdUtc": "2015-06-20T16:11:44Z",
       "description": "Come out to our winter fundraiser!",
       "hostGwid": "9ba6e2cb-c3b2-4aca-8953-9ec58115badb",
       "id": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
+      "initiativeId": "my_organization.my_initiative",
       "locationName": "The Righteous Room",
       "timeEndUtc": "2016-09-26T20:00:00Z",
       "timeStartUtc": "2016-09-26T17:00:00Z",
@@ -113,9 +115,11 @@ startsAfter   |          | string        | Return Events after this time. Format
       "addressLongitude": -84.012228,
       "addressPostalCode": "45202",
       "addressStateOrProvince": "Ohio",
+      "createdUtc": "2015-06-20T16:11:44Z",
       "description": "Come have coffee with some of the people that help with our programs!",
       "hostGwid": "9ba6e2cb-c3b2-4aca-8953-9ec58115badb",
       "id": "480c307a-41bf-429c-a5d6-95aa4034d862",
+      "initiativeId": "my_organization.my_initiative",
       "locationName": "",
       "timeEndUtc": "2016-09-29T14:00:00Z",
       "timeStartUtc": "2016-09-29T12:00:00Z",
@@ -201,14 +205,16 @@ For this reason, and for an optimal user experience, it is highly recommended th
   "addressLongitude": -84.512228,
   "addressPostalCode": "45202",
   "addressStateOrProvince": "Ohio",
-  "description": "Come out to our winter fundraiser!",
+  "createdUtc": "2015-06-20T16:11:44Z",
+  "description": "Come watch the Democratic and Republican candidates debate!",
   "hostGwid": "03d6b6c1-bf15-4401-a850-a0e6dd2be6de",
   "id": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
+  "initiativeId": "my_organization.my_initiative",
   "locationName": "The Righteous Room",
   "timeEndUtc": "2016-09-26T20:00:00Z",
   "timeStartUtc": "2016-09-26T17:00:00Z",
   "timeZoneId": "America/New_York",
-  "title": "Winter Fundraiser 2015"
+  "title": "Debate Watch Party at The Righteous Room"
 }
 ```
 
@@ -262,24 +268,26 @@ gw.events.fetch(<event id>)
 
 ```json
 {
-    "address1": "641 Walnut St.",
-    "address2": "",
-    "addressCity": "Cincinnati",
-    "addressCountry": "USA",
-    "addressCounty": "",
-    "addressDistrict": "",
-    "addressLatitude": 39.103652,
-    "addressLongitude": -84.512228,
-    "addressPostalCode": "45202",
-    "addressStateOrProvince": "Ohio",
-    "description": "Come out to our winter fundraiser!",
-    "hostGwid": "03d6b6c1-bf15-4401-a850-a0e6dd2be6de",
-    "id": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
-    "locationName": "The Righteous Room",
-    "timeEndUtc": "2016-09-26T20:00:00Z",
-    "timeStartUtc": "2016-09-26T17:00:00Z",
-    "timeZoneId": "America/New_York",
-    "title": "Winter Fundraiser 2015"
+  "address1": "641 Walnut St.",
+  "address2": "",
+  "addressCity": "Cincinnati",
+  "addressCountry": "USA",
+  "addressCounty": "",
+  "addressDistrict": "",
+  "addressLatitude": 39.103652,
+  "addressLongitude": -84.512228,
+  "addressPostalCode": "45202",
+  "addressStateOrProvince": "Ohio",
+  "createdUtc": "2015-06-20T16:11:44Z",
+  "description": "Come watch the Democratic and Republican nominees debate!",
+  "id": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
+  "initiativeId": "my_organization.my_initiative",
+  "hostGwid": "03d6b6c1-bf15-4401-a850-a0e6dd2be6de",
+  "locationName": "The Righteous Room",
+  "timeEndUtc": "2016-09-26T20:00:00Z",
+  "timeStartUtc": "2016-09-26T17:00:00Z",
+  "timeZoneId": "America/New_York",
+  "title": "Debate Watch Party at The Righteous Room"
 }
 ```
 
@@ -335,9 +343,8 @@ title                   |          | string    | 256        | The title of the E
 
 **Response**
 ```json
-```json
 {
-  "address1": "641 Walnut St.",
+  "address1": "642 Walnut St.",
   "address2": "",
   "addressCity": "Cincinnati",
   "addressCountry": "USA",
@@ -347,16 +354,17 @@ title                   |          | string    | 256        | The title of the E
   "addressLongitude": -84.512228,
   "addressPostalCode": "45202",
   "addressStateOrProvince": "Ohio",
-  "description": "Come out to our winter fundraiser!",
+  "createdUtc": "2015-06-20T16:11:44Z",
+  "description": "Come watch the Democratic and Republican candidates debate!",
   "hostGwid": "03d6b6c1-bf15-4401-a850-a0e6dd2be6de",
   "id": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
+  "initiativeId": "my_organization.my_initiative",
   "locationName": "The Righteous Room",
   "timeEndUtc": "2016-09-26T20:00:00Z",
   "timeStartUtc": "2016-09-26T17:00:00Z",
   "timeZoneId": "America/New_York",
-  "title": "Winter Fundraiser 2015"
+  "title": "Debate Watch Party at The Righteous Room"
 }
-```
 ```
 
 **NOTE**: `timeStartUtc` and `timeEndUtc` is calculated at call-time and is derived from the discovered `timeZoneId`, based on address information, and the naive datetime `timeStart / timeEnd` provided upon creation.
@@ -431,14 +439,16 @@ title                   | &#10004; | string    | 256        | The title of the E
   "addressLongitude": -84.512228,
   "addressPostalCode": "45202",
   "addressStateOrProvince": "Ohio",
-  "description": "Come learn about childhood development in Nicaragua!",
+  "createdUtc": "2015-06-20T16:11:44Z",
+  "description": "Come watch the Democratic and Republican candidates debate!",
   "hostGwid": "03d6b6c1-bf15-4401-a850-a0e6dd2be6de",
   "id": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
+  "initiativeId": "my_organization.my_initiative",
   "locationName": "The Righteous Room",
   "timeEndUtc": "2016-09-26T20:00:00Z",
   "timeStartUtc": "2016-09-26T17:00:00Z",
   "timeZoneId": "America/New_York",
-  "title": "Development talk at The Righteous Room"
+  "title": "Debate Watch Party at The Righteous Room"
 }
 ```
 
@@ -499,20 +509,36 @@ startsAfter    |          | string  | Return Events after this time. Formatted i
   "results": [
     {
       "attendeeGwid": "",
+      "attendeeProfile": null,
       "categoryId": "846d92e5-ffd3-43b5-84de-a3d5d7e250ac",
+      "createdUtc": "2015-06-20T16:11:44Z",
       "eventId": "cfdf4bfe-971a-46c9-9696-678a85e1dbfe",
       "id": "b4b0ee1c-95da-4e93-abfc-91d67093ad33",
+      "initiativeId": "my_organization.my_initiative",
       "invitationId": "",
       "purchaserGwid": "524a1efb-b390-476d-b5a4-a0867d8db916",
+      "purchaserProfile": {
+        "email": "johndoe@thegroundwork.com",
+        "familyName": "Doe",
+        "givenName": "John"
+      },
       "redeemedUtc": ""
     },
     {
       "attendeeGwid": "",
+      "attendeeProfile": null,
       "categoryId": "846d92e5-ffd3-43b5-84de-a3d5d7e250ac",
+      "createdUtc": "2015-06-20T16:11:44Z",
       "eventId": "cfdf4bfe-971a-46c9-9696-678a85e1dbfe",
       "id": "74e9976b-0e6b-4dfe-9e92-57b2267268f4",
+      "initiativeId": "my_organization.my_initiative",
       "invitationId": "",
-      "purchaserGwid": "424a1efb-b390-476d-b5a4-a0867d8db916",
+      "purchaserGwid": "524a1efb-b390-476d-b5a4-a0867d8db916",
+      "purchaserProfile": {
+        "email": "johndoe@thegroundwork.com",
+        "familyName": "Doe",
+        "givenName": "John"
+      },
       "redeemedUtc": ""
     }
   ]
@@ -557,7 +583,9 @@ messageId               |          | string    | UUID String unique identifier o
 
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "email": "test@example.com",
-  "id": "187c0a41-0550-4832-a09e-302531093b56"
+  "id": "187c0a41-0550-4832-a09e-302531093b56",
+  "initiativeId": "my_organization.my_initiative"
 }
 ```

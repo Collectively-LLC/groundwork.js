@@ -47,15 +47,30 @@ startsAfter           |          | ISO-8601 formatted String given in local time
   },
   "results": [
     {
+      "createdUtc": "2015-06-20T16:11:44Z",
       "description": "Reserved for our most active supporters",
       "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
       "id": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+      "initiativeId": "my_organization.my_initiative",
       "quantityRemaining": 5,
       "quantityTotal": 10,
       "timeEndUtc": "2016-09-26T20:00:00Z",
       "timeStartUtc": "2016-09-26T18:00:00Z",
       "timeZoneId": "America/New_York",
       "title": "VIP"
+    },
+    {
+      "createdUtc": "2015-06-20T16:11:44Z",
+      "description": "Standard ticket",
+      "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
+      "id": "c8cb77ec-9f4d-4214-bd96-b38585b44084",
+      "initiativeId": "my_organization.my_initiative",
+      "quantityRemaining": 15,
+      "quantityTotal": 20,
+      "timeEndUtc": "2016-09-26T20:00:00Z",
+      "timeStartUtc": "2016-09-26T19:00:00Z",
+      "timeZoneId": "America/New_York",
+      "title": "Admit One"
     }
   ]
 }
@@ -110,9 +125,11 @@ title                   |          | String with a maximum length of 256 charact
 
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "description": "Reserved for our most active supporters",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "initiativeId": "my_organization.my_initiative",
   "quantityRemaining": 10,
   "quantityTotal": 10,
   "timeEndUtc": "2016-09-26T20:00:00Z",
@@ -181,9 +198,11 @@ gw.events.fetchCategory(<event id>, <category id>)
 
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "description": "Reserved for our most active supporters",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "initiativeId": "my_organization.my_initiative",
   "quantityRemaining": 5,
   "quantityTotal": 10,
   "timeEndUtc": "2016-09-26T20:00:00Z",
@@ -237,9 +256,11 @@ title                   |          | String with a maximum length of 256 charact
 **Response**
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "description": "Allocated for our most active supporters",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "initiativeId": "my_organization.my_initiative",
   "quantityRemaining": 5,
   "quantityTotal": 10,
   "timeEndUtc": "2016-09-26T20:00:00Z",
@@ -299,9 +320,11 @@ title                   |          | String with a maximum length of 256 charact
 **Response**
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "description": "Reserved for our most active supporters",
   "eventId": "5bc753e4-a94e-4463-a8e9-83de9c6819df",
   "id": "d1365abf-5f70-4cb4-949e-a9f2222dcf84",
+  "initiativeId": "my_organization.my_initiative",
   "quantityRemaining": 10,
   "quantityTotal": 10,
   "timeEndUtc": "2016-09-26T20:00:00Z",

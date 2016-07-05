@@ -46,19 +46,25 @@ status                |          | String of the status by which you wish to fil
   },
   "results": [
     {
+        "createdUtc": "2015-06-20T16:11:44Z",
         "email": "test@example.com",
         "eventId": "3cd5fc23-b4e7-4469-aefe-e54493c7e123",
         "familyName": "Doe",
         "givenName": "John",
         "id": "dd380647-4630-4146-a5c9-7b533dbedf5e",
+        "initiativeId": "my_organization.my_initiative",
+        "message": "I hope you come to my event!",
         "status": "pending"
     },
     {
+        "createdUtc": "2015-06-20T16:11:44Z",
         "email": "test2@example.com",
         "eventId": "3cd5fc23-b4e7-4469-aefe-e54493c7e123",
         "familyName": "Smith",
         "givenName": "Jane",
         "id": "abc80647-4630-4146-a5c9-7b533dbedf5e",
+        "initiativeId": "my_organization.my_initiative",
+        "message": "",
         "status": "declined"
     }
   ]
@@ -111,14 +117,18 @@ subject                 |          | String of the subject that was attached to 
 
 ```json
 [
-  {
-    "email": "test@example.com",
-    "eventId": "3cd5fc23-b4e7-4469-aefe-e54493c7e123",
-    "familyName": "Doe",
-    "givenName": "John",
-    "id": "dd380647-4630-4146-a5c9-7b533dbedf5e",
-    "status": "pending"
-  }
+    {
+        "createdUtc": "2015-06-20T16:11:44Z",
+        "email": "test@example.com",
+        "eventId": "3cd5fc23-b4e7-4469-aefe-e54493c7e123",
+        "familyName": "Doe",
+        "givenName": "John",
+        "id": "dd380647-4630-4146-a5c9-7b533dbedf5e",
+        "initiativeId": "my_organization.my_initiative",
+        "message": "I hope you come to my event!",
+        "status": "pending",
+        "subject": "You're Invited!"
+    }
 ]
 ```
 
@@ -176,12 +186,16 @@ gw.events.fetchInvitation(<event id>, <invitation id>)
 
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "email": "test@example.com",
   "eventId": "3cd5fc23-b4e7-4469-aefe-e54493c7e123",
   "familyName": "Doe",
   "givenName": "John",
   "id": "dd380647-4630-4146-a5c9-7b533dbedf5e",
-  "status": "pending"
+  "initiativeId": "my_organization.my_initiative",
+  "message": "I hope you come to my event!",
+  "status": "pending",
+  "subject": "You're Invited!"
 }
 ```
 
@@ -222,11 +236,15 @@ status                  |  ✓       | String of the current RSVP status of the 
 **Response**
 ```json
 {
+  "createdUtc": "2015-06-20T16:11:44Z",
   "email": "test@example.com",
   "eventId": "3cd5fc23-b4e7-4469-aefe-e54493c7e123",
   "familyName": "Doe",
   "givenName": "John",
   "id": "dd380647-4630-4146-a5c9-7b533dbedf5e",
-  "status": "declined"
+  "initiativeId": "my_organization.my_initiative",
+  "message": "I hope you come to my event!",
+  "status": "declined",
+  "subject": "You're Invited!"
 }
 ```
