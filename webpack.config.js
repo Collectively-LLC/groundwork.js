@@ -1,102 +1,136 @@
-/*global module, require, process, __dirname */
+'use strict';
 
-var BannerPlugin = require('webpack/lib/BannerPlugin');
-var exec = require('child_process').execSync;
-var path = require('path');
-var webpack = require('webpack');
+const exec = require('child_process').execSync;
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var NODE_ENV = JSON.stringify(process.env.NODE_ENV);
-var BUILD = JSON.stringify(process.env.BUILD);
+const NODE_ENV = process.env.NODE_ENV;
+const DEVELOPMENT = NODE_ENV === 'development';
+const PRODUCTION = NODE_ENV === 'production';
 
-var releaseTag = process.env.PACKAGE_VERSION;
-var tag = (releaseTag) ?
-      releaseTag :
-      exec("git describe --always --tag | tr -d '[[:space:]]'");
+const releaseTag = process.env.PACKAGE_VERSION;
+const tag = releaseTag || exec('git describe --always --tag | tr -d "[[:space:]]"');
 
-var date = new Date();
-var banner = 'groundwork.js ' + tag + ' | (c) ' + date.getUTCFullYear() + ' Timshel / The Groundwork - BSD Licence https://opensource.org/licenses/BSD-3-Clause';
+let filename = 'groundwork.js';
+const banner = `${filename} ${tag} | (c) ${new Date().getUTCFullYear()} Timshel / The Groundwork - BSD Licence https://opensource.org/licenses/BSD-3-Clause`;
 
-// Base filename of compiled JS lib
-var filename = 'groundwork';
-
-// Default globals to be used during compilation
-var defineObj = {
+let defineObj = {
   'process.env': {
-    'NODE_ENV': NODE_ENV
+    NODE_ENV
   },
-  __LOG__: true,
+  __LOG__: false,
   TAG: JSON.stringify(tag.toString())
 };
 
-// Webpack plugins array
-var plugins = [];
+const plugins = [
+  new webpack.BannerPlugin(banner),
+  new webpack.DefinePlugin(defineObj)
+];
 
-// All builds but the .min version have logging turned on
-if (BUILD === '"min"') {
-  defineObj.__LOG__ = false;
-  defineObj['process.env'] = {
-    'NODE_ENV': JSON.stringify('production')
-  };
-  plugins.push(new webpack.optimize.UglifyJsPlugin({minimize: true}));
-  filename = filename + '.min';
+if (DEVELOPMENT) {
+  defineObj.__LOG__ = true;
+
+  plugins.push(
+    new HtmlWebpackPlugin({
+      title: 'The Groundwork Client',
+      template: './examples/index.ejs',
+      filename: 'index.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      title: 'The Groundwork | Examples',
+      template: './examples/simple/index.ejs',
+      filename: 'examples/index.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Simple Auth (Login)',
+      template: './examples/simple/auth.ejs',
+      filename: 'examples/auth.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Simple Supporter (Signup)',
+      template: './examples/simple/supporter.ejs',
+      filename: 'examples/supporter.html',
+      inject: false
+    })
+  );
 }
 
-// Push DefinePlugin into the array to setup global vars
-plugins.push(new webpack.DefinePlugin(defineObj));
+if (PRODUCTION) {
+  defineObj = Object.assign({}, defineObj, {
+    __LOG__: false,
+    'process.env': {
+      NODE_ENV: JSON.stringify('production')
+    }
+  });
 
-// Add banner to the distributable
-plugins.push(new BannerPlugin(banner));
+  plugins.push(
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  );
 
-// Presets and plugins in query form for regular loaders
-var loaderQuery = 'presets[]=es2015&presets[]=stage-0&plugins[]=transform-runtime';
+  filename = filename.replace('.js', '.min.js');
+}
+
+const babelQuery = {
+  presets: [
+    'es2015',
+    'stage-0'
+  ],
+  plugins: [
+    'lodash',
+    'transform-runtime'
+  ]
+};
 
 module.exports = {
+  devtool: 'source-map',
   entry: {
-    app: ['./src/index.js']
+    app: ['./src/lib/index.js']
   },
   output: {
+    filename,
     libraryTarget: 'umd',
     library: 'Groundwork',
     path: path.join(__dirname, 'dist'),
-    filename: filename + '.js',
-    sourceMapFilename: '[file].map'
+    publicPath: ''
   },
-  plugins: plugins,
-  devtool: 'source-map',
+  plugins,
   resolve: {
     extensions: ['', '.js'],
-    alias: {
-      'axiosUtils': path.join(__dirname, 'node_modules', 'axios', 'lib', 'utils.js'),
-      'lodash-es': path.join(__dirname, 'node_modules', 'lodash-es')
-    }
+    modulesDirectories: [
+      'node_modules'
+    ],
+    root: [
+      path.resolve('./src')
+    ]
   },
   module: {
     loaders: [
-      {
-        test: /node_modules\/credit-card/,
-        loader: 'babel-loader?' + loaderQuery,
-        include: __dirname
-      },
-      {
-        test: /node_modules\/lodash-es/,
-        loader: 'babel-loader?' + loaderQuery,
-        include: __dirname
-      },
-      {
-        test: /node_modules\/reach/,
-        loader: 'babel-loader?' + loaderQuery,
-        include: __dirname
-      },
+      /node_modules\/credit-card/,
+      /node_modules\/reach/
+    ].map(test => ({
+      test,
+      include: __dirname,
+      loader: 'babel',
+      query: babelQuery
+    })).concat([
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        include: __dirname,
+        include: [
+          path.join(__dirname, 'src')
+        ],
         loader: 'babel',
-        query: {
-          presets: ['stage-0', 'es2015'],
-          plugins: ['transform-runtime']
-        }
+        query: babelQuery
       }
-    ]
+    ])
   }
 };

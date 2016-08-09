@@ -2,6 +2,20 @@
 
 ### Please see the [Releases](https://github.com/thegroundwork/groundwork.js/releases) page for current release information.
 
+## v1.1.1 2016-6-14
+
+### Bugfixes
+
+- [#7] Update Payment.toCents to Convert 1 to 100
+
+### Updates
+
+- Update links to GW platform and API docs
+- [#2] Public setup
+- [#3] Update to correct badge
+- [#4] Indentation fix on example code
+- [#5] Update language and links in README
+
 ## v0.2.7 2015-11-11
 
 - [#32](https://github.com/thegroundwork/groundwork.js/pull/32) Update default API url

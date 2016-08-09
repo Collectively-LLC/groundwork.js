@@ -8,7 +8,7 @@ export PACKAGE_VERSION=$(cat package.json \
                          | sed 's/[",]//g' \
                          | tr -d '[[:space:]]')
 
-echo "!!! Releasing v$PACKAGE_VERSION !!!"
+echo "\n@@@ Releasing v$PACKAGE_VERSION @@@"
 
 # Create a release branch
 git checkout -b "release-$PACKAGE_VERSION"

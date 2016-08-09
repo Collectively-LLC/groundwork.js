@@ -56,12 +56,12 @@ There are some examples of the client itself [here](https://cdn.thegroundwork.co
 import Groundwork from 'groundwork.js';
 
 // Create a new Groundwork client using your client id
-let gw = new Groundwork({
+const gw = new Groundwork({
   'apiKey': 'abc123'
 });
 
 // Collect user information from a form
-let signUpData = {
+const signUpData = {
   email: form.emailAddress,
   givenName: form.firstName,
   familyName: form.lastName,
@@ -70,8 +70,8 @@ let signUpData = {
   source: "form_frontpage_campaignXYZ"
 };
 
-let handleSuccess = function(res) { /* Handle successful signup */}
-let handleErrors = function(err) { /* Handle error during signup */}
+const handleSuccess = (res) => { /* Handle successful signup */}
+const handleErrors = (err) => { /* Handle error during signup */}
 
 // Create a new supporter using the collected data and handle success or error states
 gw.supporter.create(signUpData)
@@ -84,7 +84,7 @@ A+ Grade browsers
 
 ## Prerequisites
 
-Before working with the library source, you'll need to install some reqiured packages:
+Before working with the library source, you'll need to install some required packages:
 
 ```shell
 npm install
@@ -112,7 +112,7 @@ npm run docs
 
 This library is written in [ES2015](http://www.ecma-international.org/ecma-262/6.0/) and compiled to [ES5](http://www.ecma-international.org/ecma-262/5.1/) via [Babel](https://babeljs.io). Tests are written with Jasmine and run with Karma.
 
-This project uses [GitHub Flow](https://guides.github.com/introduction/flow/index.html) ([longer explanation](http://scottchacon.com/2011/08/31/github-flow.html)) as a deployment model. Please make feature branches from `master` and then PR them for review.
+This project uses [GitHub Flow](https://guides.github.com/introduction/flow/index.html) ([longer explanation](http://scottchacon.com/2011/08/31/github-flow.html)) as a deployment model. Please make feature branches from `develop` and then PR them for review.
 
 **Setup your environment:**
 
@@ -122,13 +122,13 @@ You need [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) install
 npm install
 ```
 
-**Run the development environment:**
+**Run the development environment and build examples:**
 
 ```shell
-npm run dev
+npm start
 ```
 
-A compiled `groundwork.js` is served from [localhost:8080](http://localhost:8080).
+A compiled `groundwork.js` is served from [localhost:3000](http://localhost:3000) and examples can be found at [localhost:3000](http://localhost:3000/examples).
 
 **Run the examples:**
 
@@ -136,13 +136,13 @@ A compiled `groundwork.js` is served from [localhost:8080](http://localhost:8080
 npm run examples
 ```
 
-This will rewrite the files in `/examples` to use the current locally compiled version of `groundwork.js` instead of the CDN version. Useful for testing your work in an HTML page. The files are served from [localhost:3030](http://localhost:3030)
+This will rewrite the files in `/examples` to use the current locally compiled version of `groundwork.js` instead of the CDN version. Useful for testing your work in an HTML page. The files are served from [localhost:3000](http://localhost:3000)
 
 **Run the tests:**
 
 ```shell
-npm test # starts a watcher that runs automated tests in multiple browsers
-npm run test-ci # runs automated tests in PhantomJS & Firefox just once
+npm test # run tests once and then exit
+npm run test:watch # starts a watcher that runs automated tests in multiple browsers
 ```
 
 There are an additional set of integration tests which hit the live Dev API. These should only be run if:

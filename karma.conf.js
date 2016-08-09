@@ -1,15 +1,46 @@
-/*global module, require */
-var base = require('./karma-base.conf.js');
+'use strict';
 
-// Karma configuration for all the browsers in a watcher
-module.exports = function(config) {
-  // Browsers to run
-  base.browsers = ['Chrome', 'Firefox', 'PhantomJS', 'Safari'];
+const argv = require('yargs').argv;
+const webpackConfig = require('./webpack.config');
 
-  // level of logging
-  // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN
-  // config.LOG_INFO || config.LOG_DEBUG
-  base.logLevel = config.LOG_INFO;
-
-  config.set(base);
+module.exports = (config) => {
+  config.set({
+    browsers: [
+      'Chrome'
+    ],
+    files: [
+      'node_modules/babel-polyfill/dist/polyfill.js',
+      'karma.tests.js'
+    ],
+    frameworks: [
+      'jasmine-ajax',
+      'jasmine'
+    ],
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-eslint',
+      'karma-firefox-launcher',
+      'karma-jasmine',
+      'karma-jasmine-ajax',
+      'karma-jsdom-launcher',
+      'karma-safari-launcher',
+      'karma-spec-reporter',
+      'karma-sourcemap-loader',
+      'karma-webpack'
+    ],
+    preprocessors: {
+      'karma.tests.js': [
+        'webpack',
+        'sourcemap'
+      ]
+    },
+    reporters: [
+      'dots'
+    ],
+    singleRun: !argv.watch || true,
+    webpack: webpackConfig,
+    webpackServer: {
+      noInfo: true
+    }
+  });
 };

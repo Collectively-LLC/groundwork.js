@@ -2,7 +2,7 @@
 
 # Replace version numbers in JS href strings
 function replace() {
-  sed -i.bak "s/groundworkjs\/[0-9.]*\/groundwork/groundworkjs\/$1\/groundwork/g" $2
+  sed -i.bak "s/groundworkjs\/[0-9A-Za-z.]*\/groundwork/groundworkjs\/$1\/groundwork/g" $2
   rm -rf $2.bak
 }
 
