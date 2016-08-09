@@ -62,7 +62,7 @@
       </div>
     </div>
   </div>
-  <script src="<%= htmlWebpackPlugin.files.js %>"></script>
+  <script src="latest/<%= htmlWebpackPlugin.files.js %>"></script>
 
   <script>
     // Create and configure an instance of Groundwork
@@ -73,7 +73,7 @@
     window.gw = gw;
 
     var $header = document.querySelector('.header-version');
-    $header.innerHTML = $header.innerHTML + '(v' + gw.version + ')';
+    $header.innerHTML = $header.innerHTML + '(' + gw.version + ')';
   </script>
 
 </body>
