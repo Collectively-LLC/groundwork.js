@@ -78,6 +78,7 @@ publish-s3:
 	@echo "$(BLUE) @@@ (publish-s3) Syncing to S3 ($(BUCKET))..."
 	aws s3 sync dist s3://$(S3_BUCKET)/groundworkjs --region=$(S3_REGION)
 	aws s3 cp --recursive dist/latest s3://$(S3_BUCKET)/groundworkjs/$(VERSION) --region=$(S3_REGION)
+	aws configure set preview.cloudfront true
 	aws cloudfront create-invalidation --distribution-id $(CLOUDFRONT_DISTRIBUTION) --paths /groundworkjs/index.html /groundworkjs/latest/*
 
 release:
