@@ -24,13 +24,13 @@ Learn more about [our platform APIs](https://developer.thegroundwork.com/api/).
 **Production** (minified)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/patch/groundwork.min.js
+https://cdn.thegroundwork.com/groundworkjs/1.2.3/groundwork.min.js
 ```
 
 **Development** (additional logging)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/patch/groundwork.js
+https://cdn.thegroundwork.com/groundworkjs/1.2.3/groundwork.js
 ```
 
 ### Stand-alone
