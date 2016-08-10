@@ -84,8 +84,7 @@ publish-s3:
 release:
 	@echo "$(BLUE) @@@ (release) Beginning release..."
 	@read -p "Bump version (major|minor|patch|<$(VERSION)>): " version; \
-	sh replace.sh $$version; \
-	$(BIN)/bump $$version; \
+	$(BIN)/bump -p $$version | xargs -I {} sh replace.sh {}; \
 	sh release.sh
 
 size:
