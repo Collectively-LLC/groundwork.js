@@ -19,6 +19,7 @@
     "setTimeout": true,
     "spyOn": true
   },
+  "parser": "babel-eslint",
   "rules": {
     "comma-dangle": [2, "never"],
     "no-param-reassign": 0,

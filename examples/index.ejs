@@ -62,19 +62,5 @@
       </div>
     </div>
   </div>
-  <script src="latest/<%= htmlWebpackPlugin.files.js %>"></script>
-
-  <script>
-    // Create and configure an instance of Groundwork
-    var gw = new Groundwork();
-
-    // Sandbox in your console
-    console.info('groundwork.js ' + gw.version + ' is available in your console as gw');
-    window.gw = gw;
-
-    var $header = document.querySelector('.header-version');
-    $header.innerHTML = $header.innerHTML + '(' + gw.version + ')';
-  </script>
-
 </body>
 </html>
