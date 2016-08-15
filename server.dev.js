@@ -36,5 +36,5 @@ new WebpackDevServer(webpack(config), {
     console.log(err);
   }
 
-  console.log(`\n@@@ (server.dev.js) Open http://localhost:${PORT} to view Groundwork.js \n`);
+  console.log(`\n @@@ (server.dev.js) Open http://localhost:${PORT} to view Groundwork.js\n`);
 });

@@ -24,13 +24,13 @@ Learn more about [our platform APIs](https://developer.thegroundwork.com/api/).
 **Production** (minified)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.2.3/groundwork.min.js
+https://cdn.thegroundwork.com/groundworkjs/1.2.333/groundwork.min.js
 ```
 
 **Development** (additional logging)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.2.3/groundwork.js
+https://cdn.thegroundwork.com/groundworkjs/1.2.333/groundwork.js
 ```
 
 ### Stand-alone
@@ -39,16 +39,16 @@ Check out the repository and build a stand-alone distributable:
 
 ```shell
 $ npm install
-$ npm run dist
+$ npm run lib
 ```
 
-The compiled files will be in the `/dist` folder.
+The compiled files will be in the `/lib` folder.
 
 ## Documentation and Examples
 
-You can read the API documentation for the client itself [here](https://cdn.thegroundwork.com/groundworkjs/doc/).
+You can read the API documentation for the client itself [here](https://cdn.thegroundwork.com/groundworkjs/latest/docs/).
 
-There are some examples of the client itself [here](https://cdn.thegroundwork.com/groundworkjs/examples/).
+There are some examples of the client itself [here](https://cdn.thegroundwork.com/groundworkjs/latest/examples/).
 
 ## Usage
 
@@ -78,6 +78,33 @@ gw.supporter.create(signUpData)
   .then(handleSuccess)
   .catch(handleErrors);
 ```
+
+### Modular Builds
+```javascript
+
+import 'groundwork.js/lib/modules/common';
+import groundworkFactory from 'groundwork.js/lib/modules/groundworkFactory';
+import Event from 'groundwork.js/lib/modules/Event';
+
+// Create a Groundwork.js build containing only the Events module
+const buildGroundwork = groundworkFactory([
+  Event
+]);
+
+const gw = buildGroundwork({
+  apiUrl: 'https://api.dev.thegroundwork.com',
+  apiKey: 'pub-lantern.www-main--0vU497cBQeMEqORWa4HMe7WnlfcwtuWj9JTT4AGsEllp0f_21wg6SORuClIXIJorFfPZkKj0OorrT3h6_jB9xg'
+});
+
+gw.events.list()
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.error(error);
+  });
+
+```
 ## Browser requirements
 
 A+ Grade browsers
@@ -95,10 +122,10 @@ npm install
 To build a standalone library file and documentation:
 
 ```shell
-npm run dist
+npm run lib
 ```
 
-This will create a minified and non-minified file in `dist` and updated documentation will be in `doc`. Note: when making a release (see below) the `dist` files are built and pushed up for you.
+This will create a minified and non-minified file in `lib` and updated documentation will be in `lib/docs`. Note: when making a release (see below) the `lib` files are built and pushed up for you.
 
 ## Documentation
 
@@ -122,21 +149,32 @@ You need [NodeJS](https://nodejs.org/) and [npm](https://www.npmjs.com/) install
 npm install
 ```
 
-**Run the development environment and build examples:**
+**Start the development environment**
 
 ```shell
 npm start
 ```
 
-A compiled `groundwork.js` is served from [localhost:3000](http://localhost:3000) and examples can be found at [localhost:3000](http://localhost:3000/examples).
+A compiled `groundwork.js` is served from [localhost:3000](http://localhost:3000) and examples can be found at [localhost:3000/examples](http://localhost:3000/examples).
 
-**Run the examples:**
-
+**Run examples**
 ```shell
-npm run examples
+npm run example:simple
+npm run example:modules
 ```
 
-This will rewrite the files in `/examples` to use the current locally compiled version of `groundwork.js` instead of the CDN version. Useful for testing your work in an HTML page. The files are served from [localhost:3000](http://localhost:3000)
+**Run example while developing Groundwork.js**
+
+```shell
+# Wait till build is complete and browser launches
+npm run example:modules
+
+# The run:
+webpack -w
+```
+
+This will launch a browser window at `http://localhost:3000` and listen to changes made in `/examples/modules`. Additionally, changes made inside of '/src' will be picked up within `examples/modules` and hot-reloaded.
+
 
 **Run the tests:**
 
@@ -160,7 +198,7 @@ Once you have a working release ready to go it needs to be tagged. Update the `v
 npm run release
 ```
 
-This will create a tag with the version number, build the `dist` files and push them up to the repo.
+This will create a tag with the version number, build the `lib` files and push them up to the repo.
 
 ---
 

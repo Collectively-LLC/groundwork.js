@@ -3,7 +3,7 @@
 #
 # make release - Create new library release. Pushes tag to Github and triggers make deploy.
 # make deploy  - Create production build and sync with S3 bucket
-# make dist    - Build library and docs
+# make lib     - Build library and docs
 #
 # Internal keys:
 #
@@ -16,7 +16,7 @@
 # CloundFront Dev: E3VVDH4SEA2OKI
 # CloundFront Prod: E1YK0CEUDW7K3G
 
-.PHONY: build clean deploy dist docs production publish-s3 release start test test-watch
+.PHONY: build build-modules clean example-modules example-simple deploy docs lib production publish-s3 release start test test-watch
 
 BIN=node_modules/.bin
 VERSION=$(shell node -p "require('./package.json').version")
@@ -31,33 +31,53 @@ build:
 	@echo "$(BLUE) @@@ (build) Building library..."
 	NODE_ENV=development $(BIN)/webpack
 
+
+build-modules:
+	@echo "$(BLUE) @@@ (build-modules) Building individual modules..."
+	NODE_ENV=development $(BIN)/webpack --modules
+	@rm -rf lib/modules/examples
+
 clean:
-	@echo "$(BLUE) @@@ (clean) Cleaning dist..."
-	rm -rf dist
+	@echo "$(BLUE) @@@ (clean) Cleaning lib..."
+	rm -rf lib
 
 complete:
 	@echo "\033[0m" # Reset terminal colors
 
+# Primary task
 deploy:
 	@echo "$(BLUE) @@@ (deploy) Beginning deploy..."
-	@make dist
+	@make lib
 	@make publish-s3
 	@echo "$(BLUE) @@@ (deploy) Deploy complete."
 	@make complete
 
-dist:
-	@echo "$(BLUE) @@@ (dist) Building dist version..."
+docs:
+	@echo "$(BLUE) @@@ (docs) Building docs..."
+	$(BIN)/esdoc -c .esdoc
+
+example-modules:
+	@echo "$(BLUE) @@@ (examples-module) Running modules example..."
+	@make clean
+	NODE_ENV=development $(BIN)/webpack --modules
+	NODE_ENV=development $(BIN)/webpack
+	@echo "$(BLUE) @ Creating npm link..."
+	@npm link
+	@echo "$(BLUE) @ Starting example server..."
+	cd examples/modules && npm install && npm start
+
+example-simple: start
+
+# Primary task
+lib:
+	@echo "$(BLUE) @@@ (lib) Building lib version..."
 	@make lint
 	@make clean
 	@make build
+	@make build-modules
 	@make production
 	@make docs
-	@make move-to-latest
 	@make size
-
-docs:
-	@echo "$(BLUE) @@@ (docs) Building docs..."
-	$(BIN)/esdoc -c esdoc.json
 
 lint:
 	@echo "$(BLUE) @@@ (lint) Linting code..."
@@ -65,10 +85,11 @@ lint:
 
 move-to-latest:
 	@echo "$(BLUE) @@@ (move-to-latest) Moving to latest folder..."
-	@rsync -rv --remove-source-files dist/ dist/latest/
-	@mv dist/latest/index.html dist
-	@rm -rf dist/examples
-	@rm -rf dist/docs
+	@rsync --quiet -rv --remove-source-files lib/ lib/latest/
+	@mv lib/latest/index.html lib
+	@rm -rf lib/docs
+	@rm -rf lib/examples
+	@rm -rf lib/modules
 
 production:
 	@echo "$(BLUE) @@@ (production) Building production version..."
@@ -76,11 +97,15 @@ production:
 
 publish-s3:
 	@echo "$(BLUE) @@@ (publish-s3) Syncing to S3 ($(BUCKET))..."
-	aws s3 sync dist s3://$(S3_BUCKET)/groundworkjs --region=$(S3_REGION)
-	aws s3 cp --recursive dist/latest s3://$(S3_BUCKET)/groundworkjs/$(VERSION) --region=$(S3_REGION)
+	aws s3 cp lib/index.html s3://$(S3_BUCKET)/groundworkjs --region=$(S3_REGION)
+	aws s3 cp --recursive lib s3://$(S3_BUCKET)/groundworkjs/latest --region=$(S3_REGION)
+	aws s3 cp --recursive lib s3://$(S3_BUCKET)/groundworkjs/$(VERSION) --region=$(S3_REGION)
+	aws s3 rm s3://$(S3_BUCKET)/groundworkjs/latest/index.html
+	aws s3 rm s3://$(S3_BUCKET)/groundworkjs/$(VERSION)/index.html
 	aws configure set preview.cloudfront true
 	aws cloudfront create-invalidation --distribution-id $(CLOUDFRONT_DISTRIBUTION) --paths /groundworkjs/index.html /groundworkjs/latest/*
 
+# Primary task
 release:
 	@echo "$(BLUE) @@@ (release) Beginning release..."
 	@read -p "Bump version (major|minor|patch|<$(VERSION)>): " version; \
@@ -88,15 +113,16 @@ release:
 	sh release.sh
 
 size:
-	@echo "$(BLUE) @@@ groundwork.min.js gzip size $(shell $(BIN)/gzip-size dist/latest/groundwork.min.js | $(BIN)/pretty-bytes) \033[m"
+	@echo "$(BLUE) @@@ groundwork.min.js gzip size $(shell $(BIN)/gzip-size lib/groundwork.min.js | $(BIN)/pretty-bytes) \033[m"
 
 start:
 	@echo "$(BLUE) @@@ (start) Starting development server..."
 	@make clean
 	@make build
+	@make build-modules
 	@make docs
 	@make move-to-latest
-	node server.dev.js
+	@node server.dev.js
 
 test:
 	@echo "$(BLUE) @@@ (test) Executing tests..."
