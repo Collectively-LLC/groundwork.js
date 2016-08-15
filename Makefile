@@ -97,7 +97,7 @@ production:
 
 publish-s3:
 	@echo "$(BLUE) @@@ (publish-s3) Syncing to S3 ($(BUCKET))..."
-	aws s3 cp lib/index.html s3://$(S3_BUCKET)/groundworkjs --region=$(S3_REGION)
+	aws s3 cp lib/index.html s3://$(S3_BUCKET)/groundworkjs/index.html --region=$(S3_REGION)
 	aws s3 cp --recursive lib s3://$(S3_BUCKET)/groundworkjs/latest --region=$(S3_REGION)
 	aws s3 cp --recursive lib s3://$(S3_BUCKET)/groundworkjs/$(VERSION) --region=$(S3_REGION)
 	aws s3 rm s3://$(S3_BUCKET)/groundworkjs/latest/index.html
