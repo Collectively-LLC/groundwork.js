@@ -3,15 +3,12 @@ const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.config');
 
 const PORT = 3000;
-const ENV = process.env.NODE_ENV;
-const DEVELOPMENT = ENV === 'development';
-const hot = DEVELOPMENT || false;
 
 new WebpackDevServer(webpack(config), {
   contentBase: config.output.path,
   outputPath: config.output.path,
-  publicPath: config.output.publicPath,
-  hot,
+  publicPath: `${config.output.publicPath}/latest`,
+  hot: false,
   historyApiFallback: true,
   stats: {
     assets: false,
@@ -36,5 +33,5 @@ new WebpackDevServer(webpack(config), {
     console.log(err);
   }
 
-  console.log(`\n@@@ (server.dev.js) Open http://localhost:${PORT} to view Groundwork.js \n`);
+  console.log(`\n @@@ (server.dev.js) Open http://localhost:${PORT} to view Groundwork.js\n`);
 });

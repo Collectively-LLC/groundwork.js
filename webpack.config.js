@@ -1,5 +1,6 @@
 'use strict';
 
+const argv = require('yargs').argv;
 const exec = require('child_process').execSync;
 const path = require('path');
 const webpack = require('webpack');
@@ -8,12 +9,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NODE_ENV = process.env.NODE_ENV;
 const DEVELOPMENT = NODE_ENV === 'development';
 const PRODUCTION = NODE_ENV === 'production';
+const BUILD_MODULES = Boolean(argv.modules);
 
 const releaseTag = process.env.PACKAGE_VERSION;
 const tag = releaseTag || exec('git describe --always --tag | tr -d "[[:space:]]"');
 
 let filename = 'groundwork.js';
 const banner = `${filename} ${tag} | (c) ${new Date().getUTCFullYear()} Timshel / The Groundwork - BSD Licence https://opensource.org/licenses/BSD-3-Clause`;
+
+const babelQuery = {
+  presets: [
+    'es2015',
+    'stage-0'
+  ],
+  plugins: [
+    'lodash',
+    'transform-class-properties',
+    'transform-runtime'
+  ]
+};
 
 let defineObj = {
   'process.env': {
@@ -23,6 +37,14 @@ let defineObj = {
   TAG: JSON.stringify(tag.toString())
 };
 
+// Main entry point for GW.js
+let entry = {
+  index: ['./src/index.js']
+};
+
+// Output location for compiled files
+let outputPath = path.join(__dirname, 'lib');
+
 const plugins = [
   new webpack.BannerPlugin(banner),
   new webpack.DefinePlugin(defineObj)
@@ -31,6 +53,7 @@ const plugins = [
 if (DEVELOPMENT) {
   defineObj.__LOG__ = true;
 
+  // Setup HTML pages -- overview, examples, and so on.
   plugins.push(
     new HtmlWebpackPlugin({
       title: 'The Groundwork Client',
@@ -59,6 +82,41 @@ if (DEVELOPMENT) {
   );
 }
 
+// Compile Groundwork services into modules that can be individually imported
+if (BUILD_MODULES) {
+  filename = '[name].js';
+  outputPath = path.join(__dirname, 'lib/modules');
+
+  plugins.push(
+    new webpack.optimize.CommonsChunkPlugin({
+      filename: 'common.js',
+      name: 'common',
+      minChunks: 3
+    })
+  );
+
+  entry = Object.assign({}, entry, {
+    Donation: ['./src/Donation.js'],
+    Event: ['./src/Event.js'],
+    Groundwork: ['./src/Groundwork.js'],
+    Profile: ['./src/Profile.js'],
+    Quickcard: ['./src/Quickcard.js'],
+    Subscription: ['./src/Subscription.js'],
+    Supporter: ['./src/Supporter.js'],
+    groundworkFactory: ['./src/groundworkFactory.js'],
+
+    // Drop libraries that are shared across modules here
+    common: [
+      'axios',
+      'credit-card',
+      'currency-formatter',
+      'lodash',
+      'numeral',
+      'tv4'
+    ]
+  });
+}
+
 if (PRODUCTION) {
   defineObj = Object.assign({}, defineObj, {
     __LOG__: false,
@@ -80,28 +138,16 @@ if (PRODUCTION) {
   filename = filename.replace('.js', '.min.js');
 }
 
-const babelQuery = {
-  presets: [
-    'es2015',
-    'stage-0'
-  ],
-  plugins: [
-    'lodash',
-    'transform-runtime'
-  ]
-};
-
 module.exports = {
   devtool: 'source-map',
-  entry: {
-    app: ['./src/lib/index.js']
-  },
+  entry,
   output: {
     filename,
     libraryTarget: 'umd',
     library: 'Groundwork',
-    path: path.join(__dirname, 'dist'),
-    publicPath: ''
+    path: outputPath,
+    publicPath: '',
+    sourceMapFilename: '[file].map'
   },
   plugins,
   resolve: {
@@ -118,8 +164,7 @@ module.exports = {
       /node_modules\/credit-card/,
       /node_modules\/reach/
     ].map(test => ({
-      test,
-      include: __dirname,
+      test: new RegExp(test),
       loader: 'babel',
       query: babelQuery
     })).concat([

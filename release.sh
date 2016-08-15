@@ -14,7 +14,7 @@ echo "\n@@@ Releasing v$PACKAGE_VERSION @@@"
 git checkout -b "release-$PACKAGE_VERSION"
 
 # Build the libs
-npm run dist
+npm run lib
 
 # Commit the built files, make a version tag and push
 git commit -a -m "Release v$PACKAGE_VERSION"
