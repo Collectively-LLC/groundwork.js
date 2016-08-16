@@ -24,13 +24,13 @@ Learn more about [our platform APIs](https://developer.thegroundwork.com/api/).
 **Production** (minified)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.3.3/groundwork.min.js
+https://cdn.thegroundwork.com/groundworkjs/1.3.4/groundwork.min.js
 ```
 
 **Development** (additional logging)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.3.3/groundwork.js
+https://cdn.thegroundwork.com/groundworkjs/1.3.4/groundwork.js
 ```
 
 ### Stand-alone
@@ -155,7 +155,7 @@ npm install
 npm start
 ```
 
-A compiled `groundwork.js` is served from [localhost:3000](http://localhost:3000) and examples can be found at [localhost:3000/examples](http://localhost:3000/examples).
+A compiled `groundwork.js` is served from [localhost:3000](http://localhost:3000), examples can be found at [localhost:3000/examples](http://localhost:3000/examples), and docs can be found at [localhost:3000/docs](http://localhost:3000/docs).
 
 **Run examples**
 ```shell
@@ -169,7 +169,7 @@ npm run example:modules
 # Wait till build is complete and browser launches
 npm run example:modules
 
-# The run:
+# Then run:
 webpack -w
 ```
 
@@ -198,7 +198,11 @@ Once you have a working release ready to go it needs to be tagged. Update the `v
 npm run release
 ```
 
-This will create a tag with the version number, build the `lib` files and push them up to the repo.
+This will
+
+1. Create a Git tag with the version number
+1. Build the `lib` files from Travis and push them up to `cdn.thegroundwork.com`
+1. Create and push a release branch to be reviewed, merged and then deployed to NPM.
 
 ---
 
