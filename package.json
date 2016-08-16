@@ -1,6 +1,6 @@
 {
   "name": "groundwork.js",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "description": "The Groundwork Platform JavaScript Client",
   "main": "lib/groundwork.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "example:simple": "npm start",
     "lib": "make lib",
     "lint": "make lint",
-    "postinstall": "make build && make docs",
+    "postinstall": "make lib",
     "release": "make release",
     "start": "make start",
     "test": "make test",
