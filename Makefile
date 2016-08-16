@@ -18,7 +18,7 @@
 
 .PHONY: build build-modules clean example-modules example-simple deploy docs lib production publish-s3 release start test test-watch
 
-BIN=node_modules/.bin
+BIN=./node_modules/.bin
 VERSION=$(shell node -p "require('./package.json').version")
 
 S3_BUCKET=cdn.thegroundwork.com
