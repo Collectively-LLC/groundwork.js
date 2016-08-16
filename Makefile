@@ -18,23 +18,23 @@
 
 .PHONY: build build-modules clean example-modules example-simple deploy docs lib production publish-s3 release start test test-watch
 
-BIN=./node_modules/.bin
-VERSION=$(shell node -p "require('./package.json').version")
+PATH := node_modules/.bin:$(PATH)
+VERSION := $(shell node -p "require('./package.json').version")
 
-S3_BUCKET=cdn.thegroundwork.com
-S3_REGION=us-west-2
-CLOUDFRONT_DISTRIBUTION=E1YK0CEUDW7K3G
+S3_BUCKET := cdn.thegroundwork.com
+S3_REGION := us-west-2
+CLOUDFRONT_DISTRIBUTION := E1YK0CEUDW7K3G
 
-BLUE=\n\033[0;34m
+BLUE := \n\033[0;34m
 
 build:
 	@echo "$(BLUE) @@@ (build) Building library..."
-	NODE_ENV=development $(BIN)/webpack
+	NODE_ENV=development webpack
 
 
 build-modules:
 	@echo "$(BLUE) @@@ (build-modules) Building individual modules..."
-	NODE_ENV=development $(BIN)/webpack --modules
+	NODE_ENV=development webpack --modules
 	@rm -rf lib/modules/examples
 
 clean:
@@ -54,13 +54,13 @@ deploy:
 
 docs:
 	@echo "$(BLUE) @@@ (docs) Building docs..."
-	$(BIN)/esdoc -c .esdoc
+	esdoc -c .esdoc
 
 example-modules:
 	@echo "$(BLUE) @@@ (examples-module) Running modules example..."
 	@make clean
-	NODE_ENV=development $(BIN)/webpack --modules
-	NODE_ENV=development $(BIN)/webpack
+	NODE_ENV=development webpack --modules
+	NODE_ENV=development webpack
 	@echo "$(BLUE) @ Creating npm link..."
 	@npm link
 	@echo "$(BLUE) @ Starting example server..."
@@ -81,7 +81,7 @@ lib:
 
 lint:
 	@echo "$(BLUE) @@@ (lint) Linting code..."
-	$(BIN)/eslint src/*.js
+	eslint src/*.js
 
 move-to-latest:
 	@echo "$(BLUE) @@@ (move-to-latest) Moving to latest folder..."
@@ -93,7 +93,7 @@ move-to-latest:
 
 production:
 	@echo "$(BLUE) @@@ (production) Building production version..."
-	NODE_ENV=production $(BIN)/webpack -p
+	NODE_ENV=production webpack -p
 
 publish-s3:
 	@echo "$(BLUE) @@@ (publish-s3) Syncing to S3 ($(BUCKET))..."
@@ -109,11 +109,11 @@ publish-s3:
 release:
 	@echo "$(BLUE) @@@ (release) Beginning release..."
 	@read -p "Bump version (major|minor|patch|<$(VERSION)>): " version; \
-	$(BIN)/bump -p $$version | xargs -I {} sh replace.sh {}; \
+	bump -p $$version | xargs -I {} sh replace.sh {}; \
 	sh release.sh
 
 size:
-	@echo "$(BLUE) @@@ groundwork.min.js gzip size $(shell $(BIN)/gzip-size lib/groundwork.min.js | $(BIN)/pretty-bytes) \033[m"
+	@echo "$(BLUE) @@@ groundwork.min.js gzip size $(shell gzip-size lib/groundwork.min.js | pretty-bytes) \033[m"
 
 start:
 	@echo "$(BLUE) @@@ (start) Starting development server..."
@@ -126,12 +126,12 @@ start:
 
 test:
 	@echo "$(BLUE) @@@ (test) Executing tests..."
-	NODE_ENV=test $(BIN)/karma start
+	NODE_ENV=test karma start
 
 test-ci:
 	@echo "$(BLUE) @@@ (test-ci) Executing tests..."
-	NODE_ENV=test $(BIN)/karma start --browsers Firefox
+	NODE_ENV=test karma start --browsers Firefox
 
 test-watch:
 	@echo "$(BLUE) @@@ (test-watch) Starting test watcher..."
-	NODE_ENV=test $(BIN)/karma start --watch
+	NODE_ENV=test karma start --watch
