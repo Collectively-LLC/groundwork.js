@@ -10,7 +10,6 @@
     "example:simple": "npm start",
     "lib": "make lib",
     "lint": "make lint",
-    "postinstall": "make build && make docs",
     "release": "make release",
     "start": "make start",
     "test": "make test",

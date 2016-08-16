@@ -155,7 +155,7 @@ npm install
 npm start
 ```
 
-A compiled `groundwork.js` is served from [localhost:3000](http://localhost:3000) and examples can be found at [localhost:3000/examples](http://localhost:3000/examples).
+A compiled `groundwork.js` is served from [localhost:3000](http://localhost:3000), examples can be found at [localhost:3000/examples](http://localhost:3000/examples), and docs can be found at [localhost:3000/docs](http://localhost:3000/docs).
 
 **Run examples**
 ```shell
