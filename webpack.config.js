@@ -95,9 +95,6 @@ if (BUILD_MODULES) {
     })
   );
 
-  const packagePath = path.resolve(__dirname, 'package.json');
-  const vendors = Object.keys(require(packagePath).dependencies);
-
   entry = Object.assign({}, entry, {
     Donation: ['./src/Donation.js'],
     Event: ['./src/Event.js'],
@@ -107,7 +104,16 @@ if (BUILD_MODULES) {
     Subscription: ['./src/Subscription.js'],
     Supporter: ['./src/Supporter.js'],
     groundworkFactory: ['./src/groundworkFactory.js'],
-    common: vendors
+
+    // Drop libraries that are shared across modules here
+    common: [
+      'axios',
+      'credit-card',
+      'currency-formatter',
+      'lodash',
+      'numeral',
+      'tv4'
+    ]
   });
 }
 
