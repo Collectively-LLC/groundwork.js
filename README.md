@@ -169,7 +169,7 @@ npm run example:modules
 # Wait till build is complete and browser launches
 npm run example:modules
 
-# The run:
+# Then run:
 webpack -w
 ```
 
