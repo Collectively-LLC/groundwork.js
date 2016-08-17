@@ -29,12 +29,12 @@ BLUE := \n\033[0;34m
 
 build:
 	@echo "$(BLUE) @@@ (build) Building library..."
-	NODE_ENV=development webpack
+	cross-env NODE_ENV=development webpack
 
 
 build-modules:
 	@echo "$(BLUE) @@@ (build-modules) Building individual modules..."
-	NODE_ENV=development webpack --modules
+	cross-env NODE_ENV=development webpack --modules
 	@rm -rf lib/modules/examples
 
 clean:
@@ -59,8 +59,8 @@ docs:
 example-modules:
 	@echo "$(BLUE) @@@ (examples-module) Running modules example..."
 	@make clean
-	NODE_ENV=development webpack --modules
-	NODE_ENV=development webpack
+	cross-env NODE_ENV=development webpack --modules
+	cross-env NODE_ENV=development webpack
 	@echo "$(BLUE) @ Creating npm link..."
 	@npm link
 	@echo "$(BLUE) @ Starting example server..."
@@ -93,7 +93,7 @@ move-to-latest:
 
 production:
 	@echo "$(BLUE) @@@ (production) Building production version..."
-	NODE_ENV=production webpack -p
+	cross-env NODE_ENV=production webpack -p
 
 publish-s3:
 	@echo "$(BLUE) @@@ (publish-s3) Syncing to S3 ($(BUCKET))..."
@@ -126,12 +126,12 @@ start:
 
 test:
 	@echo "$(BLUE) @@@ (test) Executing tests..."
-	NODE_ENV=test karma start
+	cross-env NODE_ENV=test karma start
 
 test-ci:
 	@echo "$(BLUE) @@@ (test-ci) Executing tests..."
-	NODE_ENV=test karma start --browsers Firefox
+	cross-env NODE_ENV=test karma start --browsers Firefox
 
 test-watch:
 	@echo "$(BLUE) @@@ (test-watch) Starting test watcher..."
-	NODE_ENV=test karma start --watch
+	cross-env NODE_ENV=test karma start --watch
