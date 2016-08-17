@@ -164,7 +164,7 @@ module.exports = {
       /node_modules\/credit-card/,
       /node_modules\/reach/
     ].map(test => ({
-      test,
+      test: new RegExp(test),
       include: __dirname,
       loader: 'babel',
       query: babelQuery
