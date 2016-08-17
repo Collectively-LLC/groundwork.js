@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<head>
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+
+  <%= require('html!./../head.html') %>
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-color--blue-grey-50">
+
+    <div class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <span class="mdl-layout-title">
+          Simple Auth Example
+        </span>
+        <!-- Add spacer, to align navigation to the right in desktop -->
+        <div class="mdl-layout-spacer"></div>
+      </div>
+    </div>
+
+    <div class="mdl-layout__content">
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--2-col"></div>
+        <div class="mdl-cell mdl-cell--8-col">
+
+          <div style="width: 100%; height: 20px"></div>
+
+          <!-- Form -->
+          <div class="mdl-card gwl-card mdl-shadow--2dp" style="width: 100%">
+            <div class="mdl-card__title gwl-card__title gwl-card__title--inverse mdl-color--indigo-400">
+              <h2 class="mdl-card__title-text" style="color: #fff">
+                Login
+              </h2>
+            </div>
+            <div class="mdl-card__supporting-text">
+              <form action="#">
+                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: block; padding-right: 16px;">
+                  <label class="gwl-form-field__label mdl-textfield__label" for="apiKey">
+                    Enter your API key
+                  </label>
+                  <input class="gwl-form-field__input mdl-textfield__input" name="apiKey" id="apikey-text-field" type="text">
+                </div>
+                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right: 16px;">
+                  <label class="gwl-form-field__label mdl-textfield__label" for="username-text-field">
+                    Username
+                  </label>
+                  <input class="gwl-form-field__input mdl-textfield__input" name="username-text-field" id="username-text-field" type="text">
+                  <span class="gwl-form-field__error mdl-typography--body-1"></span>
+                </div>
+                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                  <label class="gwl-form-field__label mdl-textfield__label" for="password-field">
+                    Password
+                  </label>
+                  <input class="gwl-form-field__input mdl-textfield__input" name="password-field" id="password-field" type="password">
+                  <span class="gwl-form-field__error mdl-typography--body-1"></span>
+                </div>
+              </form>
+            </div>
+            <div class="mdl-card__supporting-text" id="message-text" style="display: none;">
+            </div>
+            <div class="mdl-card__actions">
+              <!-- Colored raised button -->
+              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                 Click here to login
+              </a>
+            </div>
+          </div>
+
+          <div style="width: 100%; height: 40px"></div>
+
+          <!-- Code -->
+          <div class="mdl-card gwl-card mdl-shadow--2dp" style="width: 100%">
+            <div class="mdl-card__title gwl-card__title">
+              <h2 class="mdl-card__title-text">Code</h2>
+            </div>
+            <div class="mdl-card__supporting-text" style="width: auto;">
+              <p>
+                This simple jQuery powered form makes a single call to the API using <strong>groundwork.js</strong> to handle authentication. The client always returns a Promise for consistent success / failure handling.
+              </p>
+              <pre>
+                <code class="javascript" style="font-size: 1.1em">
+$(function() {
+  // Create and configure an instance of Groundwork
+  var gw = new Groundwork({
+    apiKey: '...'
+  });
+
+  // Form submission
+  function submitForm(username, password) {
+    if (username &amp;&amp; password) {
+
+      // A successful call to auth.fetchUsingPassword will setup
+      // the client for all future authenticated requests to the API
+      gw.auth.fetchUsingPassword(username, password)
+        .then(handleSuccess)
+        .catch(handleError);
+
+    } else {
+      displayMessage('Please enter a username / password');
+    }
+  }
+});
+                </code>
+              </pre>
+            </div>
+            <div class="mdl-card__actions">
+
+              <!-- Colored raised button -->
+              <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="view-source">
+                View source
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--2-col"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../<%= htmlWebpackPlugin.files.js %>"></script>
+
+  <script>
+   $(function() {
+     // Create and configure an instance of Groundwork
+     var gw = new Groundwork();
+
+     // Sandbox in your console
+     console.info('groundwork.js ' + gw.version + ' is available in your console as gw');
+     window.gw = gw;
+
+     // Setup DOM elements
+     var $form = $('form');
+     var $button = $('a.mdl-button').first();
+     var $apiKey = $form.find('#apikey-text-field');
+     var $username = $form.find('#username-text-field');
+     var $password = $form.find('input[type=password]');
+     var $message = $('#message-text');
+
+     // Promise handlers
+     function handleSuccess(response) {
+       if (response.status === 200) {
+         displayMessage('You are now successfully logged in!')
+       }
+     }
+
+     function handleError(error) {
+       var msg = 'Login failed:';
+       if (error.status && error.statusText) {
+         msg = msg + ' ' + error.status + ' ' + error.statusText;
+         displayMessage(msg);
+       } else {
+         msg = msg + ' You have died of dysentery.';
+         displayMessage(msg);
+       }
+     }
+
+     // Message display
+     function displayMessage(msg) {
+       $message.html(msg).show();
+     }
+
+     // Form submission
+     function submitForm(apiKey, username, password) {
+       if (!apiKey) {
+         return displayMessage('Please enter an API key');
+       } else {
+         gw.apiKey = apiKey;
+       }
+
+       if (username && password) {
+         // A successful call to auth.fetchUsingPassword will setup the client
+         // for all future authenticated requests to the API
+         gw.auth.fetchUsingPassword(username, password)
+           .then(handleSuccess)
+           .catch(handleError);
+       } else {
+         displayMessage('Please enter a username / password');
+       }
+     }
+
+     // Setup listeners
+     $button.on('click', function(event) {
+       event.preventDefault();
+       submitForm($apiKey.val(), $username.val(), $password.val());
+     });
+
+     $('#view-source').on('click', function(event) {
+       event.preventDefault();
+       window.location="view-source:" + window.location.href;
+     });
+   });
+  </script>
+
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</body>
+</html>

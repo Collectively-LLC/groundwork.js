@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - "4.2"
+sudo: false
+cache:
+  directories:
+    - "/home/travis/.local"
+    - node_modules
+before_install:
+  - npm config set spin false
+install:
+  - pip install --user -U awscli
+  - npm install
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+script: make test-ci
+deploy:
+  - provider: script
+    script: make deploy
+    on:
+      tags: true
+env:
+  global:
+    - AWS_ACCESS_KEY_ID=AKIAJ2FJKT7KSNFRPWCQ
+    - secure: "AFB8OtuKeqmbkCAwHmthc78yQd+o62twi4sTiNAi7OhRiQMYYxYQeNee3tJSVXOvnQ/nGyat7X5oQFVx0mWm560eQwE/8XyZPKI1tfT9Wd0zOYYprV7m8rMg1sxaEI3zwbF+f2JDcZxY6xvV2isXmGlYF6fJNyIig3GPBTEON571Al2OXqhwXH+Ey068KAYReUf2q4WLXGea+bcFWo2+Al8PM9AqmYmqfKoIuI8muVvpcSAfJd0+nZZZr9YQvdQ+iXy1wkvlv5S3T2TTRSovAO20wyMf5ATruL0aCzPd2JZor+UKKP8sciI48cGJACqY9HBJAjxGiXgSKWeZ5oTxDXIyz/okH9RY/Bjf5Z0G4qjhFvPUdqoWcaFsnyt/E+YCTS0qc5TwgFoicR6Ug+iF94QGW2PGmd4mMV8q2G9tGJ6NiArGkdIJbjgKT1uJVou9aVCKnuvWq8rFLaj4jOVkPNX24OUo9MSzrr4JWekBA6UzNba5cfW9CMQ+MvLmOt2LPDZYiDeVxeW2Kphi4xly8X+0hzf0Z6YvKN6qe8tJHCO0E5j9VRSWGRMAOKoZiP4X5IsFzxvIoc8Hu8slMmz2u6PZNjDTa1/v2jpE8UMSh7YewqOWf0Vv2jQsvzD+7e5MoE1adslFxGTzmoYLSLyynC7rwd9+bMuolNVJ66FQf9w="
+
+notifications:
+  slack:
+    secure: "CCWA0mbPdWHq9HumT1EM78ZsSW89dJTWjkIjJQbgT/LPwJWjHD554MjgUgHQbL6fLhpSyw4oAlX75HP15UpcFum9qO9xdXQ56mAb6nz8Qvi3Aw/8hgzsJzWeRSmxXpNU5QT+aWD5/yJLrzSk8rogz3+GKAQSgk1ebrs7Qe8udz5b2lh4Tfhr9dSHPrrPZ6IOJZGtEVWmAo+wWYJetUHuJAhdA1m5ejdbTZ+Tk/c0OkEO9VpunriOs+B4zZCs6g2iSUl3/N94mOMvFYCemVbYB+UJ46HcVecXylc0BkmZjL31i+apQ5mQFSa1BR1zCoemk79tyAgxGp07Um2dZ2T6djEkUB19g752v8aoENM7TLriNXLy2yxgK9RUReaxhg0q3u4mdPsIBPfSoBmCWzpEn/CZxwKGbo7A/L10BwaeRvqThl/ts9Gd3NiYy78gKZ+3PLwHTJ+RDFXdoP9/IFZheqh52lTdbarCil9SV+TJGIkBN5FcP5yXjDegBpsr+/fv/y45c/P4/TOh1W7JH7L4db5gRbYazPJ9+IwiLVNWOnq8iPUn4CK4XzRHmMZ79B+mtTD0yEXjHcwezEW9lA/sWKiLdXRoG9YyYgLbmHtRcbPqBc/Fao9NSzhaFTegFLeTHAOusTS0n7rPfZS97ji4NBwyHqJIw3xyXKpNzYae9yI="

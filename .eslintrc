@@ -1,0 +1,28 @@
+{
+  "extends": "airbnb/base",
+  "ecmaFeatures": {
+    "experimentalObjectRestSpread": true
+  },
+  "globals": {
+    "__LOG__": true,
+    "TAG": true,
+    "afterEach": true,
+    "beforeEach": true,
+    "btoa": true,
+    "describe": true,
+    "fdescribe": true,
+    "expect": true,
+    "it": true,
+    "fit": true,
+    "jasmine": true,
+    "module": true,
+    "setTimeout": true,
+    "spyOn": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "comma-dangle": [2, "never"],
+    "no-param-reassign": 0,
+    "spaced-comment": 0
+  }
+}
