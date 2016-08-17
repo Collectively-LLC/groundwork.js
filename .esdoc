@@ -1,8 +1,0 @@
-{
-  "source": "./src",
-  "destination": "./lib/docs",
-  "excludes": ["\\.test\\.js$", "\\.integration\\.js$"],
-  "plugins": [
-    {"name": "esdoc-es7-plugin"}
-  ]
-}
