@@ -165,7 +165,6 @@ module.exports = {
       /node_modules\/reach/
     ].map(test => ({
       test: new RegExp(test),
-      include: __dirname,
       loader: 'babel',
       query: babelQuery
     })).concat([
