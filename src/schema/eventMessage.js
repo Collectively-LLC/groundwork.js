@@ -1,6 +1,6 @@
 /*eslint-disable quote-props, quotes */
 
-export default Object.freeze({
+export default {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
@@ -33,4 +33,4 @@ export default Object.freeze({
     "recipientTypes",
     "template"
   ]
-});
+};
