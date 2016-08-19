@@ -122,7 +122,7 @@ start:
 	@make build-modules
 	@make docs
 	@make move-to-latest
-	@node server.dev.js
+	@cross-env NODE_ENV=development node server.dev.js
 
 test:
 	@echo "$(BLUE) @@@ (test) Executing tests..."

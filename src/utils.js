@@ -212,12 +212,12 @@ export {
   deprecate,
   epoch,
   has,
+  isApiVersion,
   isEmpty,
   max,
   mixin,
   normalizeUrl,
   only,
   urlJoin,
-  validEmail,
-  isApiVersion
+  validEmail
 };

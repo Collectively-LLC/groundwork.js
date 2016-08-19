@@ -45,21 +45,21 @@ export default class Groundwork {
    * @param {Object} [config] - client configuration
    */
   constructor(services = [], config = {}) {
-    // display a deprecation warning for oauth_client_id in DEV only
+    // Display a deprecation warning for oauth_client_id in DEV only
     deprecate(config.oauth_client_id,
               'oauth_client_id is deprecated, please use apiKey instead');
 
-    // display a deprecation warning for api_url in DEV only
+    // Display a deprecation warning for api_url in DEV only
     deprecate(config.api_url,
               'api_url is deprecated, please use apiUrl instead');
 
-    // alias apiKey to OAUTH_CLIENT_ID
+    // Alias apiKey to OAUTH_CLIENT_ID
     if (config.apiKey) {
       config[constants.OAUTH_CLIENT_ID] = config.apiKey;
       delete config.apiKey;
     }
 
-    // alias apiUrl to API_URL
+    // Alias apiUrl to API_URL
     if (config.apiUrl) {
       config[constants.API_URL] = config.apiUrl;
       delete config.apiUrl;

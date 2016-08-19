@@ -170,7 +170,7 @@ npm run example:modules
 npm run example:modules
 
 # Then run:
-webpack -w
+webpack -w --modules
 ```
 
 This will launch a browser window at `http://localhost:3000` and listen to changes made in `/examples/modules`. Additionally, changes made inside of '/src' will be picked up within `examples/modules` and hot-reloaded.
