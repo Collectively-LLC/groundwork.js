@@ -10,7 +10,6 @@
     "example:simple": "npm start",
     "lib": "make lib",
     "lint": "make lint",
-    "prepublish": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development webpack --modules",
     "release": "make release",
     "start": "make start",
     "test": "make test",
