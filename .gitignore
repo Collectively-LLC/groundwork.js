@@ -28,4 +28,8 @@ build/Release
 node_modules
 
 # Output
-/lib
+/lib/docs
+/lib/examples
+/lib/modules/examples
+/lib/modules/index.html
+/lib/index.html
