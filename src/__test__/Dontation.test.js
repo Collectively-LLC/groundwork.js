@@ -76,6 +76,68 @@ describe('(Donation.test.js)', () => {
     jasmine.Ajax.uninstall();
   });
 
+  it('the donation schema will accept string values for ccExpMonth, ccExpYear, and amount', (done) => {
+    let request, response;
+    const donationStr = cloneDeep(DONATION);
+
+    donationStr.ccExpMonth = '12';
+    donationStr.ccExpYear = '2020';
+    donationStr.amount = '2000';
+
+    // See https://github.com/thegroundwork/groundwork.js/issues/47
+    // The API should accept integers for these values
+    donationStr.ccNum = '4242424242424242';
+    donationStr.ccCvc = '666';
+
+    const server = cloneDeep(constants.RESPONSE_200);
+    server.responseText = JSON.stringify(DONATION_RESPONSE);
+
+    const p = donation.create(donationStr)
+          .then(r => response = r)
+          .catch(err => console.log(err.data.error.fields));
+
+    // Returns a Promise
+    expect(p).toEqual(jasmine.any(Promise));
+
+    setTimeout(() => {
+      request = jasmine.Ajax.requests.mostRecent();
+      request.respondWith(server);
+      setTimeout(() => {
+        expect(response.data).toEqual(jasmine.objectContaining(DONATION_RESPONSE));
+        done();
+      }, 0);
+    }, 0);
+  });
+
+    it('the donation schema will accept integer values for ccExpMonth, ccExpYear, and amount', (done) => {
+    let request, response;
+    const donationInt = cloneDeep(DONATION);
+
+    // See https://github.com/thegroundwork/groundwork.js/issues/47
+    // The API should accept integers for these values
+    donationInt.ccNum = '4242424242424242';
+    donationInt.ccCvc = '666';
+
+    const server = cloneDeep(constants.RESPONSE_200);
+    server.responseText = JSON.stringify(DONATION_RESPONSE);
+
+    const p = donation.create(donationInt)
+          .then(r => response = r)
+          .catch(err => console.log(err.data.error.fields));
+
+    // Returns a Promise
+    expect(p).toEqual(jasmine.any(Promise));
+
+    setTimeout(() => {
+      request = jasmine.Ajax.requests.mostRecent();
+      request.respondWith(server);
+      setTimeout(() => {
+        expect(response.data).toEqual(jasmine.objectContaining(DONATION_RESPONSE));
+        done();
+      }, 0);
+    }, 0);
+  });
+
   it('create returns a rejected Promise for invalid forms', (done) => {
     const p = donation.create({ foo: 1 });
     const r = constants.RESPONSE_GENERIC;

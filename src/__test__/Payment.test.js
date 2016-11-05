@@ -296,8 +296,8 @@ describe('(Payment.test.js)', () => {
 
     it('validatePayment should return specific type errors', () => {
       const d = clone(PAYMENT);
-      d.ccNum = '4242424242424242';
-      d.ccCvc = '666';
+      d.ccNum = 4242424242424242;
+      d.ccCvc = 666;
       d.amount = '1200';
 
       const invalid = payment.validatePayment(d);
@@ -306,9 +306,9 @@ describe('(Payment.test.js)', () => {
         fields: jasmine.any(Array),
         msg: jasmine.any(Array)
       }));
-      expect(invalid.fields.length).toEqual(1);
-      expect(invalid.fields[0]).toEqual('amount');
-      expect(invalid.msg[0]).toEqual('Invalid type: string (expected integer)');
+
+      expect(invalid.fields).toEqual(['ccNum', 'ccCvc', 'ccNum', 'ccCvc']);
+      expect(invalid.msg[0]).toEqual('Invalid type: number (expected string)');
     });
 
     it('validatePayment should return missing errors', () => {

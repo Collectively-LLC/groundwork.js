@@ -19,7 +19,7 @@ export default {
     },
     'amount': {
       'id': 'amount',
-      'type': 'integer'
+      'type': ['integer', 'string']
     },
     'currency': {
       'id': 'currency',
@@ -83,11 +83,11 @@ export default {
     },
     'ccExpMonth': {
       'id': 'ccExpMonth',
-      'type': 'integer'
+      'type': ['integer', 'string']
     },
     'ccExpYear': {
       'id': 'ccExpYear',
-      'type': 'integer'
+      'type': ['integer', 'string']
     },
     'ccCvc': {
       'id': 'ccCvc',
@@ -99,7 +99,7 @@ export default {
     },
     'agreeToTerms': {
       'id': 'agreeToTerms',
-      'type': 'boolean'
+      'type': ['boolean', 'string']
     },
     'source': {
       'id': 'source',
