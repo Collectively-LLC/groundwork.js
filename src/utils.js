@@ -202,10 +202,13 @@ function mixin(target, ...sources) {
  * Predicate that checks the value of a string against the API Version format
  *
  * @param {String} version - should be `YYYY-MM-DD` with an optional integer
+ *                           or 'default'.
  * @return {Boolean}
  */
 function isApiVersion(version = '') {
-  return Boolean(String(version).match(constants.RE_API_VERSION));
+  return Boolean(
+    version === 'default' || String(version).match(constants.RE_API_VERSION)
+  );
 }
 
 export {

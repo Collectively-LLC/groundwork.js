@@ -160,8 +160,8 @@ export default class Groundwork {
    */
   set apiVersion(version) {
     if (!isApiVersion(version)) {
-      throw new Error(`apiVersion must be formatted in either YYYY-MM-DD or with
-an optinal integer like 2028-03-23:12`);
+      throw new Error(`apiVersion must be formatted in either YYYY-MM-DD, with
+an optinal integer like 2028-03-23:12, or be equal 'default'`);
     } else {
       this.config.set(constants.API_VERSION, version);
     }
