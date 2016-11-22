@@ -1,6 +1,6 @@
 {
   "name": "groundwork.js",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "The Groundwork Platform JavaScript Client",
   "main": "lib/groundwork.js",
   "scripts": {
@@ -29,7 +29,7 @@
   },
   "author": {
     "name": "The Groundwork",
-    "url": "https://thegroundwork.com"
+    "url": "https://developer.thegroundwork.com/tools/groundworkjs/"
   },
   "contributors": [
     {
