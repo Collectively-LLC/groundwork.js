@@ -35,6 +35,17 @@ describe('(Groundwork.test.js)', () => {
     expect(gw2.auth).toBeDefined('Auth not defined');
   });
 
+  it('constructor correctly adds apiKey, apiUrl and apiVersion to config', () => {
+    const apiKey = 'abc123';
+    const apiUrl = 'http://www.portishead.co.uk/';
+    const apiVersion = 'sos';
+    const gw = new Groundwork([], {apiKey, apiUrl, apiVersion});
+
+    expect(gw.apiKey).toEqual(apiKey);
+    expect(gw.apiUrl).toEqual(apiUrl);
+    expect(gw.apiVersion).toEqual(apiVersion);
+  });
+
   describe('version', () => {
     it('returns a string', () => {
       const gw = new Groundwork();
@@ -125,7 +136,7 @@ describe('(Groundwork.test.js)', () => {
 
       const xs = [a, b, c];
 
-      xs.forEach(x => expect(x).toThrowError('apiVersion must be formatted in either YYYY-MM-DD or with\nan optinal integer like 2028-03-23:12')); // eslint-disable-line
+      xs.forEach(x => expect(x).toThrowError('apiVersion must be formatted in either YYYY-MM-DD, with\nan optinal integer like 2028-03-23:12, or be equal \'default\'')); // eslint-disable-line
     });
   });
 });

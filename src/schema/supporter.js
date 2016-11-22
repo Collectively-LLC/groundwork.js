@@ -1,59 +1,148 @@
 /*eslint-disable quote-props */
 
-export default Object.freeze({
-  '$schema': 'http://json-schema.org/draft-04/schema#',
-  'id': '/',
-  'type': 'object',
-  'properties': {
-    'address1': {
-      'id': 'address1',
-      'type': 'string'
+export default {
+  "description": "Used to hold supporter identity and marketing attribution information",
+  "properties": {
+    "address2": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'address2': {
-      'id': 'address2',
-      'type': 'string'
+    "addressPostalCode": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'city': {
-      'id': 'city',
-      'type': 'string'
+    "phone": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'country': {
-      'id': 'country',
-      'type': 'string'
+    "socialHandle": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'email': {
-      'id': 'email',
-      'type': 'string'
+    "utmMedium": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'externalId': {
-      'id': 'externalId',
-      'type': 'string'
+    "addressCountry": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'familyName': {
-      'id': 'familyName',
-      'type': 'string'
+    "comments": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'givenName': {
-      'id': 'givenName',
-      'type': 'string'
+    "utmCampaign": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'postalCode': {
-      'id': 'postalCode',
-      'type': 'string'
+    "utmContent": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'source': {
-      'id': 'source',
-      'type': 'string'
+    "externalId": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'state': {
-      'id': 'state',
-      'type': 'string'
+    "addressCity": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    'tags': {
-      'id': 'tags',
-      'type': 'object',
-      'properties': {}
+    "emailTemplate": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "utmSource": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "addressCounty": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "givenName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "metadata": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "familyName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "address1": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "utmTerm": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "addressStateProvince": {
+      "type": [
+        "string",
+        "null"
+      ]
     }
   },
-  'required': []
-});
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Supporters schema",
+  "type": "object",
+  "hiddenFields": [
+    "utmSource",
+    "utmMedium",
+    "utmCampaign",
+    "utmContent",
+    "utmTerm",
+    "emailTemplate",
+    "externalId",
+    "metadata"
+  ],
+  "required": [
+    "email"
+  ]
+}

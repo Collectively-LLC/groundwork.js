@@ -4,7 +4,8 @@ import {
   epoch,
   max,
   mixin,
-  isApiVersion
+  isApiVersion,
+  validateArgs
 } from '../utils';
 
 describe('(utils.test.js)', () => {
@@ -132,7 +133,8 @@ describe('(utils.test.js)', () => {
         '3120-23-36', // doesn't check for valid dates
         '2016-03-29:12',
         '2016-03-29:1',
-        '2016-03-29:122349923'
+        '2016-03-29:122349923',
+        'default'
       ];
 
       // all false
@@ -147,7 +149,8 @@ describe('(utils.test.js)', () => {
         '2013-2-1:a',
         '2013-02-01: 1a',
         '2013-02-01 a',
-        '2013-02-01:'
+        '2013-02-01:',
+        'DEFAULLT'
       ];
 
       ts.forEach((t) => {
@@ -157,6 +160,19 @@ describe('(utils.test.js)', () => {
       fs.forEach((f) => {
         expect(isApiVersion(f)).toBe(false);
       });
+    });
+  });
+
+  describe('validateArgs', () => {
+    it('reduces name/value pairs with non-falsey values to empty array', () => {
+      const xs = [['barry', 1], ['lyndon', 'hi'], ['stanley', {}]];
+      expect(validateArgs.apply(null, xs)).toEqual([]);
+    });
+
+    it('reduces name/value pairs with null/false/undefined values to array of names',
+       () => {
+         const xs = [['barry', 0], ['lyndon', null], ['stanley', undefined]];
+         expect(validateArgs.apply(null, xs)).toEqual(['lyndon', 'stanley']);
     });
   });
 });

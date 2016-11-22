@@ -45,24 +45,30 @@ export default class Groundwork {
    * @param {Object} [config] - client configuration
    */
   constructor(services = [], config = {}) {
-    // display a deprecation warning for oauth_client_id in DEV only
+    // Display a deprecation warning for oauth_client_id in DEV only
     deprecate(config.oauth_client_id,
               'oauth_client_id is deprecated, please use apiKey instead');
 
-    // display a deprecation warning for api_url in DEV only
+    // Display a deprecation warning for api_url in DEV only
     deprecate(config.api_url,
               'api_url is deprecated, please use apiUrl instead');
 
-    // alias apiKey to OAUTH_CLIENT_ID
+    // Alias apiKey to OAUTH_CLIENT_ID
     if (config.apiKey) {
       config[constants.OAUTH_CLIENT_ID] = config.apiKey;
       delete config.apiKey;
     }
 
-    // alias apiUrl to API_URL
+    // Alias apiUrl to API_URL
     if (config.apiUrl) {
       config[constants.API_URL] = config.apiUrl;
       delete config.apiUrl;
+    }
+
+    // Alias apiVersion to API_VERSION
+    if (config.apiVersion) {
+      config[constants.API_VERSION] = config.apiVersion;
+      delete config.apiVersion;
     }
 
     /** @type {Dictionary} */
@@ -160,8 +166,8 @@ export default class Groundwork {
    */
   set apiVersion(version) {
     if (!isApiVersion(version)) {
-      throw new Error(`apiVersion must be formatted in either YYYY-MM-DD or with
-an optinal integer like 2028-03-23:12`);
+      throw new Error(`apiVersion must be formatted in either YYYY-MM-DD, with
+an optinal integer like 2028-03-23:12, or be equal 'default'`);
     } else {
       this.config.set(constants.API_VERSION, version);
     }

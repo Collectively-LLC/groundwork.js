@@ -45,3 +45,10 @@ describe('(SchemaUtils.test.js)', () => {
     expect(v[0].params.type).toBe('number');
   });
 });
+
+describe('schema properties', () => {
+  it('schemas are mutable', () => {
+    donationSchema.id = 'wutangclan';
+    expect(donationSchema.id).toEqual('wutangclan');
+  });
+});

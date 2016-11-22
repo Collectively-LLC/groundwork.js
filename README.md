@@ -24,13 +24,13 @@ Learn more about [our platform APIs](https://developer.thegroundwork.com/api/).
 **Production** (minified)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.3.9/groundwork.min.js
+https://cdn.thegroundwork.com/groundworkjs/1.4.0/groundwork.min.js
 ```
 
 **Development** (additional logging)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.3.9/groundwork.js
+https://cdn.thegroundwork.com/groundworkjs/1.4.0/groundwork.js
 ```
 
 ### Stand-alone
@@ -170,7 +170,7 @@ npm run example:modules
 npm run example:modules
 
 # Then run:
-webpack -w
+webpack -w --modules
 ```
 
 This will launch a browser window at `http://localhost:3000` and listen to changes made in `/examples/modules`. Additionally, changes made inside of '/src' will be picked up within `examples/modules` and hot-reloaded.

@@ -1,6 +1,6 @@
 {
   "name": "groundwork.js",
-  "version": "1.3.9",
+  "version": "1.5.0",
   "description": "The Groundwork Platform JavaScript Client",
   "main": "lib/groundwork.js",
   "scripts": {
@@ -10,7 +10,6 @@
     "example:simple": "npm start",
     "lib": "make lib",
     "lint": "make lint",
-    "postinstall": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development webpack --modules",
     "release": "make release",
     "start": "make start",
     "test": "make test",
@@ -30,7 +29,7 @@
   },
   "author": {
     "name": "The Groundwork",
-    "url": "https://thegroundwork.com"
+    "url": "https://developer.thegroundwork.com/tools/groundworkjs/"
   },
   "contributors": [
     {

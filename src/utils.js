@@ -202,16 +202,38 @@ function mixin(target, ...sources) {
  * Predicate that checks the value of a string against the API Version format
  *
  * @param {String} version - should be `YYYY-MM-DD` with an optional integer
+ *                           or 'default'.
  * @return {Boolean}
  */
 function isApiVersion(version = '') {
-  return Boolean(String(version).match(constants.RE_API_VERSION));
+  return Boolean(
+    version === 'default' || String(version).match(constants.RE_API_VERSION)
+  );
+}
+
+/**
+ * Ensure a list of args has valid values. Returns a list of arg names for
+ * invalid arg values, so an empty list mean you passed. Used to ensure
+ * required args are passed to a method.
+ *
+ * @param  {Array} [args] list of [name, value] pairs
+ * @return {Array}
+ */
+function validateArgs(...args) {
+  return args.reduce((arr, next) => {
+    const [name, value] = next;
+    if (value === null || value === undefined || value === false) {
+      arr.push(name);
+    }
+    return arr;
+  }, []);
 }
 
 export {
   deprecate,
   epoch,
   has,
+  isApiVersion,
   isEmpty,
   max,
   mixin,
@@ -219,5 +241,5 @@ export {
   only,
   urlJoin,
   validEmail,
-  isApiVersion
+  validateArgs
 };

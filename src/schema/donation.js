@@ -1,6 +1,6 @@
 /*eslint-disable quote-props */
 
-export default Object.freeze({
+export default {
   '$schema': 'http://json-schema.org/draft-04/schema#',
   'id': '/',
   'type': 'object',
@@ -132,4 +132,4 @@ export default Object.freeze({
     'state',
     'zip'
   ]
-});
+};

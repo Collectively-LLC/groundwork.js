@@ -3,6 +3,11 @@
 const argv = require('yargs').argv;
 const webpackConfig = require('./webpack.config');
 
+let singleRun = true;
+if (typeof argv.watch !== 'undefined') {
+  singleRun = !argv.watch;
+}
+
 module.exports = (config) => {
   config.set({
     browsers: [
@@ -37,7 +42,7 @@ module.exports = (config) => {
     reporters: [
       'dots'
     ],
-    singleRun: !argv.watch || true,
+    singleRun,
     webpack: webpackConfig,
     webpackServer: {
       noInfo: true
