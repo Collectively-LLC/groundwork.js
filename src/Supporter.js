@@ -1,20 +1,15 @@
-import Dictionary from './Dictionary';
+import Collection from './Collection';
 import SchemaUtils from './SchemaUtils';
-import { urlJoin, only } from './utils';
-
 import schema from './schema/supporter';
 
-/** @type {String} - Top level endpoint */
-const NAMESPACE = 'bucket';
-
-/** @type {String} - API endpoints for resource */
-const ENDPOINT_SUPPORTERS = 'supporters';
+/** @type {String} - name of collection */
+const COLLECTION = 'supporters';
 
 /**
  * Manage Supporter endpoint. Supporter POSTs are validated before a request
  * is made to the API.
  */
-export default class Supporter {
+export default class Supporter extends Collection {
   /** @type {String} */
   static service = 'supporters';
 
@@ -23,17 +18,7 @@ export default class Supporter {
    * @param {Http} http
    */
   constructor(config, http) {
-    /** @type {Dictionary} */
-    this.config = (config && config instanceof Dictionary) ?
-      config : new Dictionary();
-
-    // Resource must have an Http instance
-    if (!http) {
-      throw new Error('Supporter requires Http');
-    }
-
-    /** @type {Http} */
-    this.http = http;
+    super(config, http);
 
     /** @type {Object} */
     this.schema = schema;
@@ -74,7 +59,61 @@ export default class Supporter {
   }
 
   /**
+   * Extract the first schemaId from a collections/schema response
+   *
+   * @param {Object} response
+   * @return {String}
+   */
+  getSchemaIdFromResponse(response={data: {}}) {
+    if (response && !response.data) {
+      return undefined;
+    }
+    const {data: {results=[{id: undefined}]}} = response;
+    const [head] = results;
+    const {id} = head;
+    return id;
+  }
+
+  /**
+   * Provides a higher-order function bound to form. Uses response
+   * from collections/schema to make a POST to createRecord.
+   * Note: returned function returns a Promise (createRecord).
+   *
+   * @param {Object} [form]
+   * @return {Function}
+   */
+  getCreateRecord(form={}) {
+    return (id) => {
+      if (!id) {
+        return Promise.reject(new Error('No schemaId returned from collections'));
+      }
+
+      return this.createRecord(COLLECTION, id, form);
+    };
+  }
+
+  /**
+   * Attempt to get the supporter schema from collections
+   *
+   * @return {Promise}
+   */
+  getSupporterSchemaId() {
+    return this.listSchemas(COLLECTION)
+      .then(this.getSchemaIdFromResponse);
+  }
+
+  /**
    * POST a supporter record to the API
+   *
+   * The form object passed into create should have a schemaId field containing
+   * the schemaId for your default supporter schema:
+   *
+   * { schemaId: '4abc-123-fgh', ... }
+   *
+   * If you do not provide the schemaId, a separate request will be made to the
+   * API to fetch it. You can retrieve this schemaId using gw.js via
+   * getSupporterSchemaId() - which you can run from the console if you have
+   * Groundwork.js exposed.
    *
    * The passed in form object will be validated. If it fails, a mock response
    * with any errors will be sent back in a rejected Promise. This is to present
@@ -89,27 +128,27 @@ export default class Supporter {
    * @return {Promise}
    */
   create(form = {}) {
+    let schemaId;
+    if (form && form.schemaId) {
+      schemaId = form.schemaId;
+      delete form.schemaId;
+    }
+
     // Return a mock error response with validation errors
     const [cf, cp] = this.validateForm(form);
     if (!cf) { return cp; }
 
-    const url = urlJoin(NAMESPACE);
-    return this.http.post(url, form);
-  }
+    if (!schemaId) {
+      if (__LOG__) {
+        const warning =
+              '(Supporter.create) Not providing a schemaId will result in ' +
+              'an extra request being made to find it. You can retrieve ' +
+              'the schemaId using Supporter.getSupporterSchemaId';
+        console.warn(warning); // eslint-disable-line
+      }
+      return this.getSupporterSchemaId().then(this.getCreateRecord(form));
+    }
 
-  /**
-   * Fetch a collection of Supporter objects.
-   * Pagination information can be sent as well. Opts are whitelisted
-   * to only the fields listed.
-   *
-   * @param {Object} opts
-   * @param {Number} [opts.page] - page number
-   * @param {Number} [opts.perPage] - donations per page
-   * @return {Promise}
-   */
-  list(opts = {}) {
-    const _opts = only(['page', 'perPage'], opts);
-    return this.http.get(urlJoin(NAMESPACE, ENDPOINT_SUPPORTERS),
-                         { params: _opts });
+    return this.createRecord(COLLECTION, schemaId, form);
   }
 }

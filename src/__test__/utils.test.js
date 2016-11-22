@@ -4,7 +4,8 @@ import {
   epoch,
   max,
   mixin,
-  isApiVersion
+  isApiVersion,
+  validateArgs
 } from '../utils';
 
 describe('(utils.test.js)', () => {
@@ -159,6 +160,19 @@ describe('(utils.test.js)', () => {
       fs.forEach((f) => {
         expect(isApiVersion(f)).toBe(false);
       });
+    });
+  });
+
+  describe('validateArgs', () => {
+    it('reduces name/value pairs with non-falsey values to empty array', () => {
+      const xs = [['barry', 1], ['lyndon', 'hi'], ['stanley', {}]];
+      expect(validateArgs.apply(null, xs)).toEqual([]);
+    });
+
+    it('reduces name/value pairs with null/false/undefined values to array of names',
+       () => {
+         const xs = [['barry', 0], ['lyndon', null], ['stanley', undefined]];
+         expect(validateArgs.apply(null, xs)).toEqual(['lyndon', 'stanley']);
     });
   });
 });

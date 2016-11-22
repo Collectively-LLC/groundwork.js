@@ -32,6 +32,24 @@ const RESPONSE_200 = {
   }
 };
 
+const RESPONSE_201 = {
+  status: 201,
+  statusText: 'Created',
+  responseText: {},
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
+
+const RESPONSE_202 = {
+  status: 202,
+  statusText: 'Accepted',
+  responseText: {},
+  headers: {
+    'Content-Type': 'application/json'
+  }
+};
+
 const RESPONSE_204 = {
   status: 204,
   statusText: 'No Content',
@@ -73,6 +91,8 @@ export {
   TOKEN,
   RESPONSE_GENERIC,
   RESPONSE_200,
+  RESPONSE_201,
+  RESPONSE_202,
   RESPONSE_204,
   RESPONSE_400,
   RESPONSE_403,

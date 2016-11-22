@@ -35,6 +35,17 @@ describe('(Groundwork.test.js)', () => {
     expect(gw2.auth).toBeDefined('Auth not defined');
   });
 
+  it('constructor correctly adds apiKey, apiUrl and apiVersion to config', () => {
+    const apiKey = 'abc123';
+    const apiUrl = 'http://www.portishead.co.uk/';
+    const apiVersion = 'sos';
+    const gw = new Groundwork([], {apiKey, apiUrl, apiVersion});
+
+    expect(gw.apiKey).toEqual(apiKey);
+    expect(gw.apiUrl).toEqual(apiUrl);
+    expect(gw.apiVersion).toEqual(apiVersion);
+  });
+
   describe('version', () => {
     it('returns a string', () => {
       const gw = new Groundwork();
