@@ -20,64 +20,100 @@ gw.supporters.create({<supporter object>})
     .catch(errorHandler));
 ```
 
-Parameter               | Required | Type      | Description
-------------------------|----------|-----------|------------
-email                   |          | string    | The email address.
-givenName               |          | string    | The given (first) name of the Supporter.
-familyName              |          | string    | The family (last) name of the Supporter.
-address1                |          | string    | The first line of the street address.
-address2                |          | string    | The second line of the street address.
-city                    |          | string    | The city of the address.
-state                   |          | string    | The state of the address.
-country                 |          | string    | The country of the address.
-postalCode              |          | string    | The 5-digit zip code.
-phone                   |          | string    | The phone number.
-source                  |          | string    | The source of the record, for analytics purposes (e.g. "2016 winter petition").
-tags                    |          | JSON      | A JSON object for storing any arbitrary  parameters.
+Parameter                    | Required | Type      | Description
+-----------------------------|----------|-----------|------------
+address1                |          | string    | The first line of Supporter's street address.
+address2                |          | string    | The second line of Supporter's street address.
+addressCity             |          | string    | The city of Supporter's address.
+addressCountry          |          | string    | The country of Supporter's address.
+addressCounty           |          | string    | The county of Supporter's address.
+addressPostalCode       |          | string    | The postal code of Supporter's address.
+addressStateProvince    |          | string    | The state of Supporter's address.
+comments                |          | string    | Free text entered by Supporter, e.g. on a webform.
+email                   | &#10004; | string    | The Supporter's RFC-5322-compliant email address.
+emailTemplate           |          | string    | Used to to specify the template (omitting the file extension, e.g. specify "welcome" to use a template file named "welcome.html") for a post-submission email. See **Note** below.
+externalId              |          | string    | Used to hold a reference to another record within or outside The Groundwork.
+familyName              |          | string    | The Supporter's family (last) name.
+givenName               |          | string    | The Supporter's given (first) name.
+metadata                |          | object    | A JSON object used to hold arbitrary additional data you would like to associate with this supporter record.
+phone                   |          | string    | The Supporter's phone number.
+schemaId                     |          | string    | The `id` of the Schema used to validate the Supporter record.
+socialHandle            |          | string    | The Supporter's social (e.g. Twitter) handle. Used for contact information, not authentication.  See [Profiles](#facebook-authentication) for information on social media authentication.
+utmCampaign             |          | string    | The specific campaign name to associate the supporter's visit, e.g. "Spring 2016 Appeal".  We recommend that you pass this parameter from a hidden form field.
+utmContent              |          | string    | The content variant displayed to the supporter, generally for multivariate testing, e.g. "CTA-top".  We recommend that you pass this parameter from a hidden form field.
+utmMedium               |          | string    | The medium over which the supporter's visit was driven, e.g. "email".  We recommend that you pass this parameter from a hidden form field.
+utmSource               |          | string    | The source of the supporter's visit, e.g. "newsletter".  We recommend that you pass this parameter from a hidden form field and use utm_source when available.
+utmTerm                 |          | string    | The user's search term, generally used for paid search.  We recommend that you pass this parameter from a hidden form field.
+
 
 ##### Additional notes on parameters
 
-* `tags` is arbitrary JSON--you can use it to submit whatever additional data you feel is necessary to associate with a Supporter. As long as the data submitted is a valid JSON object, it will be stored as a serialized string of JSON.
-* The platform sends each supporter submitted a welcome email. If you want to control which email template they are sent, you must submit the email template name as a root level attribute of tags, named ``email_template``. For instance, to send the spanish language version of the basic welcome mailing, you would specify ``"email_template":"signup_main-es"``
-* The total _serialized_ length of the tags object may not be longer than 8192 characters. Serialization to the database is done without any additional whitespace being added. If you submit an oversized `tags` object, the request will fail.
-* To avoid triggering a welcome email, you send `"send_email": 0` in the `tags`.
+* If a `schemaId` is not provided Groundwork.js will make an additional request to the API to find it, which slows down the supporter request. You can use `supporters.getSupporterSchemaId` from the console to retrieve this value and either put it in a hidden form field or inject manually into the payload sent to `supporters.create`.
+* When a Supporter record is created the system uses the email template specified by `emailTemplate` to send an automated email to the address specified by `email`.  Omit `emailTemplate` or submit an empty value if you do not wish to send this automated email.
 
-**Response**
+##### Example request
+
+```http
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Basic {client-id}" -d '{
+    "schemaId": "abf3e913-29f4-4d71-9729-9c3d57b361e2",
+    "data": {
+        "email": "marina@galileo.edu",
+        "givenName": "Marina",
+        "familyName": "Gamba",
+        "phone": "4155551212",
+        "address1": "101 Main St",
+        "address2": "Suite 600",
+        "addressCity": "SF",
+        "addressStateProvince": "CA",
+        "addressCounty": "San Francisco",
+        "addressPostalCode": "94111",
+        "addressCountry": "USA",
+        "socialHandle": "@marina",
+        "comments": "Harder problems than this have already been solved.",
+        "utmSource": "August Member Newsletter",
+        "utmMedium": "email",
+        "utmCampaign": "Summer 2016 - Clean the Pacific Gyre",
+        "utmContent": "multivariate-b",
+        "utmTerm": "Pinniped Love",
+        "emailTemplate": "welcome",
+        "externalId": "987654321",
+        "metadata": {"beverage":"coffee"}
+    }
+}  ' "https://api.thegroundwork.com/collections/supporters"
+```
+
+##### Example response
 
 ```json
 {
-  "modifiedDate": "2016-04-26T22:21:06.345712Z",
-  "uuid": "296bb513-c41b-4778-901b-b6bb9024a904",
-  "familyName": "Jacobson",
-  "address1": "123 Elm Street",
-  "address2": "Apartment 3",
-  "tags": {
-    "dictKey": {
-      "dictScalarKey": "dictScalarVal",
-      "dictDictKey": {
-        "dictDictKey2": "dictDictVal2",
-        "dictDictKey1": "dictDictVal1"
-      },
-      "dictListKey": [
-        "dictListVal1",
-        "dictListVal2"
-      ]
+  "id": "4c9fb861-c860-4c15-8fc9-cb48d21ef66b",
+  "created": "2016-09-26T17:43:02.739334Z",
+  "modified": "2016-09-26T17:43:02.739377Z",
+  "data": {
+    "givenName": "Marina",
+    "email": "marina@galileo.edu",
+    "campaign": "Summer 2016 - Clean the Pacific Gyre",
+    "addressPostalCode": "94111",
+    "metadata": {
+      "beverage": "coffee"
     },
-    "email_template": "signup_main",
-    "listKey": [
-      "listVal1",
-      "listVal2"
-    ],
-    "scalarKey": "scalarVal",
+    "addressCity": "SF",
+    "familyName": "Gamba",
+    "addressCounty": "San Francisco",
+    "addressStateProvince": "CA",
+    "externalId": "987654321",
+    "address2": "Suite 600",
+    "socialHandle": "@marina",
+    "addressCountry": "USA",
+    "utmSource": "August Member Newsletter",
+    "utmMedium": "email",
+    "utmCampaign": "Summer 2016 - Clean the Pacific Gyre",
+    "utmContent": "multivariate-b",
+    "utmTerm": "Pinniped Love",
+    "comments": "Harder problems than this have already been solved.",
+    "phone": "4155551212",
+    "address1": "101 Main St"
   },
-  "phone": "(123)-456-7890",
-  "state": "MA",
-  "city": "Great Barrington",
-  "givenName": "Jacob",
-  "createdDate": "2016-04-26T22:21:06.345689Z",
-  "postalCode": "01230",
-  "country": "United States",
-  "email": "email@email.com",
-  "source": "appeal"
+  "schemaId": "abf3e913-29f4-4d71-9729-9c3d57b361e2"
 }
 ```

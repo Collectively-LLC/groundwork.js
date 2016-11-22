@@ -37,31 +37,34 @@
             <div class="mdl-card__supporting-text">
               <form action="#">
                 <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: block; padding-right: 16px;">
-                  <label class="gwl-form-field__label mdl-textfield__label" for="apiKey">Enter your API key</label>
+                  <label class="gwl-form-field__label mdl-textfield__label" for="apiKey">
+                    Enter your API key
+                  </label>
                   <input class="gwl-form-field__input mdl-textfield__input" name="apiKey" id="apikey-text-field" type="text">
                 </div>
-                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right: 16px;">
+
+                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: block; padding-right: 16px;">
                   <label class="gwl-form-field__label mdl-textfield__label" for="givenName">
-                    First name
+                    First Name
                   </label>
                   <input class="gwl-form-field__input mdl-textfield__input" name="givenName" id="username-text-field" type="text">
-                  <span class="gwl-form-field__error mdl-typography--body-1"></span>
                 </div>
-                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="padding-right: 16px;">
+
+                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: block; padding-right: 16px;">
                   <label class="gwl-form-field__label mdl-textfield__label" for="familyName">
-                    Last name
+                    Last Name
                   </label>
                   <input class="gwl-form-field__input mdl-textfield__input" name="familyName" id="username-text-field" type="text">
-                  <span class="gwl-form-field__error mdl-typography--body-1"></span>
                 </div>
-                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+
+                <div class="gwl-form-field mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: block; padding-right: 16px;">
                   <label class="gwl-form-field__label mdl-textfield__label" for="email">
                     Email
                   </label>
-                  <input class="gwl-form-field__input mdl-textfield__input" name="email" id="email-field" type="email">
-                  <span class="gwl-form-field__error mdl-typography--body-1"></span>
+                  <input class="gwl-form-field__input mdl-textfield__input" name="email" id="email-text-field" type="text">
                 </div>
-                <input type="hidden" name="source" value="supporterFormA">
+
+                <input type="hidden" name="utmSource" value="supporterFormA">
               </form>
             </div>
             <div class="mdl-card__supporting-text" id="message-text" style="display: none;">
@@ -100,7 +103,7 @@ $(function() {
   // Form submission
   function submitForm(form) {
     // Must have an email and source!
-    if (form.email &amp;&amp; form.source) {
+    if (form.email &amp;&amp; form.utmSource) {
 
       displayMessage('-- Saving information --');
 
@@ -189,7 +192,7 @@ $(function() {
        }
 
        // Must have an email and source!
-       if (form.email && form.source) {
+       if (form.email && form.utmSource) {
          // Sent the form data to the API, this will return a Promise
          // you can handle
          displayMessage('-- Saving information --');

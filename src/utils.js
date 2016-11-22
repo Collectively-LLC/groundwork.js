@@ -211,6 +211,24 @@ function isApiVersion(version = '') {
   );
 }
 
+/**
+ * Ensure a list of args has valid values. Returns a list of arg names for
+ * invalid arg values, so an empty list mean you passed. Used to ensure
+ * required args are passed to a method.
+ *
+ * @param  {Array} [args] list of [name, value] pairs
+ * @return {Array}
+ */
+function validateArgs(...args) {
+  return args.reduce((arr, next) => {
+    const [name, value] = next;
+    if (value === null || value === undefined || value === false) {
+      arr.push(name);
+    }
+    return arr;
+  }, []);
+}
+
 export {
   deprecate,
   epoch,
@@ -222,5 +240,6 @@ export {
   normalizeUrl,
   only,
   urlJoin,
-  validEmail
+  validEmail,
+  validateArgs
 };

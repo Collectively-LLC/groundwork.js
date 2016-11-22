@@ -65,6 +65,12 @@ export default class Groundwork {
       delete config.apiUrl;
     }
 
+    // Alias apiVersion to API_VERSION
+    if (config.apiVersion) {
+      config[constants.API_VERSION] = config.apiVersion;
+      delete config.apiVersion;
+    }
+
     /** @type {Dictionary} */
     this.config = new Dictionary(DEFAULTS);
     this.config.merge(config);
