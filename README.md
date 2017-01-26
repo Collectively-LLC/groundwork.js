@@ -208,7 +208,7 @@ This will
 
 **Groundwork.js**
 
-Copyright &copy; 2016 - [Timshel](http://timshel.com/) / [The Groundwork](https://thegroundwork.com/), all rights reserved.
+Copyright &copy; 2017 - [The Groundwork](https://thegroundwork.com/), all rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
