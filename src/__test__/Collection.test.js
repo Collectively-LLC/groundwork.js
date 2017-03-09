@@ -167,12 +167,12 @@ describe('(Collection.test.js)', () => {
        });
 
     it('builds a payload for the API', (done) => {
-      let req, resp;
+      let req, resp, err;
       const id = 'e479334f-b1ef-4403-8d36-63a72da1ca07';
       const d = {track: 'Angel'};
       const p = collection
             .createRecord('mezzanine', id, d)
-            .then(r => resp = r);
+            .then(r => resp = r).catch(e => err = e);
 
       setTimeout(() => {
         req = jasmine.Ajax.requests.mostRecent();

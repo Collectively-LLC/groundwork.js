@@ -20,7 +20,8 @@ const buildGroundwork = groundworkFactory([
 
 const modularGw = buildGroundwork({
   apiUrl: 'https://api.dev.thegroundwork.com',
-  apiKey: 'pub-lantern.www-main--0vU497cBQeMEqORWa4HMe7WnlfcwtuWj9JTT4AGsEllp0f_21wg6SORuClIXIJorFfPZkKj0OorrT3h6_jB9xg'
+  apiKey: 'pub-lantern.www-main--0vU497cBQeMEqORWa4HMe7WnlfcwtuWj9JTT4AGsEllp0f_21wg6SORuClIXIJorFfPZkKj0OorrT3h6_jB9xg',
+  beacon: {source: 'groundwork.js modular example build'}
 });
 
 console.warn('\n', 'Modular build: \n', modularGw);

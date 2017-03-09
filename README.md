@@ -24,13 +24,13 @@ Learn more about [our platform APIs](https://developer.thegroundwork.com/api/).
 **Production** (minified)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.5.0/groundwork.min.js
+https://cdn.thegroundwork.com/groundworkjs/1.5.2/groundwork.min.js
 ```
 
 **Development** (additional logging)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.5.0/groundwork.js
+https://cdn.thegroundwork.com/groundworkjs/1.5.2/groundwork.js
 ```
 
 ### Stand-alone
@@ -208,7 +208,7 @@ This will
 
 **Groundwork.js**
 
-Copyright &copy; 2016 - [Timshel](http://timshel.com/) / [The Groundwork](https://thegroundwork.com/), all rights reserved.
+Copyright &copy; 2017 - [The Groundwork](https://thegroundwork.com/), all rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 

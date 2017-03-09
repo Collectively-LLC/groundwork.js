@@ -162,7 +162,7 @@ describe('(utils.test.js)', () => {
       });
     });
   });
-
+  
   describe('validateArgs', () => {
     it('reduces name/value pairs with non-falsey values to empty array', () => {
       const xs = [['barry', 1], ['lyndon', 'hi'], ['stanley', {}]];

@@ -37,8 +37,8 @@ describe('(Groundwork.test.js)', () => {
 
   it('constructor correctly adds apiKey, apiUrl and apiVersion to config', () => {
     const apiKey = 'abc123';
-    const apiUrl = 'http://www.portishead.co.uk/';
-    const apiVersion = 'sos';
+    const apiUrl = 'https://api.dev.thegroundwork.com';
+    const apiVersion = 'default';
     const gw = new Groundwork([], {apiKey, apiUrl, apiVersion});
 
     expect(gw.apiKey).toEqual(apiKey);
@@ -85,7 +85,7 @@ describe('(Groundwork.test.js)', () => {
     });
 
     it('apiKey setter sets oauth_client_id', () => {
-      const g = new Groundwork();
+      const g = new Groundwork([], {apiUrl: 'http://autolux.com'});
       expect(g.apiKey).toEqual(undefined);
       g.apiKey = 'foo';
       expect(g.apiKey).toEqual('foo');
@@ -106,11 +106,13 @@ describe('(Groundwork.test.js)', () => {
     });
 
     it('apiUrl setter sets api_url', () => {
-      const g = new Groundwork();
+      const g = new Groundwork([], {apiKey: 'fooBarBaz'});
+      const url = 'https://electrelane.org';
       expect(g.apiUrl).toEqual(g.config.get('api_url'));
-      g.apiUrl = 'foo';
-      expect(g.apiUrl).toEqual('foo');
-      expect(g.config.get('api_url')).toEqual('foo');
+
+      g.apiUrl = url;
+      expect(g.apiUrl).toEqual(url);
+      expect(g.config.get('api_url')).toEqual(url);
     });
 
     it('apiVersion setter sets api_version', () => {

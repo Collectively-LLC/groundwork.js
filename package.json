@@ -1,6 +1,6 @@
 {
   "name": "groundwork.js",
-  "version": "1.5.0",
+  "version": "1.5.2",
   "description": "The Groundwork Platform JavaScript Client",
   "main": "lib/groundwork.js",
   "scripts": {
@@ -10,15 +10,17 @@
     "example:simple": "npm start",
     "lib": "make lib",
     "lint": "make lint",
+    "postinstall": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development webpack --modules",
     "release": "make release",
     "start": "make start",
     "test": "make test",
     "test:watch": "make test-watch"
   },
   "keywords": [
+    "api",
+    "client",
     "groundwork",
-    "thegroundwork",
-    "timshel"
+    "thegroundwork"
   ],
   "repository": {
     "type": "git",
@@ -39,7 +41,6 @@
     },
     {
       "name": "Christopher Pappas",
-      "email": "christopher.pappas@thegroundwork.com",
       "url": "https://github.com/damassi"
     },
     {
@@ -49,7 +50,6 @@
     },
     {
       "name": "Ernest W. Durbin III",
-      "email": "ernest@thegroundwork.com",
       "url": "https://github.com/ewdurbin"
     },
     {
@@ -60,8 +60,7 @@
   ],
   "homepage": "https://cdn.thegroundwork.com/groundworkjs/",
   "license": "BSD-3-Clause",
-  "dependencies": {
-    "axios": "0.9.1",
+  "devDependencies": {
     "babel-core": "6.11.4",
     "babel-eslint": "6.0.0",
     "babel-loader": "6.2.4",
@@ -73,9 +72,7 @@
     "babel-preset-stage-0": "6.5.0",
     "babel-runtime": "6.11.6",
     "bump-version": "0.5.0",
-    "credit-card": "2.0.0",
     "cross-env": "2.0.0",
-    "currency-formatter": "1.0.0",
     "esdoc": "0.4.7",
     "esdoc-es7-plugin": "0.0.3",
     "eslint": "1.10.3",
@@ -97,13 +94,19 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.7.0",
-    "lodash": "4.14.1",
-    "numeral": "1.5.3",
     "pretty-bytes-cli": "1.0.0",
-    "tv4": "1.2.7",
     "webpack": "1.13.0",
     "webpack-dev-server": "1.14.1",
     "yargs": "4.8.1"
+  },
+  "dependencies": {
+    "axios": "0.9.1",
+    "credit-card": "2.0.0",
+    "currency-formatter": "1.0.0",
+    "lodash": "4.14.1",
+    "navigator.sendbeacon": "0.0.3",
+    "numeral": "1.5.3",
+    "tv4": "1.2.7"
   },
   "analyze": true
 }
