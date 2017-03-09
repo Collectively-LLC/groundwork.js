@@ -4,6 +4,10 @@ import Dictionary from './Dictionary';
 import Http from './Http';
 import { deprecate, isApiVersion } from './utils';
 
+// Polyfill for beacon api.
+// See https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
+import 'navigator.sendbeacon';
+
 /**
  * Auth must be present in all instances
  */
@@ -53,6 +57,8 @@ export default class Groundwork {
     deprecate(config.api_url,
               'api_url is deprecated, please use apiUrl instead');
 
+    this.beaconSent = false;
+
     // Alias apiKey to OAUTH_CLIENT_ID
     if (config.apiKey) {
       config[constants.OAUTH_CLIENT_ID] = config.apiKey;
@@ -71,6 +77,10 @@ export default class Groundwork {
       delete config.apiVersion;
     }
 
+    // Ensure default modules are included
+    const servicesList = DEFAULT_SERVICES.concat(services);
+    config.serviceNames = servicesList.map(Service => Service.name);
+
     /** @type {Dictionary} */
     this.config = new Dictionary(DEFAULTS);
     this.config.merge(config);
@@ -78,13 +88,33 @@ export default class Groundwork {
     /** @type {Http} */
     this.http = new Http(this.config);
 
-    // Ensure default modules are included
-    const servicesList = DEFAULT_SERVICES.concat(services);
-
     // Attach requested service modules to the Groundwork instance
     servicesList.forEach(Service => {
       this[Service.service] = new Service(this.config, this.http);
     });
+
+    if (config[constants.OAUTH_CLIENT_ID] && config[constants.API_URL]) {
+      this.sendBeacon();
+    }
+  }
+
+  sendBeacon(key, apiurl) {
+    const apiKey = (key) ? key : this.config.get(constants.OAUTH_CLIENT_ID);
+    const url = (apiurl) ? apiurl : this.config.get(constants.API_URL);
+    const beacon = this.config.get('beacon');
+    const serviceNames = this.config.get('serviceNames');
+    const analyticsPayload = JSON.stringify({
+      apiKey,
+      services: serviceNames,
+      version: this.version,
+      metadata: (beacon) ? beacon : {}
+    });
+
+    if (apiKey && url && !this.beaconSent) {
+      const apurl = `${url}${constants.WATCHTOWER_URL}?gw-client-id=${apiKey}`;
+      navigator.sendBeacon(apurl, analyticsPayload);
+      this.beaconSent = true;
+    }
   }
 
   /**
@@ -116,6 +146,7 @@ export default class Groundwork {
    */
   set clientId(id) {
     deprecate(true, 'clientId is deprecated, please use apiKey instead');
+    this.sendBeacon(id);
     this.config.set(constants.OAUTH_CLIENT_ID, id);
   }
 
@@ -133,6 +164,7 @@ export default class Groundwork {
    * @type {String}
    */
   set apiKey(id) {
+    this.sendBeacon(id);
     this.config.set(constants.OAUTH_CLIENT_ID, id);
   }
 
@@ -149,6 +181,7 @@ export default class Groundwork {
    * @type {String}
    */
   set apiUrl(url) {
+    this.sendBeacon(null, url);
     this.config.set(constants.API_URL, url);
   }
 

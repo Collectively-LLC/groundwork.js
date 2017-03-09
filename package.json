@@ -10,6 +10,7 @@
     "example:simple": "npm start",
     "lib": "make lib",
     "lint": "make lint",
+    "postinstall": "cross-env NODE_ENV=development webpack && cross-env NODE_ENV=development webpack --modules",
     "release": "make release",
     "start": "make start",
     "test": "make test",
@@ -103,6 +104,7 @@
     "credit-card": "2.0.0",
     "currency-formatter": "1.0.0",
     "lodash": "4.14.1",
+    "navigator.sendbeacon": "0.0.3",
     "numeral": "1.5.3",
     "tv4": "1.2.7"
   },

@@ -53,6 +53,9 @@ const OAUTH_CLIENT_ID = 'oauth_client_id';
 /** @type {String} */
 const DEFAULT_API_URL = 'https://api.thegroundwork.com';
 
+/** @type {String} */
+const WATCHTOWER_URL = '/watchtower/beacons';
+
 /** @type {RegExp} */
 const RE_API_VERSION = /^\d{4}[-]\d{2}[-]\d{2}(:\d+)?$/gm;
 
@@ -66,5 +69,6 @@ export {
   DEFAULT_API_URL,
   FACEBOOK_APP_ID,
   OAUTH_CLIENT_ID,
-  RE_API_VERSION
+  RE_API_VERSION,
+  WATCHTOWER_URL
 };

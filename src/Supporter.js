@@ -1,3 +1,4 @@
+
 import Collection from './Collection';
 import SchemaUtils from './SchemaUtils';
 import schema from './schema/supporter';
@@ -9,6 +10,7 @@ const COLLECTION = 'supporters';
  * Manage Supporter endpoint. Supporter POSTs are validated before a request
  * is made to the API.
  */
+
 export default class Supporter extends Collection {
   /** @type {String} */
   static service = 'supporters';
