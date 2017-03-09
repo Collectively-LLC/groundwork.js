@@ -99,15 +99,15 @@ export default class Groundwork {
   }
 
   sendBeacon(key, apiurl) {
-    const apiKey = (key) ? key : this.config.get(constants.OAUTH_CLIENT_ID);
-    const url = (apiurl) ? apiurl : this.config.get(constants.API_URL);
+    const apiKey = key || this.config.get(constants.OAUTH_CLIENT_ID);
+    const url = apiurl || this.config.get(constants.API_URL);
     const beacon = this.config.get('beacon');
     const serviceNames = this.config.get('serviceNames');
     const analyticsPayload = JSON.stringify({
       apiKey,
       services: serviceNames,
       version: this.version,
-      metadata: (beacon) ? beacon : {}
+      metadata: beacon || {}
     });
 
     if (apiKey && url && !this.beaconSent) {
