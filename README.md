@@ -24,13 +24,13 @@ Learn more about [our platform APIs](https://developer.thegroundwork.com/api/).
 **Production** (minified)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.5.2/groundwork.min.js
+https://cdn.thegroundwork.com/groundworkjs/1.5.4/groundwork.min.js
 ```
 
 **Development** (additional logging)
 
 ```
-https://cdn.thegroundwork.com/groundworkjs/1.5.2/groundwork.js
+https://cdn.thegroundwork.com/groundworkjs/1.5.4/groundwork.js
 ```
 
 ### Stand-alone
@@ -80,6 +80,9 @@ gw.supporter.create(signUpData)
 ```
 
 ### Modular Builds
+
+:warning: Due to vagaries in Webpack 1.x and Axios needing `Promise` you are responsible for your own polyfills when using modules directly. Checkout the `index.html` file in `/examples/modules`.
+
 ```javascript
 
 import 'groundwork.js/lib/modules/common';

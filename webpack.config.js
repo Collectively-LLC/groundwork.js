@@ -24,8 +24,7 @@ const babelQuery = {
   ],
   plugins: [
     'lodash',
-    'transform-class-properties',
-    'transform-runtime'
+    'transform-class-properties'
   ]
 };
 
@@ -39,7 +38,7 @@ let defineObj = {
 
 // Main entry point for GW.js
 let entry = {
-  index: ['./src/index.js']
+  index: ['babel-polyfill', './src/index.js']
 };
 
 // Output location for compiled files
