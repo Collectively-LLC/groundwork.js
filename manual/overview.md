@@ -6,7 +6,7 @@
 
 ## Examples
 
-You can view examples of the library in action on our [examples](https://cdn.thegroundwork.com/groundworkjs/examples/) page.
+You can view examples of the library in action on our [examples](https://cdn.thegroundwork.com/groundworkjs/latest/examples/) page.
 
 ## License
 
