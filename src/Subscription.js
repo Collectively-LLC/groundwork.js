@@ -1,9 +1,9 @@
-import Payment from './Payment';
-import schema from './schema/donation';
-import { urlJoin, has, only, epoch, max } from './utils';
+import Payment from "./Payment";
+import schema from "./schema/donation";
+import { urlJoin, has, only, epoch, max } from "./utils";
 
 /** @type {String} - API endpoint for resource */
-const ENDPOINT_SUBSCRIPTION = 'subscriptions';
+const ENDPOINT_SUBSCRIPTION = "subscriptions";
 
 /**
  * Create and view subscriptions
@@ -15,7 +15,7 @@ const ENDPOINT_SUBSCRIPTION = 'subscriptions';
  */
 export default class Subscription extends Payment {
   /** @type {String} */
-  static service = 'subscriptions';
+  static service = "subscriptions";
 
   /**
    * Fetch a collection of Subscription objects for a specific gwid. We try
@@ -29,17 +29,25 @@ export default class Subscription extends Payment {
    * @return {Promise}
    */
   list(opts = {}) {
-    const params = only(['gwid', 'email', 'page', 'perPage'],
-                     this.attachIdentity(opts));
+    const params = only(
+      ["gwid", "email", "page", "perPage"],
+      this.attachIdentity(opts)
+    );
 
     // Allow opts to override the gwid from config
-    if (has(opts, 'gwid')) { params.gwid = opts.gwid; }
+    if (has(opts, "gwid")) {
+      params.gwid = opts.gwid;
+    }
 
     // Max 50 p/page
-    if (has(opts, 'perPage')) { params.perPage = max(opts.perPage); }
+    if (has(opts, "perPage")) {
+      params.perPage = max(opts.perPage);
+    }
 
     // Failsafe to force gwid property into place no matter what
-    if (!has(params, 'gwid')) { params.gwid = undefined; }
+    if (!has(params, "gwid")) {
+      params.gwid = undefined;
+    }
 
     const url = urlJoin(this.namespace, ENDPOINT_SUBSCRIPTION);
     return this.fetchCollection(url, params);
@@ -51,12 +59,14 @@ export default class Subscription extends Payment {
    * @param {String} id - subscription id
    * @return {Promise}
    */
-  listDonations(id = '') {
+  listDonations(id = "") {
     // Must have an id
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
-    const url = urlJoin(this.namespace, ENDPOINT_SUBSCRIPTION, id, 'donations');
+    const url = urlJoin(this.namespace, ENDPOINT_SUBSCRIPTION, id, "donations");
     return this.fetchCollection(url);
   }
 
@@ -66,10 +76,12 @@ export default class Subscription extends Payment {
    * @param {String} id - subscription id
    * @return {Promise}
    */
-  fetch(id = '') {
+  fetch(id = "") {
     // Must have an id
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
     const url = urlJoin(this.namespace, ENDPOINT_SUBSCRIPTION, id);
     return this.fetchCollection(url);
@@ -96,7 +108,9 @@ export default class Subscription extends Payment {
   create(subscription = {}) {
     // Make sure the interval is correct if its set
     const [intervalv, intervalp] = this.validateInterval(subscription.interval);
-    if (!intervalv) { return intervalp; }
+    if (!intervalv) {
+      return intervalp;
+    }
 
     const checkSubscription = this.validatePayment(subscription, schema);
 
@@ -130,10 +144,12 @@ export default class Subscription extends Payment {
    * @param {...time<number>} [time] - year, month, day for a specific epoch
    * @return {Promise}
    */
-  del(id = '', ...time) {
+  del(id = "", ...time) {
     // Must have an id
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
     const date = epoch.apply(null, time);
     const url = urlJoin(this.namespace, ENDPOINT_SUBSCRIPTION, id);
@@ -151,10 +167,14 @@ export default class Subscription extends Payment {
     // Must have an id
     const newAmount = Number(amount);
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
-    const [amountv, amountp] = this.validateArg(amount, 'amount');
-    if (!amountv) { return amountp; }
+    const [amountv, amountp] = this.validateArg(amount, "amount");
+    if (!amountv) {
+      return amountp;
+    }
 
     const url = urlJoin(this.namespace, ENDPOINT_SUBSCRIPTION, id);
     return this.http.put(url, { amount: newAmount });

@@ -1,12 +1,12 @@
-import * as constants from './constants';
-import Auth from './Auth';
-import Dictionary from './Dictionary';
-import Http from './Http';
-import { deprecate, isApiVersion } from './utils';
+import * as constants from "./constants";
+import Auth from "./Auth";
+import Dictionary from "./Dictionary";
+import Http from "./Http";
+import { deprecate, isApiVersion } from "./utils";
 
 // Polyfill for beacon api.
 // See https://developer.mozilla.org/en-US/docs/Web/API/Navigator/sendBeacon
-import 'navigator.sendbeacon';
+import "navigator.sendbeacon";
 
 /**
  * Auth must be present in all instances
@@ -18,8 +18,8 @@ const DEFAULT_SERVICES = [Auth];
  */
 const DEFAULTS = {
   [constants.API_URL]: constants.DEFAULT_API_URL,
-  [constants.OAUTH_CLIENT_ID]: '',
-  [constants.FACEBOOK_APP_ID]: '',
+  [constants.OAUTH_CLIENT_ID]: "",
+  [constants.FACEBOOK_APP_ID]: "",
   [constants.CONFIG_AUTH]: {}
 };
 
@@ -50,12 +50,16 @@ export default class Groundwork {
    */
   constructor(services = [], config = {}) {
     // Display a deprecation warning for oauth_client_id in DEV only
-    deprecate(config.oauth_client_id,
-              'oauth_client_id is deprecated, please use apiKey instead');
+    deprecate(
+      config.oauth_client_id,
+      "oauth_client_id is deprecated, please use apiKey instead"
+    );
 
     // Display a deprecation warning for api_url in DEV only
-    deprecate(config.api_url,
-              'api_url is deprecated, please use apiUrl instead');
+    deprecate(
+      config.api_url,
+      "api_url is deprecated, please use apiUrl instead"
+    );
 
     this.beaconSent = false;
 
@@ -101,8 +105,8 @@ export default class Groundwork {
   sendBeacon(key, apiurl) {
     const apiKey = key || this.config.get(constants.OAUTH_CLIENT_ID);
     const url = apiurl || this.config.get(constants.API_URL);
-    const beacon = this.config.get('beacon');
-    const serviceNames = this.config.get('serviceNames');
+    const beacon = this.config.get("beacon");
+    const serviceNames = this.config.get("serviceNames");
     const analyticsPayload = JSON.stringify({
       apiKey,
       services: serviceNames,
@@ -135,7 +139,7 @@ export default class Groundwork {
    * @return {*}
    */
   get clientId() {
-    deprecate(true, 'clientId is deprecated, please use apiKey instead');
+    deprecate(true, "clientId is deprecated, please use apiKey instead");
     return this.config.get(constants.OAUTH_CLIENT_ID);
   }
 
@@ -145,7 +149,7 @@ export default class Groundwork {
    * @type {String}
    */
   set clientId(id) {
-    deprecate(true, 'clientId is deprecated, please use apiKey instead');
+    deprecate(true, "clientId is deprecated, please use apiKey instead");
     this.sendBeacon(id);
     this.config.set(constants.OAUTH_CLIENT_ID, id);
   }
@@ -199,8 +203,10 @@ export default class Groundwork {
    */
   set apiVersion(version) {
     if (!isApiVersion(version)) {
-      throw new Error(`apiVersion must be formatted in either YYYY-MM-DD, with
-an optinal integer like 2028-03-23:12, or be equal 'default'`);
+      throw new Error(
+        `apiVersion must be formatted in either YYYY-MM-DD, with
+an optinal integer like 2028-03-23:12, or be equal 'default'`
+      );
     } else {
       this.config.set(constants.API_VERSION, version);
     }

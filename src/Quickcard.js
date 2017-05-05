@@ -1,10 +1,10 @@
-import Payment from './Payment';
-import schema from './schema/quickcard';
-import schemaPay from './schema/quickcardPay';
-import { urlJoin, has, only, epoch, max } from './utils';
+import Payment from "./Payment";
+import schema from "./schema/quickcard";
+import schemaPay from "./schema/quickcardPay";
+import { urlJoin, has, only, epoch, max } from "./utils";
 
 /** @type {String} - API endpoint for resource */
-const ENDPOINT_QUICKCARD = 'quickcards';
+const ENDPOINT_QUICKCARD = "quickcards";
 
 /**
  * Create and view quickcards
@@ -16,7 +16,7 @@ const ENDPOINT_QUICKCARD = 'quickcards';
  */
 export default class Quickcard extends Payment {
   /** @type {String} */
-  static service = 'quickcards';
+  static service = "quickcards";
 
   /**
    * Fetch a collection of Quickcard objects for a specific gwid. We try
@@ -30,17 +30,25 @@ export default class Quickcard extends Payment {
    * @return {Promise}
    */
   list(opts = {}) {
-    const params = only(['gwid', 'email', 'page', 'perPage'],
-                     this.attachIdentity(opts));
+    const params = only(
+      ["gwid", "email", "page", "perPage"],
+      this.attachIdentity(opts)
+    );
 
     // Allow opts to Override the gwid from config
-    if (has(opts, 'gwid')) { params.gwid = opts.gwid; }
+    if (has(opts, "gwid")) {
+      params.gwid = opts.gwid;
+    }
 
     // Max 50 p/page
-    if (has(opts, 'perPage')) { params.perPage = max(opts.perPage); }
+    if (has(opts, "perPage")) {
+      params.perPage = max(opts.perPage);
+    }
 
     // Failsafe to force gwid property into place no matter what
-    if (!has(params, 'gwid')) { params.gwid = undefined; }
+    if (!has(params, "gwid")) {
+      params.gwid = undefined;
+    }
 
     const url = urlJoin(this.namespace, ENDPOINT_QUICKCARD);
     return this.fetchCollection(url, params);
@@ -52,12 +60,14 @@ export default class Quickcard extends Payment {
    * @param {String} id - quickcard id
    * @return {Promise}
    */
-  listDonations(id = '') {
+  listDonations(id = "") {
     // Must have an id
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
-    const url = urlJoin(this.namespace, ENDPOINT_QUICKCARD, id, 'donations');
+    const url = urlJoin(this.namespace, ENDPOINT_QUICKCARD, id, "donations");
     return this.fetchCollection(url);
   }
 
@@ -67,10 +77,12 @@ export default class Quickcard extends Payment {
    * @param {String} id - quickcard id
    * @return {Promise}
    */
-  fetch(id = '') {
+  fetch(id = "") {
     // Must have an id
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
     const url = urlJoin(this.namespace, ENDPOINT_QUICKCARD, id);
     return this.fetchCollection(url);
@@ -127,12 +139,14 @@ export default class Quickcard extends Payment {
    * @param {...time<number>} [time] - year, month, day for a specific epoch
    * @return {Promise}
    */
-  del(id = '', ...time) {
+  del(id = "", ...time) {
     const date = epoch.apply(null, time);
 
     // Must have an id
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
     const url = urlJoin(this.namespace, ENDPOINT_QUICKCARD, id);
     return this.http.put(url, { deleted: date });
@@ -151,18 +165,19 @@ export default class Quickcard extends Payment {
   pay(id, payment = {}) {
     // Must have an id
     const [idv, idp] = this.validateId(id);
-    if (!idv) { return idp; }
+    if (!idv) {
+      return idp;
+    }
 
     const _payment = this.attachIdentity(payment);
 
     // Validate payment and reject if errors
     const [pv, pp] = this.validateSchema(_payment, schemaPay);
-    if (!pv) { return pp; }
+    if (!pv) {
+      return pp;
+    }
 
-    const url = urlJoin(this.namespace,
-                        ENDPOINT_QUICKCARD,
-                        id,
-                        'donations');
+    const url = urlJoin(this.namespace, ENDPOINT_QUICKCARD, id, "donations");
 
     return this.http.post(url, _payment);
   }

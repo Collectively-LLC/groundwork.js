@@ -1,6 +1,6 @@
 {
   "name": "groundwork.js",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "description": "The Groundwork Platform JavaScript Client",
   "main": "lib/groundwork.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "example:simple": "npm start",
     "lib": "make lib",
     "lint": "make lint",
+    "lint:staged": "lint-staged",
     "release": "make release",
     "start": "make start",
     "test": "make test",
@@ -91,6 +92,9 @@
     "karma-sourcemap-loader": "0.3.7",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "1.7.0",
+    "lint-staged": "3.4.1",
+    "pre-commit": "1.2.2",
+    "prettier": "1.3.1",
     "pretty-bytes-cli": "1.0.0",
     "webpack": "1.13.0",
     "webpack-dev-server": "1.14.1",
@@ -105,5 +109,12 @@
     "numeral": "1.5.3",
     "tv4": "1.2.7"
   },
-  "analyze": true
+  "analyze": true,
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "pre-commit": "lint:staged"
 }

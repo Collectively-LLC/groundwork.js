@@ -1,16 +1,16 @@
-import * as constants from './constants';
-import Dictionary from './Dictionary';
-import axios from 'axios';
-import { urlJoin, isEmpty } from './utils';
+import * as constants from "./constants";
+import Dictionary from "./Dictionary";
+import axios from "axios";
+import { urlJoin, isEmpty } from "./utils";
 
 /** @type {String} */
-const API_VERSION_HEADER = 'gw-api-version';
+const API_VERSION_HEADER = "gw-api-version";
 
 /** @type {String} */
-const CLIENT_HEADER = 'gw-js-client';
+const CLIENT_HEADER = "gw-js-client";
 
 /** @type {Function} */
-const CLIENT_VERSION = (TAG) ? TAG.replace(/[\s]*/g, '') : 'None';
+const CLIENT_VERSION = TAG ? TAG.replace(/[\s]*/g, "") : "None";
 
 // Template for XHR responses
 /** @type {Object} */
@@ -19,7 +19,7 @@ const GENERIC_RESPONSE = Object.freeze({
   data: {},
   headers: {},
   status: 0,
-  statusText: ''
+  statusText: ""
 });
 
 /**
@@ -54,8 +54,12 @@ export default class Http {
    */
   constructor(config) {
     /** @type {Dictionary} */
-    this.config = (config && config instanceof Dictionary) ?
-      config : new Dictionary();
+    this.config = config && config instanceof Dictionary
+      ? config
+      : new Dictionary();
+
+    /** @type {Object} */
+    this.axios = axios.create(); // we need new instances every time
 
     /** @type {Object} */
     this.genericResponse = GENERIC_RESPONSE;
@@ -83,7 +87,7 @@ export default class Http {
    * @param {String} [status] - error status message
    * @return {Object}
    */
-  generateErrorResponse(error = {}, code = 400, status = 'Invalid Data') {
+  generateErrorResponse(error = {}, code = 400, status = "Invalid Data") {
     return this.generateMockResponse({
       status: code,
       statusText: status,
@@ -113,7 +117,9 @@ export default class Http {
    */
   hasAuthToken() {
     const auth = this.config.get(constants.CONFIG_AUTH);
-    if (!auth) { return false; }
+    if (!auth) {
+      return false;
+    }
     return !!auth[constants.AUTH_ACCESS_TOKEN];
   }
 
@@ -126,11 +132,11 @@ export default class Http {
     const a = this.config.get(constants.CONFIG_AUTH);
     if (isEmpty(a)) {
       if (__LOG__) {
-        console.warn('No authorization token is set!'); // eslint-disable-line
+        console.warn("No authorization token is set!"); // eslint-disable-line
       }
       return undefined;
     }
-    return `${ a[constants.AUTH_TOKEN_TYPE] }\ ${ a[constants.AUTH_ACCESS_TOKEN] }`;
+    return `${a[constants.AUTH_TOKEN_TYPE]}\ ${a[constants.AUTH_ACCESS_TOKEN]}`;
   }
 
   /**
@@ -142,11 +148,11 @@ export default class Http {
     const id = this.config.get(constants.OAUTH_CLIENT_ID);
     if (!id) {
       if (__LOG__) {
-        console.warn('No oauth_client_id is set!'); // eslint-disable-line
+        console.warn("No oauth_client_id is set!"); // eslint-disable-line
       }
       return undefined;
     }
-    return `Basic ${ btoa(id + ':') }`; // eslint-disable-line
+    return `Basic ${btoa(id + ":")}`; // eslint-disable-line
   }
 
   /**
@@ -165,7 +171,7 @@ export default class Http {
   defaultHeaders(requestConfig = {}) {
     const apiVersion = this.config.get(constants.API_VERSION);
     const headers = {
-      [CLIENT_HEADER]: `js-${ CLIENT_VERSION }`
+      [CLIENT_HEADER]: `js-${CLIENT_VERSION}`
     };
 
     // Attach an API Version header
@@ -195,20 +201,23 @@ export default class Http {
    */
   setupRequestInterceptors() {
     const defaults = this.defaultHeaders.bind(this);
-    axios.interceptors.request.use((config) => {
-      const headers = (config.headers) ?
-            Object.assign(config.headers, defaults(config)) :
-            defaults(config);
+    this.axios.interceptors.request.use(
+      config => {
+        const headers = config.headers
+          ? Object.assign(config.headers, defaults(config))
+          : defaults(config);
 
-      config.headers = headers; // eslint-disable-line
-      return config;
-    }, (error) => {
-      // Do something with request error
-      if (__LOG__) {
-        console.error('REQUEST_ERROR', error); // eslint-disable-line
+        config.headers = headers; // eslint-disable-line
+        return config;
+      },
+      error => {
+        // Do something with request error
+        if (__LOG__) {
+          console.error("REQUEST_ERROR", error); // eslint-disable-line
+        }
+        return Promise.reject(error);
       }
-      return Promise.reject(error);
-    });
+    );
   }
 
   /**
@@ -227,7 +236,7 @@ export default class Http {
    * @return {Promise}
    */
   get(url, opts = {}) {
-    return axios.get(this.assembleUrl(url), opts);
+    return this.axios.get(this.assembleUrl(url), opts);
   }
 
   /**
@@ -238,7 +247,7 @@ export default class Http {
    * @return {Promise}
    */
   post(url, data, opts = {}) {
-    return axios.post(this.assembleUrl(url), data, opts);
+    return this.axios.post(this.assembleUrl(url), data, opts);
   }
 
   /**
@@ -249,7 +258,7 @@ export default class Http {
    * @return {Promise}
    */
   put(url, data, opts = {}) {
-    return axios.put(this.assembleUrl(url), data, opts);
+    return this.axios.put(this.assembleUrl(url), data, opts);
   }
 
   /**
@@ -260,7 +269,7 @@ export default class Http {
    * @return {Promise}
    */
   patch(url, data, opts = {}) {
-    return axios.patch(this.assembleUrl(url), data, opts);
+    return this.axios.patch(this.assembleUrl(url), data, opts);
   }
 
   /**
@@ -270,6 +279,6 @@ export default class Http {
    * @return {Promise}
    */
   delete(url, opts = {}) {
-    return axios.delete(this.assembleUrl(url), opts);
+    return this.axios.delete(this.assembleUrl(url), opts);
   }
 }

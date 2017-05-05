@@ -92,7 +92,7 @@ export default class Dictionary {
       }
     }
 
-    return ret.filter((x) => x);
+    return ret.filter(x => x);
   }
 
   /**

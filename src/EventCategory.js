@@ -1,6 +1,6 @@
-import { only, urlJoin } from './utils';
-import { NAMESPACE, ENDPOINT_EVENT, ENDPOINT_CATEGORY } from './Event';
-import eventCategorySchema from './schema/eventCategory';
+import { only, urlJoin } from "./utils";
+import { NAMESPACE, ENDPOINT_EVENT, ENDPOINT_CATEGORY } from "./Event";
+import eventCategorySchema from "./schema/eventCategory";
 
 /**
  * An EventCategory is a sub-object of an Event. It describes a block of time within
@@ -62,12 +62,16 @@ export default class EventCategory {
    * @return {Promise}
    */
   listCategories(eventId, opts = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const _opts = only(['page', 'perPage', 'startsBefore', 'startsAfter'], opts);
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY);
+    const _opts = only(
+      ["page", "perPage", "startsBefore", "startsAfter"],
+      opts
+    );
+    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId, ENDPOINT_CATEGORY);
 
     return this.http.get(url, { params: _opts });
   }
@@ -80,14 +84,23 @@ export default class EventCategory {
    * @return {Promise}
    */
   fetchCategory(eventId, categoryId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId
+    );
     return this.http.get(url);
   }
 
@@ -99,14 +112,20 @@ export default class EventCategory {
    * @return {Promise}
    */
   createCategory(eventId, category = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [categoryv, categoryp] = this.validatePayload(category, eventCategorySchema);
-    if (!categoryv) { return categoryp; }
+    const [categoryv, categoryp] = this.validatePayload(
+      category,
+      eventCategorySchema
+    );
+    if (!categoryv) {
+      return categoryp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY);
+    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId, ENDPOINT_CATEGORY);
 
     return this.http.post(url, category);
   }
@@ -122,14 +141,23 @@ export default class EventCategory {
    * @return {Profile}
    */
   updateCategory(eventId, categoryId, category = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId
+    );
 
     return this.http.patch(url, category);
   }
@@ -146,17 +174,31 @@ export default class EventCategory {
    * @return {Promise}
    */
   replaceCategory(eventId, categoryId, category = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const [categoryv, categoryp] = this.validatePayload(category, eventCategorySchema);
-    if (!categoryv) { return categoryp; }
+    const [categoryv, categoryp] = this.validatePayload(
+      category,
+      eventCategorySchema
+    );
+    if (!categoryv) {
+      return categoryp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId
+    );
 
     return this.http.put(url, category);
   }
@@ -171,14 +213,23 @@ export default class EventCategory {
    * @return {Promise}
    */
   delCategory(eventId, categoryId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId
+    );
     return this.http.delete(url);
   }
 }
