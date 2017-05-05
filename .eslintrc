@@ -1,8 +1,8 @@
 {
-  "extends": "airbnb/base",
   "ecmaFeatures": {
     "experimentalObjectRestSpread": true
   },
+  "extends": "eslint:recommended",
   "globals": {
     "__LOG__": true,
     "TAG": true,
@@ -16,15 +16,17 @@
     "fit": true,
     "jasmine": true,
     "module": true,
+    "navigator": true,
     "setTimeout": true,
     "spyOn": true
   },
   "parser": "babel-eslint",
   "rules": {
     "comma-dangle": [2, "never"],
-    "no-param-reassign": 0,
-    "object-curly-spacing": 0,
-    "space-infix-ops": 0,
+    "no-param-reassign": 2,
+    "object-curly-spacing": [2, "always"],
+    "semi": 2,
+    "space-infix-ops": 2,
     "spaced-comment": 0
   }
 }
