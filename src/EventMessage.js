@@ -1,6 +1,6 @@
-import { only, urlJoin } from './utils';
-import { NAMESPACE, ENDPOINT_EVENT, ENDPOINT_MESSAGE } from './Event';
-import eventMessageSchema from './schema/eventMessage';
+import { only, urlJoin } from "./utils";
+import { NAMESPACE, ENDPOINT_EVENT, ENDPOINT_MESSAGE } from "./Event";
+import eventMessageSchema from "./schema/eventMessage";
 
 /**
  * Send a Message to a subset of people associated with an eventId.
@@ -40,7 +40,6 @@ import eventMessageSchema from './schema/eventMessage';
  *   .catch((err) => console.error(err));
  */
 export default class EventMessage {
-
   /**
    * List all Messages on an Event
    *
@@ -53,12 +52,13 @@ export default class EventMessage {
    * @return {Promise}
    */
   listMessages(eventId, opts = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const _opts = only(['page', 'perPage'], opts);
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_MESSAGE);
+    const _opts = only(["page", "perPage"], opts);
+    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId, ENDPOINT_MESSAGE);
 
     return this.http.get(url, { params: _opts });
   }
@@ -71,14 +71,23 @@ export default class EventMessage {
    * @return {Promise}
    */
   fetchMessage(eventId, messageId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [mv, mp] = this.validateId(messageId, 'messageId');
-    if (!mv) { return mp; }
+    const [mv, mp] = this.validateId(messageId, "messageId");
+    if (!mv) {
+      return mp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_MESSAGE, messageId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_MESSAGE,
+      messageId
+    );
     return this.http.get(url);
   }
 
@@ -90,14 +99,17 @@ export default class EventMessage {
    * @return {Promise}
    */
   createMessage(eventId, message = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
     const [mv, mp] = this.validatePayload(message, eventMessageSchema);
-    if (!mv) { return mp; }
+    if (!mv) {
+      return mp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_MESSAGE);
+    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId, ENDPOINT_MESSAGE);
 
     return this.http.post(url, message);
   }
@@ -110,15 +122,23 @@ export default class EventMessage {
    * @return {Promise}
    */
   delMessage(eventId, messageId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [mv, mp] = this.validateId(messageId, 'messageId');
-    if (!mv) { return mp; }
+    const [mv, mp] = this.validateId(messageId, "messageId");
+    if (!mv) {
+      return mp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_MESSAGE, messageId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_MESSAGE,
+      messageId
+    );
     return this.http.delete(url);
   }
-
 }

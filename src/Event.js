@@ -1,32 +1,32 @@
-import Dictionary from './Dictionary';
-import SchemaUtils from './SchemaUtils';
-import EventCategory from './EventCategory';
-import EventInvitation from './EventInvitation';
-import EventMessage from './EventMessage';
-import EventTicket from './EventTicket';
-import eventSchema from './schema/event';
-import { mixin, only, urlJoin, validEmail } from './utils';
+import Dictionary from "./Dictionary";
+import SchemaUtils from "./SchemaUtils";
+import EventCategory from "./EventCategory";
+import EventInvitation from "./EventInvitation";
+import EventMessage from "./EventMessage";
+import EventTicket from "./EventTicket";
+import eventSchema from "./schema/event";
+import { mixin, only, urlJoin, validEmail } from "./utils";
 
 /** @type {String} - API endpoint for resource */
-export const NAMESPACE = 'events';
+export const NAMESPACE = "events";
 
 /** @type {String} - API endpoint for event resource */
-export const ENDPOINT_EVENT = 'events';
+export const ENDPOINT_EVENT = "events";
 
 /** @type {String} - API endpoint for category resource */
-export const ENDPOINT_CATEGORY = 'categories';
+export const ENDPOINT_CATEGORY = "categories";
 
 /** @type {String} - API endpoint for invitation resource */
-export const ENDPOINT_INVITATION = 'invitations';
+export const ENDPOINT_INVITATION = "invitations";
 
 /** @type {String} - API endpoint for message resource */
-export const ENDPOINT_MESSAGE = 'messages';
+export const ENDPOINT_MESSAGE = "messages";
 
 /** @type {String} - API endpoint for ticket resource */
-export const ENDPOINT_TICKET = 'tickets';
+export const ENDPOINT_TICKET = "tickets";
 
 /** @type {String} - API endpoint for unsubscribing an email address */
-export const ENDPOINT_HOST_UNSUBSCRIBE = 'host-unsubscribe';
+export const ENDPOINT_HOST_UNSUBSCRIBE = "host-unsubscribe";
 
 /**
  * An Event is a time and a place of an event. It also encompasses an event's
@@ -85,7 +85,7 @@ export const ENDPOINT_HOST_UNSUBSCRIBE = 'host-unsubscribe';
  */
 class Event {
   /** @type {String} */
-  static service = 'events';
+  static service = "events";
 
   /**
    * @param {Dictionary} [config] - configuration dictionary
@@ -93,12 +93,13 @@ class Event {
    */
   constructor(config, http) {
     /** @type {Dictionary} */
-    this.config = (config && config instanceof Dictionary) ?
-      config : new Dictionary();
+    this.config = config && config instanceof Dictionary
+      ? config
+      : new Dictionary();
 
     // Resource must have an Http instance
     if (!http) {
-      throw new Error('Event requires Http');
+      throw new Error("Event requires Http");
     }
 
     /** @type {Http} */
@@ -122,7 +123,7 @@ class Event {
 
     if (valid.length > 0) {
       const ret = this.http.generateErrorObject();
-      valid.forEach((err) => {
+      valid.forEach(err => {
         ret.msg.push(err.message);
         ret.fields.push(this.schemaUtils.extractFieldByError(err));
       });
@@ -139,10 +140,12 @@ class Event {
    * @param {String} [name] - name of argument being checked
    * @return {Array}
    */
-  validateId(id, name = '') {
+  validateId(id, name = "") {
     let out = [true];
 
-    if (typeof id !== 'string' || id === null || id === undefined || id === false) {
+    if (
+      typeof id !== "string" || id === null || id === undefined || id === false
+    ) {
       const response = this.http.generateErrorResponse({
         valid: false,
         fields: [name],
@@ -188,9 +191,21 @@ class Event {
    * @return {Promise}
    */
   list(opts = {}) {
-    const _opts = only(['hostGwid', 'isDeleted', 'latitude', 'longitude', 'page',
-                        'perPage', 'radius', 'search', 'startsBefore',
-                        'startsAfter'], opts);
+    const _opts = only(
+      [
+        "hostGwid",
+        "isDeleted",
+        "latitude",
+        "longitude",
+        "page",
+        "perPage",
+        "radius",
+        "search",
+        "startsBefore",
+        "startsAfter"
+      ],
+      opts
+    );
 
     const url = urlJoin(NAMESPACE, ENDPOINT_EVENT);
     return this.http.get(url, { params: _opts });
@@ -203,8 +218,10 @@ class Event {
    * @return {Promise}
    */
   fetch(eventId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
     const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId);
     return this.http.get(url);
@@ -221,7 +238,9 @@ class Event {
    */
   create(event = {}) {
     const [eventv, eventp] = this.validatePayload(event, eventSchema);
-    if (!eventv) { return eventp; }
+    if (!eventv) {
+      return eventp;
+    }
 
     const url = urlJoin(NAMESPACE, ENDPOINT_EVENT);
     return this.http.post(url, event);
@@ -241,8 +260,10 @@ class Event {
    * @return {Promise}
    */
   update(eventId, event = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
     const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId);
     return this.http.patch(url, event);
@@ -263,11 +284,15 @@ class Event {
    * @return {Promise}
    */
   replace(eventId, event = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
     const [eventv, eventp] = this.validatePayload(event, eventSchema);
-    if (!eventv) { return eventp; }
+    if (!eventv) {
+      return eventp;
+    }
 
     const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId);
     return this.http.put(url, event);
@@ -283,8 +308,10 @@ class Event {
    * @return {Promise}
    */
   del(eventId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
     const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId);
     return this.http.delete(url);
@@ -316,8 +343,17 @@ class Event {
    * @return {Promise}
    */
   listAllTickets(opts = {}) {
-    const _opts = only(['isRedeemed', 'page', 'perPage', 'purchaserGwid',
-                        'startsBefore', 'startsAfter'], opts);
+    const _opts = only(
+      [
+        "isRedeemed",
+        "page",
+        "perPage",
+        "purchaserGwid",
+        "startsBefore",
+        "startsAfter"
+      ],
+      opts
+    );
 
     const url = urlJoin(NAMESPACE, ENDPOINT_TICKET);
     return this.http.get(url, { params: _opts });
@@ -337,14 +373,16 @@ class Event {
    * @return {[type]}
    */
   unsubscribe(email, opts = {}) {
-    const valid = validEmail(email) && (typeof opts === 'object');
+    const valid = validEmail(email) && typeof opts === "object";
 
     if (!valid) {
       const response = this.http.generateErrorResponse({
         valid: false,
-        fields: ['email', 'opts'],
-        msg: [`Valid \`email\` and \`opts\` are required. Passed email (${email}).
-               and opts (${opts})`]
+        fields: ["email", "opts"],
+        msg: [
+          `Valid \`email\` and \`opts\` are required. Passed email (${email}).
+               and opts (${opts})`
+        ]
       });
 
       return Promise.reject(response);
@@ -356,8 +394,8 @@ class Event {
     if (invitationId && messageId) {
       const response = this.http.generateErrorResponse({
         valid: false,
-        fields: ['invitationId', 'messageId'],
-        msg: ['Must unsubscribe via `invitationId` or `messageId`, not both.']
+        fields: ["invitationId", "messageId"],
+        msg: ["Must unsubscribe via `invitationId` or `messageId`, not both."]
       });
 
       return Promise.reject(response);
@@ -368,12 +406,6 @@ class Event {
   }
 }
 
-mixin(
-  Event,
-  EventCategory,
-  EventInvitation,
-  EventMessage,
-  EventTicket
-);
+mixin(Event, EventCategory, EventInvitation, EventMessage, EventTicket);
 
 export default Event;

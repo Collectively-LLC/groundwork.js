@@ -1,4 +1,4 @@
-import tv4 from 'tv4';
+import tv4 from "tv4";
 
 /**
  * JSON Schema functions
@@ -35,12 +35,13 @@ export default class SchemaUtils {
   static extractFieldByError(err) {
     switch (err.code) {
       case 0: // type error
-        return err.dataPath.replace('/', '');
+        return err.dataPath.replace("/", "");
 
       case 302: // required missing
         return err.params.key;
 
-      default: // default
+      default:
+        // default
         return err.schemaPath;
     }
   }

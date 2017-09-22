@@ -1,28 +1,24 @@
-import CreditCard from 'credit-card';
-import currencyFormatter from 'currency-formatter';
-import numeral from 'numeral';
+import CreditCard from "credit-card";
+import currencyFormatter from "currency-formatter";
+import numeral from "numeral";
 
-import Dictionary from './Dictionary';
-import SchemaUtils from './SchemaUtils';
-import { isEmpty, has, urlJoin } from './utils';
-import * as constants from './constants';
+import Dictionary from "./Dictionary";
+import SchemaUtils from "./SchemaUtils";
+import { isEmpty, has, urlJoin } from "./utils";
+import * as constants from "./constants";
 
-import {
-  cloneDeep,
-  forEach,
-  merge
-} from 'lodash';
+import { cloneDeep, forEach, merge } from "lodash";
 
 /** @type {String} - API endpoint for resource */
-const NAMESPACE = 'payments';
+const NAMESPACE = "payments";
 
 /** @type {Object} - used to map validation errors to fields */
 const CC_MAP = Object.freeze({
-  validCardNumber: 'ccNum',
-  validExpiryMonth: 'ccExpMonth',
-  validExpiryYear: 'ccExpYear',
-  validCvv: 'ccCvc',
-  isExpired: 'expiration'
+  validCardNumber: "ccNum",
+  validExpiryMonth: "ccExpMonth",
+  validExpiryYear: "ccExpYear",
+  validCvv: "ccCvc",
+  isExpired: "expiration"
 });
 
 export default class Payment {
@@ -32,12 +28,13 @@ export default class Payment {
    */
   constructor(config, http) {
     /** @type {Dictionary} */
-    this.config = (config && config instanceof Dictionary) ?
-      config : new Dictionary();
+    this.config = config && config instanceof Dictionary
+      ? config
+      : new Dictionary();
 
     // Resource must have an Http instance
     if (!http) {
-      throw new Error('Payment requires Http');
+      throw new Error("Payment requires Http");
     }
 
     /** @type {Http} */
@@ -58,7 +55,7 @@ export default class Payment {
    * @param {String} name - name of argument being checked
    * @return {Array}
    */
-  validateArg(arg, name = '') {
+  validateArg(arg, name = "") {
     let out = [true];
 
     if (arg === null || arg === undefined || arg === false) {
@@ -98,14 +95,14 @@ export default class Payment {
    * @param {String} id
    * @return {Array}
    */
-  validateId(id = '') {
+  validateId(id = "") {
     let out = [true];
 
     if (id.length === 0) {
       const response = this.http.generateErrorResponse({
         valid: false,
-        fields: ['id'],
-        msg: ['Missing ID']
+        fields: ["id"],
+        msg: ["Missing ID"]
       });
       out = [false, Promise.reject(response)];
     }
@@ -126,8 +123,8 @@ export default class Payment {
     const codeCheck = currencyFormatter.findCurrency(upCode);
 
     if (!codeCheck || codeCheck.code !== upCode) {
-      errs.msg.push('currency is not a valid ISO-4217 country code');
-      errs.fields.push('currency');
+      errs.msg.push("currency is not a valid ISO-4217 country code");
+      errs.fields.push("currency");
     }
 
     return errs;
@@ -144,17 +141,21 @@ export default class Payment {
     let out = [true];
 
     // Slightly complex check is complex
-    const test = (t) => {
-      if (!t) { return false; }
-      if (t === 'weekly' || t === 'monthly') { return false; }
+    const test = t => {
+      if (!t) {
+        return false;
+      }
+      if (t === "weekly" || t === "monthly") {
+        return false;
+      }
       return true;
     };
 
     if (test(interval)) {
       const response = this.http.generateErrorResponse({
         valid: false,
-        fields: ['interval'],
-        msg: ['Interval must be weekly or monthly']
+        fields: ["interval"],
+        msg: ["Interval must be weekly or monthly"]
       });
       out = [false, Promise.reject(response)];
     }
@@ -172,11 +173,13 @@ export default class Payment {
   validateSchema(payment, schema) {
     let out = [true];
 
-    const valid = this.schemaUtils.validateSchema(this.attachIdentity(payment),
-                                                schema);
+    const valid = this.schemaUtils.validateSchema(
+      this.attachIdentity(payment),
+      schema
+    );
     if (valid.length > 0) {
       const ret = this.http.generateErrorObject();
-      valid.forEach((err) => {
+      valid.forEach(err => {
         ret.msg.push(err.message);
         ret.fields.push(this.schemaUtils.extractFieldByError(err));
       });
@@ -201,14 +204,14 @@ export default class Payment {
 
     // Bail out on empty form
     if (!payment || isEmpty(payment)) {
-      ret.msg = ['Required fields missing'];
+      ret.msg = ["Required fields missing"];
       ret.fields = this.schema.required;
       return ret;
     }
 
     // Loop through schema errors and build up
     if (validSchema.length > 0) {
-      validSchema.forEach((err) => {
+      validSchema.forEach(err => {
         ret.msg.push(err.message);
         ret.fields.push(this.schemaUtils.extractFieldByError(err));
       });
@@ -218,7 +221,7 @@ export default class Payment {
     ret = this.validateCCPayment(payment, ret);
 
     // Check currency code if it exists
-    if (has(payment, 'currency')) {
+    if (has(payment, "currency")) {
       ret = this.validateCurrencyCode(payment.currency, ret);
     }
 
@@ -242,15 +245,15 @@ export default class Payment {
     delete validCard.customValidation; // Un-used
 
     forEach(validCard, (val, key) => {
-      if (!val && key !== 'isExpired') {
+      if (!val && key !== "isExpired") {
         const field = CC_MAP[key];
-        ret.msg.push(`${ field } is invalid`);
+        ret.msg.push(`${field} is invalid`);
         ret.fields.push(field);
       }
     });
 
     if (validCard.isExpired) {
-      ret.msg.push('Credit card expired');
+      ret.msg.push("Credit card expired");
       ret.fields.push(CC_MAP.isExpired);
     }
 
@@ -267,12 +270,12 @@ export default class Payment {
    * @param {String} [amount] - currency amount
    * @return {String}
    */
-  removeCurrencyFormatting(amount = '') {
+  removeCurrencyFormatting(amount = "") {
     let _amount = amount;
-    if (typeof _amount !== 'string') {
+    if (typeof _amount !== "string") {
       _amount = String(_amount);
     }
-    return numeral(_amount).format('0.00');
+    return numeral(_amount).format("0.00");
   }
 
   /**
@@ -288,7 +291,7 @@ export default class Payment {
    * @param {String} [amount]
    * @return {Number}
    */
-  toIndivisible(amount = '') {
+  toIndivisible(amount = "") {
     return Math.abs(Number(this.removeCurrencyFormatting(amount)).toFixed(0));
   }
 
@@ -306,10 +309,10 @@ export default class Payment {
    * @param {String} amount - string representation of value
    * @return {Number}
    */
-  toCents(amount = '') {
+  toCents(amount = "") {
     const amt = this.removeCurrencyFormatting(amount);
     const abs = Math.abs(Number(amt).toFixed(2));
-    return (abs <= 0) ? Number(String(abs).replace(/\D/g, '')) : abs * 100;
+    return abs <= 0 ? Number(String(abs).replace(/\D/g, "")) : abs * 100;
   }
 
   /**
@@ -336,7 +339,7 @@ export default class Payment {
   attachIdentity(payment = {}) {
     const fields = {};
     const auth = this.config.get(constants.CONFIG_AUTH);
-    if (has(auth, 'gwid')) {
+    if (has(auth, "gwid")) {
       fields.gwid = auth.gwid;
     }
     return merge({}, payment, fields);
@@ -350,7 +353,7 @@ export default class Payment {
    * @param {Object} params
    * @return {Promise}
    */
-  fetchCollection(url = '', params = {}) {
+  fetchCollection(url = "", params = {}) {
     return this.http.get(url, { params });
   }
 
@@ -364,8 +367,8 @@ export default class Payment {
    */
   health(opts = {}) {
     const { features } = opts;
-    const urlBase = urlJoin(this.namespace, 'health');
-    const url = (features) ? urlJoin(urlBase, 'features') : urlBase;
+    const urlBase = urlJoin(this.namespace, "health");
+    const url = features ? urlJoin(urlBase, "features") : urlBase;
     return this.http.get(url);
   }
 }

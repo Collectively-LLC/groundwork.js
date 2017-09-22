@@ -1,9 +1,9 @@
-import { only, urlJoin } from './utils';
-import { NAMESPACE, ENDPOINT_EVENT, ENDPOINT_INVITATION } from './Event';
-import eventInvitationSchema from './schema/eventInvitation';
+import { only, urlJoin } from "./utils";
+import { NAMESPACE, ENDPOINT_EVENT, ENDPOINT_INVITATION } from "./Event";
+import eventInvitationSchema from "./schema/eventInvitation";
 
 /** @type {Array} - Status options for Invitation RSVP's */
-const STATUSES = ['declined', 'pending'];
+const STATUSES = ["declined", "pending"];
 
 /**
  * An EventInvitation is an email correspondence used to inform people of an event.
@@ -34,7 +34,6 @@ const STATUSES = ['declined', 'pending'];
  *   .catch((err) => console.error(err));
  */
 export default class EventInvitation {
-
   /**
    * If the status of an invitation is neither `declined` nor `pending` then send back a
    * tuple with a rejected Promise containing an error message.
@@ -50,8 +49,10 @@ export default class EventInvitation {
     if (!valid) {
       const response = this.http.generateErrorResponse({
         valid: false,
-        fields: ['status'],
-        msg: [`Invalid status: ${status}. Options are \`declined\` or \`pending\``]
+        fields: ["status"],
+        msg: [
+          `Invalid status: ${status}. Options are \`declined\` or \`pending\``
+        ]
       });
       out = [false, Promise.reject(response)];
     }
@@ -73,12 +74,18 @@ export default class EventInvitation {
    * @return {Promise}
    */
   listInvitations(eventId, opts = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const _opts = only(['page', 'perPage', 'status'], opts);
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_INVITATION);
+    const _opts = only(["page", "perPage", "status"], opts);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_INVITATION
+    );
 
     return this.http.get(url, { params: _opts });
   }
@@ -91,14 +98,23 @@ export default class EventInvitation {
    * @return {Promise}
    */
   fetchInvitation(eventId, invitationId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [iv, ip] = this.validateId(invitationId, 'invitationId');
-    if (!iv) { return ip; }
+    const [iv, ip] = this.validateId(invitationId, "invitationId");
+    if (!iv) {
+      return ip;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_INVITATION, invitationId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_INVITATION,
+      invitationId
+    );
     return this.http.get(url);
   }
 
@@ -110,14 +126,22 @@ export default class EventInvitation {
    * @return {Promise}
    */
   createInvitation(eventId, invitations = []) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
     const [iv, ip] = this.validatePayload(invitations, eventInvitationSchema);
-    if (!iv) { return ip; }
+    if (!iv) {
+      return ip;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_INVITATION);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_INVITATION
+    );
 
     return this.http.post(url, invitations);
   }
@@ -132,17 +156,28 @@ export default class EventInvitation {
    * @return {Promise}
    */
   updateInvitationStatus(eventId, invitationId, status) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [iv, ip] = this.validateId(invitationId, 'invitationId');
-    if (!iv) { return ip; }
+    const [iv, ip] = this.validateId(invitationId, "invitationId");
+    if (!iv) {
+      return ip;
+    }
 
     const [sv, sp] = this.validateStatus(status);
-    if (!sv) { return sp; }
+    if (!sv) {
+      return sp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_INVITATION, invitationId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_INVITATION,
+      invitationId
+    );
 
     return this.http.patch(url, { status });
   }
@@ -155,15 +190,23 @@ export default class EventInvitation {
    * @return {Promise}
    */
   delInvitation(eventId, invitationId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [iv, ip] = this.validateId(invitationId, 'invitationId');
-    if (!iv) { return ip; }
+    const [iv, ip] = this.validateId(invitationId, "invitationId");
+    if (!iv) {
+      return ip;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_INVITATION, invitationId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_INVITATION,
+      invitationId
+    );
     return this.http.delete(url);
   }
-
 }

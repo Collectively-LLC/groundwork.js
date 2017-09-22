@@ -6,55 +6,55 @@
  * Auth Key
  * @type {String}
  */
-const AUTH_ACCESS_TOKEN = 'accessToken';
+const AUTH_ACCESS_TOKEN = "accessToken";
 
 /**
  * Auth Key
  * @type {String}
  */
-const AUTH_GWID = 'gwid';
+const AUTH_GWID = "gwid";
 
 /**
  * Auth Key
  * @type {String}
  */
-const AUTH_TOKEN_TYPE = 'tokenType';
+const AUTH_TOKEN_TYPE = "tokenType";
 
 /**
  * Config Key
  * @type {String}
  */
-const API_URL = 'api_url';
+const API_URL = "api_url";
 
 /**
  * Config Key
  * @type {String}
  */
-const API_VERSION = 'api_version';
+const API_VERSION = "api_version";
 
 /**
  * Config Key
  * @type {String}
  */
-const CONFIG_AUTH = 'auth';
+const CONFIG_AUTH = "auth";
 
 /**
  * Config Key
  * @type {String}
  */
-const FACEBOOK_APP_ID = 'facebook_app_id';
+const FACEBOOK_APP_ID = "facebook_app_id";
 
 /**
  * Config Key
  * @type {String}
  */
-const OAUTH_CLIENT_ID = 'oauth_client_id';
+const OAUTH_CLIENT_ID = "oauth_client_id";
 
 /** @type {String} */
-const DEFAULT_API_URL = 'https://api.thegroundwork.com';
+const DEFAULT_API_URL = "https://api.thegroundwork.com";
 
 /** @type {String} */
-const WATCHTOWER_URL = '/watchtower/beacons';
+const WATCHTOWER_URL = "/watchtower/beacons";
 
 /** @type {RegExp} */
 const RE_API_VERSION = /^\d{4}[-]\d{2}[-]\d{2}(:\d+)?$/gm;

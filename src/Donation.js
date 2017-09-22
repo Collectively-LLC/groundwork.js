@@ -1,9 +1,9 @@
-import Payment from './Payment';
-import schema from './schema/donation';
-import { max, only, urlJoin } from './utils';
+import Payment from "./Payment";
+import schema from "./schema/donation";
+import { max, only, urlJoin } from "./utils";
 
 /** @type {String} - API endpoint for resource */
-const ENDPOINT_DONATION = 'donations';
+const ENDPOINT_DONATION = "donations";
 
 /**
  * Create and view donations
@@ -15,7 +15,7 @@ const ENDPOINT_DONATION = 'donations';
  */
 export default class Donation extends Payment {
   /** @type {String} */
-  static service = 'donations';
+  static service = "donations";
 
   /**
    * Fetch a collection of Donation objects, filtering on gwid, subscription,
@@ -31,8 +31,14 @@ export default class Donation extends Payment {
    * @return {Promise}
    */
   list(opts = {}) {
-    const whitelist = ['gwid', 'subscription', 'quickCard', 'email', 'page',
-                     'perPage'];
+    const whitelist = [
+      "gwid",
+      "subscription",
+      "quickCard",
+      "email",
+      "page",
+      "perPage"
+    ];
 
     const params = only(whitelist, opts);
     if (params.perPage) {
@@ -49,7 +55,7 @@ export default class Donation extends Payment {
    * @param {String} id - donation id
    * @return {Promise}
    */
-  fetch(id = '') {
+  fetch(id = "") {
     const url = urlJoin(this.namespace, ENDPOINT_DONATION, id);
     return this.fetchCollection(url);
   }

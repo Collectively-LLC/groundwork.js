@@ -1,6 +1,11 @@
-import { only, urlJoin } from './utils';
-import { NAMESPACE, ENDPOINT_EVENT, ENDPOINT_CATEGORY, ENDPOINT_TICKET } from './Event';
-import eventTicketSchema from './schema/eventTicket';
+import { only, urlJoin } from "./utils";
+import {
+  NAMESPACE,
+  ENDPOINT_EVENT,
+  ENDPOINT_CATEGORY,
+  ENDPOINT_TICKET
+} from "./Event";
+import eventTicketSchema from "./schema/eventTicket";
 
 /**
  * An EventTicket represents participation in an EventCategory.
@@ -53,17 +58,29 @@ export default class EventTicket {
    * @return {Promise}
    */
   listTickets(eventId, categoryId, opts = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const _opts = only(['isRedeemed', 'page', 'perPage', 'purchaserGwid'], opts);
+    const _opts = only(
+      ["isRedeemed", "page", "perPage", "purchaserGwid"],
+      opts
+    );
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId,
-                                   ENDPOINT_TICKET);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId,
+      ENDPOINT_TICKET
+    );
 
     return this.http.get(url, { params: _opts });
   }
@@ -77,18 +94,30 @@ export default class EventTicket {
    * @return {[type]}
    */
   fetchTicket(eventId, categoryId, ticketId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const [tv, tp] = this.validateId(ticketId, 'ticketId');
-    if (!tv) { return tp; }
+    const [tv, tp] = this.validateId(ticketId, "ticketId");
+    if (!tv) {
+      return tp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId,
-                                   ENDPOINT_TICKET, ticketId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId,
+      ENDPOINT_TICKET,
+      ticketId
+    );
     return this.http.get(url);
   }
 
@@ -101,18 +130,29 @@ export default class EventTicket {
    * @return {Promise}
    */
   createTicket(eventId, categoryId, ticket = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
     const [ticketv, ticketp] = this.validatePayload(ticket, eventTicketSchema);
-    if (!ticketv) { return ticketp; }
+    if (!ticketv) {
+      return ticketp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId,
-                                   ENDPOINT_TICKET);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId,
+      ENDPOINT_TICKET
+    );
 
     return this.http.post(url, ticket);
   }
@@ -129,21 +169,35 @@ export default class EventTicket {
    * @return {Promise}
    */
   updateTicket(eventId, categoryId, ticketId, ticket = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const [tv, tp] = this.validateId(ticketId, 'ticketId');
-    if (!tv) { return tp; }
+    const [tv, tp] = this.validateId(ticketId, "ticketId");
+    if (!tv) {
+      return tp;
+    }
 
     const [ticketv, ticketp] = this.validatePayload(ticket, eventTicketSchema);
-    if (!ticketv) { return ticketp; }
+    if (!ticketv) {
+      return ticketp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId,
-                                   ENDPOINT_TICKET, ticketId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId,
+      ENDPOINT_TICKET,
+      ticketId
+    );
 
     return this.http.patch(url, ticket);
   }
@@ -161,21 +215,35 @@ export default class EventTicket {
    * @return {Promise}
    */
   replaceTicket(eventId, categoryId, ticketId, ticket = {}) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const [tv, tp] = this.validateId(ticketId, 'ticketId');
-    if (!tv) { return tp; }
+    const [tv, tp] = this.validateId(ticketId, "ticketId");
+    if (!tv) {
+      return tp;
+    }
 
     const [ticketv, ticketp] = this.validatePayload(ticket, eventTicketSchema);
-    if (!ticketv) { return ticketp; }
+    if (!ticketv) {
+      return ticketp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId,
-                                   ENDPOINT_TICKET, ticketId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId,
+      ENDPOINT_TICKET,
+      ticketId
+    );
 
     return this.http.put(url, ticket);
   }
@@ -189,18 +257,30 @@ export default class EventTicket {
    * @return {Promise}
    */
   delTicket(eventId, categoryId, ticketId) {
-    const [ev, ep] = this.validateId(eventId, 'eventId');
-    if (!ev) { return ep; }
+    const [ev, ep] = this.validateId(eventId, "eventId");
+    if (!ev) {
+      return ep;
+    }
 
-    const [cv, cp] = this.validateId(categoryId, 'categoryId');
-    if (!cv) { return cp; }
+    const [cv, cp] = this.validateId(categoryId, "categoryId");
+    if (!cv) {
+      return cp;
+    }
 
-    const [tv, tp] = this.validateId(ticketId, 'ticketId');
-    if (!tv) { return tp; }
+    const [tv, tp] = this.validateId(ticketId, "ticketId");
+    if (!tv) {
+      return tp;
+    }
 
-    const url = urlJoin(NAMESPACE, ENDPOINT_EVENT, eventId,
-                                   ENDPOINT_CATEGORY, categoryId,
-                                   ENDPOINT_TICKET, ticketId);
+    const url = urlJoin(
+      NAMESPACE,
+      ENDPOINT_EVENT,
+      eventId,
+      ENDPOINT_CATEGORY,
+      categoryId,
+      ENDPOINT_TICKET,
+      ticketId
+    );
     return this.http.delete(url);
   }
 }

@@ -1,12 +1,12 @@
-import * as constants from './constants';
-import Dictionary from './Dictionary';
-import { urlJoin } from './utils';
+import * as constants from "./constants";
+import Dictionary from "./Dictionary";
+import { urlJoin } from "./utils";
 
 /**
  * API Endpoints
  */
-const NAMESPACE = 'oauth';
-const ENDPOINT_TOKEN = 'token';
+const NAMESPACE = "oauth";
+const ENDPOINT_TOKEN = "token";
 
 /**
  * Manage oauth and user tokens for the client. Once a successful auth token has
@@ -15,7 +15,7 @@ const ENDPOINT_TOKEN = 'token';
  */
 export default class Auth {
   /** @type {String} */
-  static service = 'auth';
+  static service = "auth";
 
   /**
    * Constructor
@@ -24,12 +24,13 @@ export default class Auth {
    */
   constructor(config, http) {
     /** @type {Dictionary} */
-    this.config = (config && config instanceof Dictionary) ?
-      config : new Dictionary();
+    this.config = config && config instanceof Dictionary
+      ? config
+      : new Dictionary();
 
     // Resource must have an Http instance
     if (!http) {
-      throw new Error('Auth requires Http');
+      throw new Error("Auth requires Http");
     }
 
     /** @type {Http} */
@@ -82,11 +83,11 @@ export default class Auth {
    * @param {String} password
    * @return {Promise}
    */
-  fetchUsingPassword(email = '', password = '') {
+  fetchUsingPassword(email = "", password = "") {
     return this.requestToken({
       email,
       password,
-      grant_type: 'password'
+      grant_type: "password"
     });
   }
 
@@ -96,10 +97,10 @@ export default class Auth {
    * @param {String} accessToken
    * @return {Promise}
    */
-  fetchUsingFacebook(accessToken = '') {
+  fetchUsingFacebook(accessToken = "") {
     return this.requestToken({
       access_token: accessToken,
-      grant_type: 'facebook'
+      grant_type: "facebook"
     });
   }
 
@@ -109,10 +110,10 @@ export default class Auth {
    * @param {String} accessToken
    * @return {Promise}
    */
-  fetchUsingGoogle(accessToken = '') {
+  fetchUsingGoogle(accessToken = "") {
     return this.requestToken({
       access_token: accessToken,
-      grant_type: 'google'
+      grant_type: "google"
     });
   }
 
@@ -167,7 +168,7 @@ export default class Auth {
    * @return {String}
    */
   get authorizationHeader() {
-    return `${ this.tokenType } ${ this.token }`;
+    return `${this.tokenType} ${this.token}`;
   }
 
   /**
@@ -180,7 +181,9 @@ export default class Auth {
    */
   insertAuthKey(key, val) {
     const auth = Object.assign({}, this.auth);
-    if (!key || !val) { return undefined; }
+    if (!key || !val) {
+      return undefined;
+    }
     auth[key] = val;
     this.auth = auth;
     return this.auth;

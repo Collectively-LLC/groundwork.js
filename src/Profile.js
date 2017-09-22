@@ -1,22 +1,22 @@
-import Dictionary from './Dictionary';
-import SchemaUtils from './SchemaUtils';
-import schema from './schema/profile';
-import { urlJoin } from './utils';
+import Dictionary from "./Dictionary";
+import SchemaUtils from "./SchemaUtils";
+import schema from "./schema/profile";
+import { urlJoin } from "./utils";
 
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from "lodash";
 
 /** @type {String} - API endpoint for resource */
-const NAMESPACE = 'the-claw';
+const NAMESPACE = "the-claw";
 
 /** @type {String} - API endpoint for profile resource */
-const ENDPOINT_PROFILE = 'profiles';
+const ENDPOINT_PROFILE = "profiles";
 
 /** @type {String} - API endpoint for password reset */
-const ENDPOINT_PASSWORD_RESET = 'password_resets';
+const ENDPOINT_PASSWORD_RESET = "password_resets";
 
 export default class Profile {
   /** @type {String} */
-  static service = 'profiles';
+  static service = "profiles";
 
   /**
    * @param {Dictionary} [config] - configuration dictionary
@@ -24,12 +24,13 @@ export default class Profile {
    */
   constructor(config, http) {
     /** @type {Dictionary} */
-    this.config = (config && config instanceof Dictionary) ?
-      config : new Dictionary();
+    this.config = config && config instanceof Dictionary
+      ? config
+      : new Dictionary();
 
     // Resource must have an Http instance
     if (!http) {
-      throw new Error('Profile requires Http');
+      throw new Error("Profile requires Http");
     }
 
     /** @type {Http} */
@@ -65,7 +66,7 @@ export default class Profile {
 
     if (valid.length > 0) {
       const ret = this.http.generateErrorObject();
-      valid.forEach((err) => {
+      valid.forEach(err => {
         ret.msg.push(err.message);
         ret.fields.push(this.schemaUtils.extractFieldByError(err));
       });
@@ -80,7 +81,7 @@ export default class Profile {
    * @param {String} [gwid=''] - profile gwid
    * @return {Promise}
    */
-  fetch(gwid = '') {
+  fetch(gwid = "") {
     const url = urlJoin(NAMESPACE, ENDPOINT_PROFILE, gwid);
     return this.http.get(url);
   }
@@ -103,7 +104,9 @@ export default class Profile {
   create(profile = {}) {
     // Return a mock error response with validation errors
     const [cf, cp] = this.validateProfile(profile);
-    if (!cf) { return cp; }
+    if (!cf) {
+      return cp;
+    }
 
     const url = urlJoin(NAMESPACE, ENDPOINT_PROFILE);
     return this.http.post(url, profile);
@@ -125,12 +128,14 @@ export default class Profile {
    * @param {Object} [profile={}] - fields to update
    * @return {Promise}
    */
-  update(gwid = '', profile = {}) {
+  update(gwid = "", profile = {}) {
     // Return a mock error response with validation errors
     const putSchema = cloneDeep(this.schema);
     delete putSchema.required; // No required fields in PUTs
     const [cf, cp] = this.validateProfile(profile, putSchema);
-    if (!cf) { return cp; }
+    if (!cf) {
+      return cp;
+    }
 
     const url = urlJoin(NAMESPACE, ENDPOINT_PROFILE, gwid);
     return this.http.put(url, profile);
@@ -145,8 +150,8 @@ export default class Profile {
    * @param {String} [email=''] - profile email
    * @return {Promise}
    */
-  requestResetToken(email = '') {
-    const url = urlJoin(NAMESPACE, ENDPOINT_PASSWORD_RESET, '');
+  requestResetToken(email = "") {
+    const url = urlJoin(NAMESPACE, ENDPOINT_PASSWORD_RESET, "");
     return this.http.post(url, { email });
   }
 
@@ -157,9 +162,8 @@ export default class Profile {
    * @param {String} [password=''] - new password
    * @return {Promise}
    */
-  resetPassword(token = '', password = '') {
+  resetPassword(token = "", password = "") {
     const url = urlJoin(NAMESPACE, ENDPOINT_PASSWORD_RESET, token);
     return this.http.put(url, { token, password });
   }
-
 }

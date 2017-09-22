@@ -1,4 +1,4 @@
-import * as constants from './constants';
+import * as constants from "./constants";
 
 /**
  * Utility Functions
@@ -12,12 +12,12 @@ const hasOwnProperty = Object.prototype.hasOwnProperty;
  * @param {String} [str=''] - url string to normalize
  * @return {String}
  */
-function normalizeUrl(str = '') {
+function normalizeUrl(str = "") {
   return str
-    .replace(/[\/]+/g, '/')
-    .replace(/\/\?/g, '?')
-    .replace(/\/\#/g, '#')
-    .replace(/\:\//g, '://');
+    .replace(/[\/]+/g, "/")
+    .replace(/\/\?/g, "?")
+    .replace(/\/\#/g, "#")
+    .replace(/\:\//g, "://");
 }
 
 /**
@@ -50,7 +50,7 @@ function has(object, path) {
  * @return {String}
  */
 function urlJoin(...url) {
-  const joined = [].slice.call(url, 0).join('/');
+  const joined = [].slice.call(url, 0).join("/");
   return normalizeUrl(joined);
 }
 
@@ -86,7 +86,9 @@ function isEmpty(obj) {
  * @return {Boolean}
  */
 function validEmail(str) {
-  const re = new RegExp(/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/); // eslint-disable-line
+  const re = new RegExp(
+    /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+  ); // eslint-disable-line
   return re.test(str);
 }
 
@@ -98,7 +100,9 @@ function validEmail(str) {
  */
 function only(whitelist = [], obj = {}) {
   return whitelist.reduce((ret, p) => {
-    if (has(obj, p)) { ret[p] = obj[p]; } // eslint-disable-line
+    if (has(obj, p)) {
+      ret[p] = obj[p];
+    } // eslint-disable-line
     return ret;
   }, {});
 }
@@ -115,7 +119,7 @@ function only(whitelist = [], obj = {}) {
  */
 function epoch(...time) {
   const [year, month, day] = time;
-  const d = (time.length > 0) ? new Date(year, month, day) : new Date();
+  const d = time.length > 0 ? new Date(year, month, day) : new Date();
   return Math.floor(d.getTime() / 1000);
 }
 
@@ -128,8 +132,10 @@ function epoch(...time) {
  */
 function max(num, maximum = 50) {
   const [n, m] = [Number(num), Number(maximum)];
-  let r = (n > m) ? m : n;
-  if (isNaN(n)) { r = 0; }
+  let r = n > m ? m : n;
+  if (isNaN(n)) {
+    r = 0;
+  }
   return r;
 }
 
@@ -152,7 +158,7 @@ function max(num, maximum = 50) {
 function deprecate(pred, format, ...args) {
   if (__LOG__ && pred) {
     if (format === undefined) {
-      throw new Error('deprecate requires an error message');
+      throw new Error("deprecate requires an error message");
     }
 
     let warning;
@@ -187,12 +193,16 @@ function deprecate(pred, format, ...args) {
 function mixin(target, ...sources) {
   const tp = target.prototype;
 
-  sources.forEach((source) => {
+  sources.forEach(source => {
     const sp = source.prototype;
 
-    Object.getOwnPropertyNames(sp).forEach((name) => {
-      if (name !== 'constructor') {
-        Object.defineProperty(tp, name, Object.getOwnPropertyDescriptor(sp, name));
+    Object.getOwnPropertyNames(sp).forEach(name => {
+      if (name !== "constructor") {
+        Object.defineProperty(
+          tp,
+          name,
+          Object.getOwnPropertyDescriptor(sp, name)
+        );
       }
     });
   });
@@ -205,9 +215,9 @@ function mixin(target, ...sources) {
  *                           or 'default'.
  * @return {Boolean}
  */
-function isApiVersion(version = '') {
+function isApiVersion(version = "") {
   return Boolean(
-    version === 'default' || String(version).match(constants.RE_API_VERSION)
+    version === "default" || String(version).match(constants.RE_API_VERSION)
   );
 }
 

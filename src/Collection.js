@@ -1,8 +1,8 @@
-import Dictionary from './Dictionary';
-import { urlJoin, only, validateArgs } from './utils';
+import Dictionary from "./Dictionary";
+import { urlJoin, only, validateArgs } from "./utils";
 
 /** @type {String} - API endpoint for resource */
-const NAMESPACE = 'collections';
+const NAMESPACE = "collections";
 
 export default class Collection {
   /**
@@ -11,12 +11,13 @@ export default class Collection {
    */
   constructor(config, http) {
     /** @type {Dictionary} */
-    this.config = (config && config instanceof Dictionary) ?
-      config : new Dictionary();
+    this.config = config && config instanceof Dictionary
+      ? config
+      : new Dictionary();
 
     // Resource must have an Http instance
     if (!http) {
-      throw new Error('Payment requires Http');
+      throw new Error("Payment requires Http");
     }
 
     /** @type {Http} */
@@ -49,7 +50,7 @@ export default class Collection {
    * @return {Promise}
    */
   listCollections(opts = {}) {
-    const _opts = only(['page', 'perPage'], opts);
+    const _opts = only(["page", "perPage"], opts);
     return this.http.get(NAMESPACE, { params: _opts });
   }
 
@@ -61,14 +62,15 @@ export default class Collection {
    * @return {Promise}
    */
   listSchemas(collection, opts = {}) {
-    const v = validateArgs(['collection', collection]);
+    const v = validateArgs(["collection", collection]);
     if (v.length) {
-      return this.syntheticError('listSchemas', v);
+      return this.syntheticError("listSchemas", v);
     }
 
-    const _opts = only(['page', 'perPage'], opts);
-    return this.http.get(urlJoin(NAMESPACE, collection, 'schemas'),
-                         { params: _opts });
+    const _opts = only(["page", "perPage"], opts);
+    return this.http.get(urlJoin(NAMESPACE, collection, "schemas"), {
+      params: _opts
+    });
   }
 
   /**
@@ -82,15 +84,17 @@ export default class Collection {
    * @return {Promise}
    */
   createRecord(collection, schemaId, data) {
-    const v = validateArgs(['collection', collection],
-                           ['schemaId', schemaId],
-                           ['data', data]);
+    const v = validateArgs(
+      ["collection", collection],
+      ["schemaId", schemaId],
+      ["data", data]
+    );
 
     if (v.length) {
-      return this.syntheticError('createRecord', v);
+      return this.syntheticError("createRecord", v);
     }
 
-    const payload = {schemaId, data};
-    return this.http.post(urlJoin(NAMESPACE, collection, 'records'), payload);
+    const payload = { schemaId, data };
+    return this.http.post(urlJoin(NAMESPACE, collection, "records"), payload);
   }
 }

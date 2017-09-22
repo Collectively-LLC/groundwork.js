@@ -1,10 +1,9 @@
-
-import Collection from './Collection';
-import SchemaUtils from './SchemaUtils';
-import schema from './schema/supporter';
+import Collection from "./Collection";
+import SchemaUtils from "./SchemaUtils";
+import schema from "./schema/supporter";
 
 /** @type {String} - name of collection */
-const COLLECTION = 'supporters';
+const COLLECTION = "supporters";
 
 /**
  * Manage Supporter endpoint. Supporter POSTs are validated before a request
@@ -13,7 +12,7 @@ const COLLECTION = 'supporters';
 
 export default class Supporter extends Collection {
   /** @type {String} */
-  static service = 'supporters';
+  static service = "supporters";
 
   /**
    * @param {Dictionary} [config] - configuration dictionary
@@ -51,7 +50,7 @@ export default class Supporter extends Collection {
 
     if (valid.length > 0) {
       const ret = this.http.generateErrorObject();
-      valid.forEach((err) => {
+      valid.forEach(err => {
         ret.msg.push(err.message);
         ret.fields.push(this.schemaUtils.extractFieldByError(err));
       });
@@ -66,13 +65,13 @@ export default class Supporter extends Collection {
    * @param {Object} response
    * @return {String}
    */
-  getSchemaIdFromResponse(response={data: {}}) {
+  getSchemaIdFromResponse(response = { data: {} }) {
     if (response && !response.data) {
       return undefined;
     }
-    const {data: {results=[{id: undefined}]}} = response;
+    const { data: { results = [{ id: undefined }] } } = response;
     const [head] = results;
-    const {id} = head;
+    const { id } = head;
     return id;
   }
 
@@ -84,10 +83,12 @@ export default class Supporter extends Collection {
    * @param {Object} [form]
    * @return {Function}
    */
-  getCreateRecord(form={}) {
-    return (id) => {
+  getCreateRecord(form = {}) {
+    return id => {
       if (!id) {
-        return Promise.reject(new Error('No schemaId returned from collections'));
+        return Promise.reject(
+          new Error("No schemaId returned from collections")
+        );
       }
 
       return this.createRecord(COLLECTION, id, form);
@@ -100,8 +101,7 @@ export default class Supporter extends Collection {
    * @return {Promise}
    */
   getSupporterSchemaId() {
-    return this.listSchemas(COLLECTION)
-      .then(this.getSchemaIdFromResponse);
+    return this.listSchemas(COLLECTION).then(this.getSchemaIdFromResponse);
   }
 
   /**
@@ -138,14 +138,16 @@ export default class Supporter extends Collection {
 
     // Return a mock error response with validation errors
     const [cf, cp] = this.validateForm(form);
-    if (!cf) { return cp; }
+    if (!cf) {
+      return cp;
+    }
 
     if (!schemaId) {
       if (__LOG__) {
         const warning =
-              '(Supporter.create) Not providing a schemaId will result in ' +
-              'an extra request being made to find it. You can retrieve ' +
-              'the schemaId using Supporter.getSupporterSchemaId';
+          "(Supporter.create) Not providing a schemaId will result in " +
+          "an extra request being made to find it. You can retrieve " +
+          "the schemaId using Supporter.getSupporterSchemaId";
         console.warn(warning); // eslint-disable-line
       }
       return this.getSupporterSchemaId().then(this.getCreateRecord(form));

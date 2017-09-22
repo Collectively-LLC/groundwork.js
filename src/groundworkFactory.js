@@ -1,4 +1,4 @@
-import Groundwork from './Groundwork';
+import Groundwork from "./Groundwork";
 
 function groundworkFactory(services) {
   return function lambda(opts) {
